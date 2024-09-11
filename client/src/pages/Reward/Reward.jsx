@@ -1,9 +1,19 @@
-import React from 'react'
 
-function Reward() {
-  return (
-    <div>Reward</div>
-  )
+import React from 'react'
+import './Reward.css'
+
+import RewardPage from '../../components/RewardPage/RewardPage'
+
+export default function Reward() {
+
+    return  <>
+    <RewardPage></RewardPage>
+           </>
+     
+    
 }
 
-export default Reward
+
+
+//set new reward, list of rewards, set new milestone
+

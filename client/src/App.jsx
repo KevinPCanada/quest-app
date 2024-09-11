@@ -3,6 +3,10 @@ import {
   RouterProvider,
   Outlet,
 } from "react-router-dom";
+import { useState } from 'react'
+import './App.css'
+import Reward from './pages/Reward/Reward'
+
 
 
 import Home from "./pages/Home/Home"
