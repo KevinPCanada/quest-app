@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Sidebar() {
+export function Sidebar() {
   return (
     <div>Sidebar</div>
   )

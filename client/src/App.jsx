@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   createBrowserRouter,
   RouterProvider,
@@ -5,8 +6,6 @@ import {
 } from "react-router-dom";
 import { useState } from 'react'
 import './App.css'
-import Reward from './pages/Reward/Reward'
-
 
 
 import Home from "./pages/Home/Home"
