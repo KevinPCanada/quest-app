@@ -2,6 +2,9 @@ import React from "react";
 import RewardRadio from "./RewardListComponents/RadioButton";
 import RewardListItem from "./RewardListComponents/RewardListItem";
 
+//On this page, the user can set a new reward, see their list of rewards and set their milestone 
+//The milestone is how often the user can give themselves a reward
+
 export default function RewardPage() {
     return <>
     <main>

@@ -1,5 +1,7 @@
 import React from 'react'
 
+//This is the sidebar component,that will be accessible from any page and allow the user to navigate the webapp easily
+
 export function Sidebar() {
   return (
     <div>
