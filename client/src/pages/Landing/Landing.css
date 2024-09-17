@@ -1,0 +1,153 @@
+/* 8-bit Button */
+
+/* HOW TO CUSTOMIZE BUTTONS WITH THE EIGTHBIT-BTN CSS CODE */
+/* - Attach the 'eigthbit-btn' class to a button you are styling  */
+/* - Attach another class to that same button. */
+/* - Copy & paste the 'btn-name' provided below.*/
+/* - Change 'btn-name' to the unique button name you've chosen. */
+/* Please contact Ayumu for any questions. If you like this then give him a kebab.*/
+
+/* .btn-name {
+    background-color: ;
+    font-family: ;
+    color: ;
+    box-shadow: inset -4px -4px 0px 0px 'add color';
+    font-size: ;
+}
+
+.btn-name:hover {
+    background-color: ;
+    box-shadow: inset -6px -6px 0px 0px 'add color';
+}
+
+.btn-name:active {
+    box-shadow: inset 4px 4px 0px 0px 'add color';
+} */
+
+/* Don't touch 'eightbit-btn' pls T_____T*/
+.eightbit-btn {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  /* Border dimensions */
+  .eightbit-btn:before,
+  .eightbit-btn:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+  }
+  
+  .eightbit-btn:before {
+    top: -6px;
+    left: 0;
+    border-top: 6px black solid;
+    border-bottom: 6px black solid;
+  }
+  
+  .eightbit-btn:after {
+    left: -6px;
+    top: 0;
+    border-left: 6px black solid;
+    border-right: 6px black solid;
+  }
+
+/* ----------------------------------------------------------- */
+
+/* Landing Page */
+.landing-anchor {
+    position: relative;
+    text-align: center;
+    background: url('../../assets/img/background.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    height: 100vh;
+    width: 100vw;
+}
+
+.landing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 15px;
+    width: 100%;
+
+    span, h1 {
+        color: var(--background-color);
+        font-family: var(--primary-font);
+        text-transform: uppercase;
+    }
+
+    span {
+        font-size: 4rem;
+    }
+
+    h1 {
+        font-size: 6rem;
+        margin-bottom: 50px;
+    }
+
+}
+
+/* Guest User button*/
+.guest-btn {
+    background-color: #c0c0c0;
+    padding: 10px 20px;
+    font-size: 1rem;
+    box-shadow: inset -4px -4px 0px 0px #808080;
+
+    cursor: pointer;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    font-family: var(--primary-font);
+    color: var(--text-color);
+
+}
+
+.guest-btn:hover {
+    background-color: #a9a9a9;
+    box-shadow: inset -6px -6px 0px 0px #808080;
+}
+
+.guest-btn:active {
+    box-shadow: inset 4px 4px 0px 0px #808080;
+}
+
+/* Loging & Sign Up buttons */
+.landing-btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.landing-btn {
+    background-color: #c0c0c0;
+    font-family: var(--primary-font);
+    color: var(--text-color);
+    box-shadow: inset -4px -4px 0px 0px #808080;
+    font-size: 1.5rem;
+
+    width: 250px;
+    height: 65px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.landing-btn:hover {
+    background-color: #a9a9a9;
+    box-shadow: inset -6px -6px 0px 0px #808080;
+}
+
+.landing-btn:active {
+    box-shadow: inset 4px 4px 0px 0px #808080;
+}
