@@ -18,7 +18,6 @@ import NewQuest from './components/NewQuest/NewQuest';
 
 import Sidebar from "./components/Sidebar/Sidebar"
 
-
 const Layout = () => {
   return (
     <>

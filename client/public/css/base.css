@@ -1,3 +1,9 @@
+/* Roboto Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* Pixelify Font */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'); 
+
 * {
     box-sizing: border-box;
 }
@@ -13,7 +19,7 @@
     --accent-color: #d4a373; /* Warm Tan */
 
     /* Fonts */
-    --primary-font: "Pixelify Sans", sans-serif;
+    --primary-font: 'Pixelify Sans', sans-serif;
     --secondary-font: "Roboto", sans-serif;
 
     /* Button Styles */
