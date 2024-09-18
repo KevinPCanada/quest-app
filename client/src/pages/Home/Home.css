@@ -46,10 +46,8 @@ table {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    width: calc(100% - 250px);
     font-family: var(--primary-font);
     background-color: var(--background-color);
-
     a {
         color: var(--text-color);
     }
@@ -58,25 +56,27 @@ table {
 /* Questboard Header */
 .questboard-header {
     display: flex;
-    flex-direction: column;
     margin-bottom: 20px;
     font-size: 2rem;
+    justify-content: space-between;
 }
 
 /* Questboard Header Progess Bar and Buttons */
 .questboard-header-bottom {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: row;
+    width: 100%;
 }
 
 .questboard-header-left {
     display: flex;
-    align-items: center;
+    align-items: start;
+    flex: 1;
 }
 
 .questboard-header-right {
     display: flex;
+    flex-direction: row;
     gap: 10px;
 }
 
@@ -146,6 +146,9 @@ table {
 /* Quest Option Buttons */
 .quest-options {
     display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
     gap: 10px;
 
     a {
@@ -188,7 +191,7 @@ table {
     cursor: pointer;
     text-align: center;
 
-    .material-symbols-outlined {
+    i {
         font-size: 1.5rem;
         margin-top: 5px;
         color: var(--text-color);
