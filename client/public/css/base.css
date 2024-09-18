@@ -19,6 +19,7 @@
     --accent-color: #d4a373; /* Warm Tan */
 
     /* Fonts */
+
     --primary-font: 'Pixelify Sans', sans-serif;
     --secondary-font: "Roboto", sans-serif;
 
@@ -42,3 +43,4 @@ main {
 a {
     text-decoration: none;
 }
+
