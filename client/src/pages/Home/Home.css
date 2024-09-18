@@ -214,3 +214,15 @@ table {
     transform: var(--button-transform-click);
 }
 
+
+/* App.jsx layout style */
+.layout {
+    display: flex;
+    flex-direction: row;
+  }
+
+.layout-outlet {
+    display: flex;
+    height: 100vh;
+    justify-content: flex-start;
+}

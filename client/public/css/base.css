@@ -42,14 +42,3 @@ main {
 a {
     text-decoration: none;
 }
-
-.layout {
-    display: flex;
-    flex-direction: row;
-  }
-
-.layout-outlet {
-    display: flex;
-    height: 100vh;
-    justify-content: flex-start;
-}
