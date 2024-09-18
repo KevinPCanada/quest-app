@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 function SignUp() {
-  // CHANGE: Added state to manage form inputs
   const [inputs, setInputs] = useState({
     email: "",
     username: "",
@@ -11,7 +10,6 @@ function SignUp() {
   const [err, setError] = useState(null);
   const navigate = useNavigate();
 
-  // CHANGE: Added handleChange function to update state
   const handleChange = (e) => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -19,7 +17,6 @@ function SignUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // CHANGE: Use inputs state instead of FormData
       const res = await fetch("http://localhost:8800/api/auth/register", {
         method: "POST",
         headers: {
@@ -46,7 +43,6 @@ function SignUp() {
     <div className="form">
       <h2>Create a new account</h2>
       <form onSubmit={handleSubmit}>
-        {/* CHANGE: Updated input fields to use state */}
         <input
           type="email"
           name="email"

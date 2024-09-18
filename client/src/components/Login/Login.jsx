@@ -32,9 +32,7 @@ function Login() {
   return (
     <div className="form">
       <h2>Login to your account</h2>
-      {/* CHANGE: Updated onSubmit to use handleSubmit */}
       <form onSubmit={handleSubmit}>
-        {/* CHANGE: Updated value to use inputs state */}
         <input
           type="text"
           name="username"
@@ -43,7 +41,6 @@ function Login() {
           onChange={handleChange}
           required
         />
-        {/* CHANGE: Updated value to use inputs state */}
         <input
           type="password"
           name="password"
