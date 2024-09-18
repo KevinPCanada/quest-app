@@ -1,35 +1,37 @@
 import React from 'react'
 
+//This is the sidebar component,that will be accessible from any page and allow the user to navigate the webapp easily
+
 export function Sidebar() {
   return (
     <div>
-       <aside class="sidebar">
-            <a href="" class="profile">
-                <span class="material-symbols-outlined">account_circle</span>
+       <aside className="sidebar">
+            <a href="" className="profile">
+                <span className="material-symbols-outlined">account_circle</span>
                 <h1>user_name</h1>
             </a>
-            <nav class="sidebar-menu">
+            <nav className="sidebar-menu">
                 <ul>
-                    <a class="sidebar-button" href="">
-                        <span class="material-symbols-outlined">star</span>
+                    <a className="sidebar-button" href="">
+                        <span className="material-symbols-outlined">star</span>
                         <p>Rewards</p>
                     </a>
-                    <a class="sidebar-button" href="">
-                        <span class="material-symbols-outlined">receipt_long</span>
+                    <a className="sidebar-button" href="">
+                        <span className="material-symbols-outlined">receipt_long</span>
                         <p>Questboard</p>
                     </a>
-                    <a class="sidebar-button" href="">
-                        <span class="material-symbols-outlined">menu_book</span>
+                    <a className="sidebar-button" href="">
+                        <span className="material-symbols-outlined">menu_book</span>
                         <p>Quest History</p>
                     </a>
                 </ul>
             </nav>
-            <nav class="sidebar-footer">
+            <nav className="sidebar-footer">
                 <a href="">About us</a>
                 <a href="">Privacy Policy</a>
             </nav>
-            <a href="" class="logout">
-                <span class="material-symbols-outlined">settings</span>
+            <a href="" className="logout">
+                <span className="material-symbols-outlined">settings</span>
                 <p>Logout</p>
             </a>
         </aside>

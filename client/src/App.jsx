@@ -14,14 +14,15 @@ import Landing from "./pages/Landing/Landing"
 import Reward from "./pages/Reward/Reward"
 import NotFound from "./pages/NotFound/NotFound"
 import Settings from "./pages/Settings/Settings"
+import NewQuest from './components/NewQuest/NewQuest';
 
 import Sidebar from "./components/Sidebar/Sidebar"
-
 
 const Layout = () => {
   return (
     <>
       <Sidebar />
+
       <Outlet />
     </>
   )
@@ -62,7 +63,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-
 
   return (
     <div className="app">

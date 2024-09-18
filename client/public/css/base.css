@@ -1,19 +1,46 @@
+/* Roboto Font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* Pixelify Font */
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'); 
+
 * {
-    box-sizing: none;
     box-sizing: border-box;
 }
 
 :root {
-    /* Color Pallete */
+    /* Color Palette */
     --primary-color: #4a9b48; /* Green */
-    --secondary-color: #d4c5a1; /* Light Parchment */
     --secondary-color: #d4c5a1; /* Light Parchment */
     --secondary-color-dark: #7b4f2e; /* Brown */
     --text-color: #333333; /* Dark Gray */
+    --text-color-light: #444444; /* Gray */
     --background-color: #f2f2f2; /* Light Gray */
     --accent-color: #d4a373; /* Warm Tan */
 
     /* Fonts */
-    --primary-font: 'Pixelify sans';
-    --secondard-font: 'Roboto sans';
-  }
+
+    --primary-font: 'Pixelify Sans', sans-serif;
+    --secondary-font: "Roboto", sans-serif;
+
+    /* Button Styles */
+    --button-shadow: 2px 2px 1px 1px black;
+    --button-border: 2px solid black;
+
+    /* Button Hover */
+    --button-shadow-hover: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    --button-transform-lift: translateY(-2px); 
+
+    /* Button Click Effect */
+    --button-shadow-click: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    --button-transform-click: transform: translateY(2px);
+}
+
+main {
+    display: flex;
+}
+
+a {
+    text-decoration: none;
+}
+
