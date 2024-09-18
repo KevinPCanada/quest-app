@@ -3,6 +3,7 @@ import cors from 'cors';
 import { pool } from './pool.js';
 
 import authRoutes from './routes/auth.js';
+import questRoutes from './routes/quests.js'
 
 const app = express();
 
@@ -17,12 +18,15 @@ app.get('/', (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use('/api/quests', questRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
+
 
 const port = process.env.port || 8800;
 app.listen(port, () => {
