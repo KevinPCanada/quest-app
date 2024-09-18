@@ -6,7 +6,6 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     height: 100vh;
     width: 250px;
 }
@@ -23,7 +22,7 @@
         font-size: 1.5rem;
     }
 
-    span {
+    i {
         font-size: 2rem;
     }
 }
@@ -51,7 +50,7 @@
     color: var(--background-color);
     transition: color 0.3s ease;  
     
-    span, p {
+    i, p {
         padding: 20px 0;
     }
 }
@@ -92,17 +91,13 @@
 .logout {
     cursor: pointer;
     margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+}
 
-    a {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: var(--text-color);
-        transition: color 0.3s ease;
-    }
-
-    a:hover{
-        color: var(--background-color);
-    }
-
+.logout:hover {
+    color: var(--background-color);
 }

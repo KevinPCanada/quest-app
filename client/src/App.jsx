@@ -20,11 +20,12 @@ import Sidebar from "./components/Sidebar/Sidebar"
 
 const Layout = () => {
   return (
-    <>
+    <div className="layout">
       <Sidebar />
-
-      <Outlet />
-    </>
+      <div className="layout-outlet">
+       <Outlet />
+      </div>
+    </div>
   )
 }
 
