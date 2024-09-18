@@ -18,7 +18,6 @@ import NewQuest from './components/NewQuest/NewQuest';
 
 import Sidebar from "./components/Sidebar/Sidebar"
 
-
 const Layout = () => {
   return (
     <>
@@ -64,7 +63,6 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-
 
   return (
     <div className="app">

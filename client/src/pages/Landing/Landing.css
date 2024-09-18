@@ -83,7 +83,7 @@
 
     span, h1 {
         color: var(--background-color);
-        font-family: var(--primary-font);
+        font-family: 'Pixelify Sans', sans-serif;
         text-transform: uppercase;
     }
 
