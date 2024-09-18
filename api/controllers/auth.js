@@ -70,9 +70,12 @@ export const login = async (req, res) => {
 
     // Set the token as an HTTP-only cookie and send the user data
     res
-      .cookie("access_token", token, {
-        httpOnly: true,
-      })
+    .cookie("access_token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production", // use secure cookies in production
+      sameSite: 'strict', // prevents CSRF attacks
+      maxAge: 24 * 60 * 60 * 1000 
+    })
       .status(200)
       .json(other);
   } catch (error) {
@@ -85,7 +88,8 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   // Clear the access_token cookie to log the user out
   res.clearCookie("access_token", {
-    sameSite: "none",
-    secure: true,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: 'strict'
   }).status(200).json("User has been logged out");
 };
