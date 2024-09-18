@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { AuthContext } from '/src/context/AuthContext';
 
-function SignUp() {
+function SignUp({ onToggle }) { 
   const [inputs, setInputs] = useState({
     email: "",
     username: "",
     password: ""
   });
   const [err, setError] = useState(null);
-  const navigate = useNavigate();
+  const { login } = useContext(AuthContext); 
 
   const handleChange = (e) => {
     setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -24,7 +24,7 @@ function SignUp() {
         },
         body: JSON.stringify(inputs),
       });
-      
+     
       if (res.status === 409) {
         setError("User already exists");
       } else if (!res.ok) {
@@ -32,7 +32,9 @@ function SignUp() {
       } else {
         const data = await res.json();
         console.log(data);
-        navigate("/login");
+       
+        await login(inputs);
+        onToggle(); // Switch to login view
       }
     } catch (err) {
       setError(err.message || "An error occurred during registration");
@@ -70,7 +72,7 @@ function SignUp() {
         {err && <p style={{ color: "red" }}>{err}</p>}
         <button type="submit" className="btn">Sign Up</button>
       </form>
-      <p>Already a member? <Link to="/login">Log in</Link></p>
+      <p>Already a member? <button onClick={onToggle}>Log in</button></p>
     </div>
   );
 }
