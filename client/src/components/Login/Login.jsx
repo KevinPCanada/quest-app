@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from '/src/context/AuthContext';
 
-function Login() {
+function Login({onToggle}) {
   const [inputs, setInputs] = useState({
     username: "",
     password: "",
@@ -52,7 +52,7 @@ function Login() {
         {err && <p style={{ color: "red" }}>{err}</p>}
         <button type="submit" className="btn">Login</button>
       </form>
-      <p>Not a member? <Link to="/register">Sign up now!</Link></p>
+      <p>Not a member? <button onClick={onToggle}>Sign Up</button></p>
     </div>
   );
 }
