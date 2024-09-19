@@ -5,13 +5,13 @@ export const addQuest = async (req, res) => {
         const { questName, questDescription, questLevel } = req.body;
         const userID = 2;
 
-        await pool.query(
-            "INSERT INTO tasks (userID, questName, questDesc, questLevel) VALUES (?, ?, ?, ?)",
+        const result = await pool.query(
+            "INSERT INTO tasks (user_id, task_name, task_description, task_level) VALUES (?, ?, ?, ?)",
             [userID, questName, questDescription, questLevel]
         );
         
        
-        res.status(200).json({ message: "Quest added successfully" });
+        res.status(200).json({ message: "Quest added successfully", result });
 
     } catch (error) {
        
@@ -22,7 +22,7 @@ export const addQuest = async (req, res) => {
 
 export const deleteQuest = async (req, res) => {
     try {
-        const idToDelete = getQuestByID
+        const idToDelete = req.params.id
 
         await pool.query(
             'DELETE FROM tasks WHERE id = ?', [idToDelete]
@@ -35,11 +35,11 @@ export const deleteQuest = async (req, res) => {
     }
 }
 
-async function getQuestByID(iD) {
-    const task = await pool.query(
-        'SELECT * FROM tasks WHERE id = ?', [iD]
-    )
+// async function getQuestByID(iD) {
+//     const task = await pool.query(
+//         'SELECT * FROM tasks WHERE id = ?', [iD]
+//     )
 
-    return task
+//     return task
 
-}
+// }

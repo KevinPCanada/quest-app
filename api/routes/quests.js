@@ -45,5 +45,6 @@ router.get('/:userId', (req, res) => {
 });
 
 router.post('/add-quest', addQuest)
+router.delete('/delete-quest/:id', deleteQuest)
 
 export default router
