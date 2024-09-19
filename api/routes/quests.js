@@ -1,6 +1,7 @@
 import express from 'express';
 // import multer from 'multer';
 import mysql from 'mysql2';
+import { addQuest, deleteQuest } from '../controllers/quests.js';
 
 const app = express();
 // const port = 8800;
@@ -42,5 +43,7 @@ router.get('/:userId', (req, res) => {
     res.json(results);
   });
 });
+
+router.post('/add-quest', addQuest)
 
 export default router
