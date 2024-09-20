@@ -1,32 +1,13 @@
+// rewards.js (in the routes folder)
 import express from 'express';
-import multer from 'multer';
-import { 
-    createReward, 
-    getUserRewards, 
-    updateReward, 
-    claimReward, 
-    deleteReward 
-} from '../controllers/rewards.js';
+import { verifyToken } from '../middleware/authMiddleware.js';
+import { addReward, getRewards, claimReward } from '../controllers/rewards.js';
 
 const router = express.Router();
-const upload = multer();
 
-// Create
-router.post('/', upload.none(), createReward);
-
-// Get all
-router.get('/user/:userId', getUserRewards);
-
-// Get single
-router.get('/:rewardId', getReward);
-
-// Update
-router.put('/:rewardId', upload.none(), updateReward);
-
-// Claim
-router.post('/:rewardId/claim', claimReward);
-
-// Delete
-router.delete('/:rewardId', deleteReward);
+// Protected route - Only accessible if a valid token is provided
+router.post('/add', verifyToken, addReward);
+router.get('/', verifyToken, getRewards);
+router.put('/claim/:id', verifyToken, claimReward);
 
 export default router;
