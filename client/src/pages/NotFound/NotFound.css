@@ -1,3 +1,42 @@
-.NotFound{
-    color: blue;
+.notfound-container {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    flex-direction: row;
+}
+.notfound-container-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.notfound-code {
+    font-family: var(--secondary-font);
+    font-size: 10rem;
+    font-weight: bolder;
+    color: var( --text-color-light);
+}
+
+.notfound-title {
+    font-family: var(--primary-font);
+    font-size: 2.3rem;
+    margin-top: -20px;
+}
+
+.notfound-img {
+    width: 170px;
+}
+
+.notfound-button:hover {
+    background-color: #a9a9a9;
+    box-shadow: inset -6px -6px 0px 0px #808080;
+}
+
+.notfound-button:active {
+    box-shadow: inset 4px 4px 0px 0px #808080;
 }

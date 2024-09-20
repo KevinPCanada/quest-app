@@ -59,26 +59,14 @@
 /* ----------------------------------------------------------- */
 
 /* Landing Page */
-.landing-anchor {
-    position: relative;
-    text-align: center;
-    background: url('../../assets/img/background.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    height: 100vh;
-    width: 100vw;
-}
-
 .landing-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
-    top: 30%;
+    top: 25%;
     left: 50%;
     transform: translateX(-50%);
-    gap: 15px;
     width: 100%;
 
     span, h1 {
