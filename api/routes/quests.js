@@ -1,7 +1,7 @@
 import express from 'express';
 // import multer from 'multer';
 import mysql from 'mysql2';
-import { addQuest, deleteQuest } from '../controllers/quests.js';
+import { addQuest, deleteQuest, modifyQuest } from '../controllers/quests.js';
 
 const app = express();
 // const port = 8800;
@@ -29,12 +29,12 @@ router.get('/:userId', (req, res) => {
   const userId = req.params.userId;
   const query = `
     SELECT 
-      tasks.task_name, 
-      tasks.task_description, 
+      quests.quest_name, 
+      quests.quest_description, 
       difficulty.difficulty_name 
-    FROM tasks
-    JOIN difficulty ON tasks.task_level = difficulty.difficulty_level
-    WHERE tasks.user_id = ?;
+    FROM quests
+    JOIN difficulty ON quests.quest_level = difficulty.difficulty_level
+    WHERE quests.user_id = ?;
   `;
   
   // Execute the query
@@ -46,5 +46,5 @@ router.get('/:userId', (req, res) => {
 
 router.post('/add-quest', addQuest)
 router.delete('/delete-quest/:id', deleteQuest)
-
+router.put('/modify-quest', modifyQuest)
 export default router
