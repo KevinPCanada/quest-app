@@ -17,6 +17,8 @@ import Settings from "./pages/Settings/Settings"
 import NewQuest from './components/NewQuest/NewQuest';
 
 import Sidebar from "./components/Sidebar/Sidebar"
+import Privacy from './pages/Privacy/PrivacyPolicy';
+import AboutUs from './pages/About/AboutUs';
 
 const Layout = () => {
   return (
@@ -60,6 +62,14 @@ const router = createBrowserRouter([
   {
     path: "*",
     element: <NotFound />  // Create a NotFound component for 404 errors
+  },
+  {
+    path: "/privacy",
+    element: <Privacy/>  ,
+  },
+  {
+    path: "/about",
+    element: <AboutUs/>  ,
   },
 ]);
 
