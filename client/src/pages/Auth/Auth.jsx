@@ -4,7 +4,6 @@ import SignUp from '../../components/SignUp/SignUp.jsx';
 import './Auth.css';
 
 function Auth() {
-  // State to track whether to show Login or SignUp
   const [isLogin, setIsLogin] = useState(true);
 
   const handleToggle = () => {
@@ -25,10 +24,8 @@ function Auth() {
         </label>
         <span className={`toggle-label ${!isLogin ? 'active' : ''}`}>Sign Up</span>
       </div>
-
       <div className="form-container">
-        {/* Conditionally render Login or SignUp form with animation */}
-        {isLogin ? <Login /> : <SignUp />}
+        {isLogin ? <Login onToggle={handleToggle} /> : <SignUp onToggle={handleToggle} />}
       </div>
     </div>
   );
