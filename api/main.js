@@ -1,13 +1,16 @@
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import cors from 'cors';
 import { pool } from './pool.js';
 
 import authRoutes from './routes/auth.js';
 import questRoutes from './routes/quests.js'
+import rewardsRoutes from './routes/rewards.js'
 
 const app = express();
 
 // Middleware
+app.use(cookieParser()); 
 app.use(cors({
   origin: 'http://localhost:5173', // or whatever the frontend URL is
   credentials: true,
@@ -24,6 +27,7 @@ app.get('/', (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use('/api/quests', questRoutes);
+app.use('/api/rewards', rewardsRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
