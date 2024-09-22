@@ -11,8 +11,10 @@ import Reward from "./pages/Reward/Reward";
 import NotFound from "./pages/NotFound/NotFound";
 import Settings from "./pages/Settings/Settings";
 import NewQuest from "./components/NewQuest/NewQuest";
+import Sidebar from "./components/Sidebar/Sidebar"
+import Privacy from './pages/Privacy/PrivacyPolicy';
+import AboutUs from './pages/About/AboutUs';
 
-import Sidebar from "./components/Sidebar/Sidebar";
 
 const Layout = () => {
   return (
@@ -75,6 +77,14 @@ const router = createBrowserRouter([
         <NotFound />
       </AuthWrapper>
     ), // Create a NotFound component for 404 errors
+  },
+  {
+    path: "/privacy",
+    element: <Privacy/>  ,
+  },
+  {
+    path: "/about",
+    element: <AboutUs/>  ,
   },
 ]);
 

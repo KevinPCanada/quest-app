@@ -1,0 +1,57 @@
+
+
+.PrivacyPage {
+    background-image: url('../src/assets/img/background.png'); /* Adjust the path if needed */
+    background-size: cover; /* Ensure the image covers the entire container */
+    background-position: center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+    background-attachment: fixed; /* Keep the background fixed during scrolling */
+    min-height: 100vh; /* Ensure it covers the entire viewport height */
+    min-width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Privacy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    max-width: 500px;
+    background-color: var(--background-color); /* Light Gray */
+    padding: 20px;
+    border: 3px solid var(--primary-color); /* Green */
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    font-family: var(--primary-font); /* Retro font */
+    color: var(--text-color); /* Dark Gray */
+    text-align: center;
+}
+.Privacy:hover {
+    box-shadow: 0 0 15px 5px var(--primary-color), 0 4px 15px rgba(0, 0, 0, 0.25); /* Glowing green */
+}
+
+.Privacy ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.Privacy li {
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 500px) {
+    .Privacy {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    .Privacy li {
+        font-size: 1rem;
+    }
+}
