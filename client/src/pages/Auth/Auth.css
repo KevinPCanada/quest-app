@@ -1,15 +1,22 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 :root {
     /* Color Palette */
-    --primary-color: #4a9b48; /* Green */
-    --secondary-color: #d4c5a1; /* Light Parchment */
-    --text-color: #333333; /* Dark Gray */
-    --background-color: #f2f2f2; /* Light Gray */
-    --accent-color: #d4a373; /* Warm Tan */
-    
+    --primary-color: #4a9b48;
+    /* Green */
+    --secondary-color: #d4c5a1;
+    /* Light Parchment */
+    --text-color: #333333;
+    /* Dark Gray */
+    --background-color: #f2f2f2;
+    /* Light Gray */
+    --accent-color: #d4a373;
+    /* Warm Tan */
+
     /* Fonts */
     --primary-font: 'Pixelify sans', sans-serif;
     --secondary-font: 'Roboto', sans-serif;
@@ -21,35 +28,47 @@
     align-items: center;
     justify-content: center;
     background-color: var(--background-color);
-    padding: 20px;
-    font-family: var(--secondary-font);
+    padding: 10px;
+    gap: 5px;
+    font-family: var(--primary-font);
+    /* Retro font for consistency */
     width: 100%;
-    max-width: 350px;
-    min-height: 300px;
+    max-width: 320px;
+    height: 315px;
+    /* Fixed height to maintain consistent size */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border: solid 2px black; 
-    /* border-radius: 10px; */
+    border: solid 3px var(--primary-color);
+    /* Thick border for pixelated look */
+
 }
 
+
 .toggle-container {
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: row;
-    align-items: center;
     justify-content: center;
-    /* margin-bottom: 20px; */
+    align-items: center;
+    background-color: var(--background-color);
+    width: 100%;
+    padding: 10px 0;
+    z-index: 10;
+    border-bottom: 2px solid var(--primary-color);
 }
 
 .switch {
     position: relative;
     display: inline-block;
     width: 60px;
-    height: 34px;
+    height: 37px;
     margin: 0 10px;
+    border: 2px solid var(--primary-color);
 }
 
 .switch input {
@@ -65,9 +84,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc;
+    background-color: var(--primary-color);
     transition: background-color 0.4s;
-    /* border-radius: 34px; */
 }
 
 .slider:before {
@@ -77,17 +95,17 @@
     width: 26px;
     left: 4px;
     bottom: 4px;
-    background-color: white;
+    background-color: var(--background-color);
     transition: transform 0.4s;
-    /* border-radius: 50%; */
 }
 
-input:checked + .slider {
-    background-color: var(--primary-color);
+input:checked+.slider {
+    background-color: var(--secondary-color);
+
 }
 
-input:checked + .slider:before {
-    transform: translateX(26px);
+input:checked+.slider:before {
+    transform: translateX(24px);
 }
 
 .toggle-label {
@@ -104,17 +122,21 @@ input:checked + .slider:before {
 .form-container {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 100%;
     max-width: 400px;
-    margin-top: 20px;
-    position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    flex-grow: 1;
+    margin-top: 15px;
+    
+
 }
 
 .form {
+    gap: 5px;
     opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.5s forwards ease-in-out;
+    transform: translateY(10px);
+    animation: fadeInUp 0.3s forwards ease-in-out;
 }
 
 @keyframes fadeInUp {
@@ -122,6 +144,7 @@ input:checked + .slider:before {
         opacity: 0;
         transform: translateY(20px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -131,7 +154,7 @@ input:checked + .slider:before {
 form {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 1px;
 }
 
 input {
@@ -139,24 +162,38 @@ input {
     flex-direction: column;
     margin: 10px 0;
     gap: 5px;
-    /* width: calc(100% - 20px); */
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    padding: 20px 15px;
+    /* Added more padding for the placeholder to move right */
+    border: none;
+    /* Removed border */
+    border-radius: 0px;
     font-size: 1rem;
+    background-color: var(--background-color);
+    /* Optional: Set input background color */
+    /* box-shadow: 0 0 3px rgba(0, 0, 0, 0.1); Optional: Light shadow for depth */
 }
+
+input::placeholder {
+    color: var(--text-color);
+    /* Optional: Change the color of the placeholder text */
+    padding-left: 5px;
+    /* Additional padding to move placeholder slightly more to the right */
+}
+
 
 button.btn {
     background-color: var(--primary-color);
     color: white;
-    border: solid 2px black; 
+    border: solid 2px black;
     padding: 10px 20px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-top: 10px; /* Add some space between button and input fields */
+    margin-top: 10px;
+    /* Add some space between button and input fields */
+    margin-bottom: 10px;
 }
 
 button.btn:hover {
-    /* background-color: lighten(var(--primary-color), +10%) */
+    box-shadow: 0 0 3px 2px var(--primary-color), 0 4px 15px rgba(0, 0, 0, 0.25);
 }
