@@ -22,7 +22,7 @@ export const addQuest = async (req, res) => {
 
 export const deleteQuest = async (req, res) => {
     try {
-        const idToDelete = req.params.id
+        const idToDelete = req.params.questId
 
         await pool.query(
             'DELETE FROM quests WHERE id = ?', [idToDelete]
@@ -39,45 +39,26 @@ export const modifyQuest = async (req, res) => {
     try {
         const { questId, questName, questDescription, questLevel } = req.body;
 
-        //create 2 arrays, one for update fields and one for values
-        //the first will create the query for SQL dynamically
-        //the second will store the values to be inserted into the query
-        const updateFields = [];
-        const queryValues = [];
-
-        //check if each item is present
-        //if it is present in the req.body, it is added into the query and the values list
         if (questName) {
-            updateFields.push(`quest_name = ?`);
-            queryValues.push(questName);
+            await pool.query(
+                'UPDATE quests SET quest_name = ? WHERE id = ?', 
+                [questName, questId] 
+            );
         }
         if (questDescription) {
-            updateFields.push(`quest_description = ?`);
-            queryValues.push(questDescription);
+            await pool.query(
+                'UPDATE quests SET quest_description = ? WHERE id = ?', 
+                [questDescription, questId] 
+            );
         }
         if (questLevel) {
-            updateFields.push(`quest_level = ?`);
-            queryValues.push(questLevel);
+            await pool.query(
+                'UPDATE quests SET quest_level = ? WHERE id = ?', 
+                [questLevel, questId] 
+            );
         }
 
-        if (updateFields.length === 0) {
-            return res.status(400).json({ message: "No fields provided to update" });
-        }
-
-        //add quest ID last, as it wwill be the last item added into the query
-        queryValues.push(questId);
-
-        //make the query by joining all elements from the first array 
-        const updateQuery = `
-            UPDATE quests 
-            SET ${updateFields.join(', ')}
-            WHERE id = ?
-        `;
-
-        //execute the query by adding the values into  it
-        await pool.query(updateQuery, queryValues);
-
-        res.status(200).json({ message: "Quest modified successfully" });
+       res.status(200).json({message:"Quest successfully updated"})
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "An error occurred while modifying the quest" });
@@ -118,7 +99,7 @@ export const displayAllQuests = async (req, res) => {
 
 export const getQuestByID = async (req, res) => {
     try {
-        const questID = req.params.questID;
+        const questId = req.params.questId;
 
         const query = `
             SELECT 
@@ -131,7 +112,7 @@ export const getQuestByID = async (req, res) => {
         `;
 
         // Execute the query
-        const [results] = await pool.query(query, [questID]);
+        const [results] = await pool.query(query, [questId]);
 
         console.log('Query results:', results);
         res.status(200).json(results);
@@ -143,16 +124,16 @@ export const getQuestByID = async (req, res) => {
 
 export const completeQuest = async (req, res) => {
     try {
-        const ID = req.params.questID;
+        const questId = req.params.questId;
 
-        console.log(ID)
+        console.log(questId)
 
 
         const result = await pool.query(`
             UPDATE quests
             SET completed = 1
             WHERE id = ?;
-        `, [ID]);
+        `, [questId]);
 
         res.status(200).json({ message: "Quest Completed" });
 
@@ -161,6 +142,80 @@ export const completeQuest = async (req, res) => {
         res.status(500).json({ message: "An error occurred" });
     }
 };
+
+export const getCompletedQuests = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const query = `
+            SELECT 
+                quests.quest_name, 
+                quests.quest_description, 
+                difficulty.difficulty_name 
+            FROM quests
+            JOIN difficulty ON quests.quest_level = difficulty.difficulty_level
+            WHERE user_id = ? AND completed = 1;
+        `;
+
+        // Execute the query
+        const [results] = await pool.query(query, [userId]);
+
+        console.log('Query results:', results);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "An error occurred" });
+    }
+};
+
+export const getIncompleteQuests = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+
+        const query = `
+            SELECT 
+                quests.quest_name, 
+                quests.quest_description, 
+                difficulty.difficulty_name 
+            FROM quests
+            JOIN difficulty ON quests.quest_level = difficulty.difficulty_level
+            WHERE user_id = ? AND completed = 0;
+        `;
+
+        // Execute the query
+        const [results] = await pool.query(query, [userId]);
+
+        console.log('Query results:', results);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "An error occurred" });
+    }
+};
+export const getExpByQuest = async (req, res) => {
+    try {
+        const questId = req.params.questId;
+
+        const query = `
+             SELECT 
+                
+                difficulty.exp_reward
+            FROM quests
+            JOIN difficulty ON quests.quest_level = difficulty.difficulty_level
+            WHERE quests.id = ?;
+        `;
+
+        // Execute the query
+        const [results] = await pool.query(query, [questId]);
+
+        console.log('Query results:', results);
+        res.status(200).json(results);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "An error occurred" });
+    }
+};
 //complete quest
 //get all quests
 //get quest by ID
+//controller and route for get quest experience by quest ID
