@@ -147,14 +147,14 @@ export const completeQuest = async (req, res) => {
 
         console.log(ID)
 
-        // Execute the SQL query using the parameterized value to prevent SQL injection
+
         const result = await pool.query(`
             UPDATE quests
             SET completed = 1
             WHERE id = ?;
         `, [ID]);
 
-
+        res.status(200).json({ message: "Quest Completed" });
 
     } catch (error) {
         console.error(error);
