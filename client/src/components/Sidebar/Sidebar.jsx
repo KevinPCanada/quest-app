@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "/src/context/AuthContext";
 import "./Sidebar.css";
-
-//This is the sidebar component,that will be accessible from any page and allow the user to navigate the webapp easily
 
 export function Sidebar() {
   const { currentUser, logout } = useContext(AuthContext);
@@ -21,36 +19,38 @@ export function Sidebar() {
   return (
     <div>
       <aside className="sidebar">
-        <a href="" className="profile">
+        <Link to="/profile" className="profile">
           <i className="material-icons">account_circle</i>
-          <h1>user_name</h1>
-        </a>
+          <h1>{currentUser ? currentUser.username : 'Guest'}</h1>
+        </Link>
         <nav className="sidebar-menu">
           <ul>
-            <a className="sidebar-button" href="">
+            <Link to="/rewards" className="sidebar-button">
               <i className="material-icons">star</i>
               <p>Rewards</p>
-            </a>
-            <a className="sidebar-button" href="">
+            </Link>
+            <Link to="/questboard" className="sidebar-button">
               <i className="material-icons">receipt_long</i>
               <p>Questboard</p>
-            </a>
-            <a className="sidebar-button" href="">
+            </Link>
+            <Link to="/quest-history" className="sidebar-button">
               <i className="material-icons">menu_book</i>
               <p>Quest History</p>
-            </a>
+            </Link>
           </ul>
         </nav>
         <nav className="sidebar-footer">
-          <a href="">About us</a>
-          <a href="">Privacy Policy</a>
+          <Link to="/about">About us</Link>
+          <Link to="/privacy">Privacy Policy</Link>
         </nav>
         {currentUser && (
           <button className="auth-button" onClick={handleLogout}>
             Logout
           </button>
         )}
-        <i className="material-icons">settings</i>
+        <Link to="/settings">
+          <i className="material-icons">settings</i>
+        </Link>
       </aside>
     </div>
   );

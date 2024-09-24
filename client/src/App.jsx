@@ -52,6 +52,10 @@ const router = createBrowserRouter([
         path: "/settings",
         element: <Settings />,
       },
+      {
+        path: "/rewards",
+        element: <Reward />,
+      },
     ],
   },
   {
