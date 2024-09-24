@@ -1,6 +1,6 @@
 import React from 'react'
 import './NotFound.css'
-import errorImg from '../../assets/img/chicken.png';
+import errorImg from '../../assets/img/chicken.png'
 
 function NotFound() {
   return (
