@@ -1,4 +1,5 @@
 import React from "react";
+import './Level.css';
 
 //This component is for the level bar, whch will show the amount of exp needed to get to the next level and the user's current level
 //you can call this component with 

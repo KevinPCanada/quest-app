@@ -61,16 +61,3 @@
     font-size: 1rem;
     line-height: 1.5;
 }
-
-/* Responsive styling */
-@media (max-width: 1200px) {
-    .TeamMember {
-        width: 48%; /* Adjust width for smaller screens */
-    }
-}
-
-@media (max-width: 768px) {
-    .TeamMember {
-        width: 100%; /* Stack team members on smaller screens */
-    }
-}
