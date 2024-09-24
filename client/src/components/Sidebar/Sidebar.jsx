@@ -29,7 +29,7 @@ export function Sidebar() {
               <i className="material-icons">star</i>
               <p>Rewards</p>
             </Link>
-            <Link to="/questboard" className="sidebar-button">
+            <Link to="/" className="sidebar-button">
               <i className="material-icons">receipt_long</i>
               <p>Questboard</p>
             </Link>
@@ -39,10 +39,11 @@ export function Sidebar() {
             </Link>
           </ul>
         </nav>
-        <nav className="sidebar-footer">
+        <nav className="sidebar-info">
           <Link to="/about">About us</Link>
           <Link to="/privacy">Privacy Policy</Link>
         </nav>
+        <div className="sidebar-footer">
         {currentUser && (
           <button className="auth-button" onClick={handleLogout}>
             Logout
@@ -51,6 +52,7 @@ export function Sidebar() {
         <Link to="/settings">
           <i className="material-icons">settings</i>
         </Link>
+        </div>
       </aside>
     </div>
   );
