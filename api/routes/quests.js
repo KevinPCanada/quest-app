@@ -28,6 +28,7 @@ db.connect(err => {
 
 // Define the route to get tasks for a specific user
 
+
 //add a quest. 
 //example query POST http://localhost:8800/api/quests/add-quest
 //body questName: Shopping questDescription: Grocery shopping questLevel: 1
@@ -65,8 +66,6 @@ router.get('/incomplete/:userId', getIncompleteQuests)
 //get a quests's experience by the quest ID
 //example query GET http://localhost:8800/api/quests/exp/7
 router.get('/exp/:questId', getExpByQuest)
-
-
 
 
 
