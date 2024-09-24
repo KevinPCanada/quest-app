@@ -16,9 +16,15 @@ export const AuthContext = createContext();
 // AuthContextProvider component to wrap the app and provide authentication state
 export const AuthContextProvider = ({ children }) => {
   // Initialize currentUser state with data from localStorage, if any
-  const [currentUser, setCurrentUser] = useState(
-    JSON.parse(localStorage.getItem("user") || null)
-  );
+  const [currentUser, setCurrentUser] = useState(() => {
+    const user = localStorage.getItem("user");
+    try {
+      return user ? JSON.parse(user) : null;
+    } catch (e) {
+      console.error("Failed to parse user data from localStorage", e);
+      return null;
+    }
+  });
 
   // Login function to authenticate user
   const login = async (inputs) => {
