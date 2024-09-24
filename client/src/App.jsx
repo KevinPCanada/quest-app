@@ -24,8 +24,8 @@ const Layout = () => {
         <Outlet />
       </div>
     </div>
-  );
-};
+  )
+}
 
 const AuthWrapper = ({ children }) => (
   <AuthContextProvider>{children}</AuthContextProvider>

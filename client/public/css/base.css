@@ -34,6 +34,15 @@
     /* Button Click Effect */
     --button-shadow-click: 0px 2px 4px rgba(0, 0, 0, 0.2);
     --button-transform-click: transform: translateY(2px);
+
+    /* Button Colors */
+    --button-green: #4caf50;
+    --button-green-hover: #388e3c;
+    --button-green-shadow: #2e7d32;
+
+    --button-red: #f44336;
+    --button-red-hover: #d32f2f;
+    --button-red-shadow: #c62828;
 }
 
 a {

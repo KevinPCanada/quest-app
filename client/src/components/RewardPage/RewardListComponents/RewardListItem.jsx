@@ -1,10 +1,18 @@
-import React from "react";
+import React from "react"
+import "./RewardListItem.css"
+import goldCoin from"../../../assets/img/gold-coin.png"
 
-export default function RewardListItem({reward}) {
-    
-    return <>
+export default function RewardListItem({ reward }) {
+  return (
+    <div className="reward-list-item">
+      <div className="reward-name">
+        <img src={goldCoin} ></img>
         <p>{reward}</p>
-        <input type='button' value='modify'/>
-        <input type='button' value='delete'/>
-    </>
+      </div>
+      <div className="reward-actions">
+        <input type="button" value="Modify" className="eightbit-btn modify-btn" />
+        <input type="button" value="Delete" className="eightbit-btn delete-btn" />
+      </div>
+    </div>
+  )
 }
