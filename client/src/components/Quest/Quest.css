@@ -1,0 +1,66 @@
+.quest-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border: 2px solid var(--text-color);
+  margin-bottom: 20px;
+  background-color: var(--background-color);
+  align-items: center;
+}
+
+.quest-container-bottom {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.quest-container-bottom h2 {
+  font-family: var(--primary-font);
+  font-size: 1.5rem;
+  color: var(--text-color);
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--text-color);
+  width: calc(100% - 20px);
+}
+
+.quest-container-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: calc(100% - 20px);
+}
+
+.quest-container-left p {
+  font-family: var(--secondary-font);
+  font-size: .9rem;
+  color: var(--text-color);
+  margin: 10px 0;
+}
+
+/* Buttons? */
+
+.quest-options {
+  display: flex;
+  gap: 20px;
+}
+
+.quest-options a {
+  font-family: var(--primary-font);
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+  padding: 3px 8px;
+  border: var(--button-border);
+  box-shadow: var(--button-shadow);
+  transition: background-color 0.3s ease, box-shadow, transform;
+}
+
+.quest-options a:hover {
+  background-color: var(--button-hover-color);
+}
+
+.quest-options a:active {
+  box-shadow: var(--button-shadow-click);
+  transform: var(--button-transform-click);
+}

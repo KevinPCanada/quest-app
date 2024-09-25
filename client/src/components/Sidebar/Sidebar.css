@@ -6,12 +6,12 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: sticky;
     height: 100vh;
     width: 250px;
     overflow-y: auto;
+    position: sticky;
+    top: 0;
 }
 
 .profile {
@@ -52,9 +52,10 @@
     cursor: pointer;
     font-size: 1.2rem;
     color: var(--background-color);
-    transition: color 0.3s ease;  
-    
-    i, p {
+    transition: color 0.3s ease;
+
+    i,
+    p {
         padding: 20px 0;
     }
 }
@@ -74,22 +75,26 @@
     box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.sidebar-footer {
+.sidebar-info {
+    color: var(--background-color);
     display: flex;
     flex-direction: column;
-    padding: 20px 0;
-    gap: 10px;
-    border-block: 2px solid var(--background-color);
 
-    a {
-        color: var(--text-color-light);
-        transition: color 0.3s ease;
-    }
-
-    a:hover{
-        color: #e0e0e0;
+    a:hover {
         text-decoration: underline;
     }
+}
+
+.sidebar-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    a {
+        display: flex;
+        align-items: center;
+    }
+
 }
 
 .logout {

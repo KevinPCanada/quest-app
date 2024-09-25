@@ -1,0 +1,22 @@
+.questboard-header-button {
+  font-family: var(--primary-font);
+  height: 50px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background-color: var(--secondary-color);
+  padding: 5px 10px;
+  border: var(--button-border);
+  box-shadow: var(--button-shadow);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.questboard-header-button:hover {
+  background-color: var(--button-hover-color);
+}
+
+.questboard-header-button:active {
+  box-shadow: var(--button-shadow-click);
+  transform: var(--button-transform-click);
+}
