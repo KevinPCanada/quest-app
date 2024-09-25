@@ -1,7 +1,104 @@
-section {
+:root {
+    /* Existing color palette */
+    --primary-color: #4a9b48;
+    /* Green */
+    --secondary-color: #d4c5a1;
+    /* Light Parchment */
+    --text-color: #333333;
+    /* Dark Gray */
+    --background-color: #f2f2f2;
+    /* Light Gray */
+    --accent-color: #d4a373;
+    /* Warm Tan */
+    --danger-color: #d9534f;
+    /* Red */
+    --warning-color: #f0ad4e;
+    /* Orange */
+    --primary-font: 'Pixelify sans', sans-serif;
+}
+
+
+.full-quest-section {
     display: flex;
     flex-direction: column;
-    border: 2px black solid;
-    width: 200px;
-    
+    gap: 10px;
+    background-color: var(--background-color);
+    padding: 20px;
+    border: 3px solid var(--primary-color);
+    max-width: 350px;
+    margin: 20px auto;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: var(--primary-font);
+
+    .FullQuestTitleContainer {
+        text-align: center;
+        border-bottom: 3px solid var(--primary-color);
+    }
+
+    .Questname {
+        font-size: 2.5rem;
+    }
+
+    .Questdescription {
+        font-size: 1.5rem;
+    }
+
+    .Questlevel{
+        font-size: 1.3rem;
+    }
+
+    .Questlevel strong {
+        color: var(--primary-color); /* Example: change the color */
+    }
+
+    .full-quest-section p {
+        color: var(--text-color);
+        font-size: 1.1rem;
+        margin-bottom: 20px;
+    }
+
+    .full-quest-section {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+
+    .full-quest-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    /* Button styles for different actions */
+    .full-quest-button {
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .full-quest-button.complete {
+        background-color: var(--primary-color);
+    }
+
+    .full-quest-button.modify {
+        background-color: var(--warning-color);
+    }
+
+    .full-quest-button.delete {
+        background-color: var(--danger-color);
+    }
+
+    .full-quest-button:hover {
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .full-quest-button:active {
+        transform: scale(0.98);
+        /* Scaling button to 0.98 to its original size */
+        box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+        /* Lowering the shadow */
+    }
 }

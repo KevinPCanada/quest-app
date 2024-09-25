@@ -28,7 +28,7 @@ body {
     width: 40%;
     min-width: 320px;
     max-width: 475px;
-    background: ##f2f2f2;
+    background: #f2f2f2;
     position: absolute;
     text-align: center;
     top: 50%;
@@ -68,7 +68,7 @@ body {
         text-transform: uppercase;
         padding: .75em 1em .75em 1.5em;
         box-shadow: inset 0px 1px 1px fadeout(white, 95%);
-        border: 1px solid darken(@#333333, 5%);
+        border: 1px solid darken(#333333, 5%);
         //text-shadow: 0px 1px 1px darken(@grey, 5%);
         margin: 0;
         font-weight: 200;
@@ -113,9 +113,7 @@ body {
         top:1px;
         bottom: 1px;
     }
-    
-            
-
+     
     .createAccount {
         color: lighten(@blue, 10%);
         line-height: .5em;
