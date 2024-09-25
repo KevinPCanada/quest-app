@@ -1,5 +1,6 @@
 import React from 'react';
 import QuestCompleteButton from '../QuestCompleteButton/QuestCompleteButton';
+import EditQuest from '../EditQuest/EditQuest';
 import './Quest.css';
 
 function Quest({ title, description, exp }) {
@@ -11,9 +12,7 @@ function Quest({ title, description, exp }) {
           <p>{description}</p>
           <div className="quest-options">
             <a href="">View Full Quest</a>
-            <a className="quest-edit-button" href="">
-              Edit
-            </a>
+            <EditQuest/>
           </div>
         </div>
       </div>
