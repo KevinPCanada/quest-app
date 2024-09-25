@@ -13,8 +13,7 @@
 }
 
 .questboard-header-button:hover {
-  box-shadow: var(--button-shadow-hover);
-  transform: var(--button-transform-lift);
+  background-color: var(--button-hover-color);
 }
 
 .questboard-header-button:active {
