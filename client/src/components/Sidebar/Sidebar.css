@@ -76,25 +76,16 @@
 }
 
 .sidebar-info {
+    color: var(--background-color);
     display: flex;
     flex-direction: column;
-    padding: 20px 0;
-    gap: 10px;
-    border-block: 2px solid var(--background-color);
-
-    a {
-        color: var(--text-color-light);
-        transition: color 0.3s ease;
-    }
 
     a:hover {
-        color: #e0e0e0;
         text-decoration: underline;
     }
 }
 
 .sidebar-footer {
-    padding: 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;

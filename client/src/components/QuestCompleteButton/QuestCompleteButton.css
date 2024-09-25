@@ -9,8 +9,6 @@
   font-family: var(--primary-font);
   cursor: pointer;
   text-align: center;
-  /* Add these lines for smooth transition */
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 
 .quest-complete-button i {
@@ -26,8 +24,7 @@
 }
 
 .quest-complete-button:hover {
-  box-shadow: var(--button-shadow-hover);
-  transform: var(--button-transform-lift);
+  background-color: var(--button-hover-color);
 }
 
 .quest-complete-button:active {

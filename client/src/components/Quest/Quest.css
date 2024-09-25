@@ -61,6 +61,6 @@
 }
 
 .quest-options a:active {
-  box-shadow: none;
+  box-shadow: var(--button-shadow-click);
   transform: var(--button-transform-click);
 }
