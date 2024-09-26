@@ -2,28 +2,31 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
-    background-color: var(--secondary-color);
-    /* border: 2px solid var(--text-color); */
-    border-radius: 5px;
+    padding: 10px 5px;
     width: 100%;
     max-height: 100vh;
     margin-bottom: 10px;
-    font-family: var(--primary-font);
     flex-direction: row;
+    border-bottom: 1px solid var(--background-color);
   }
   
+  .reward-list-checkbox {
+    display: flex;
+    align-items: center;
+    
+    input {
+      cursor: pointer;
+      height: 20px;
+      width: 20px;
+    }
+  }
   .reward-name {
     display: flex;
     flex-direction: row;
     gap: 10px;
     
-    img {
-        width: 20px;
-    }
     p {
-        font-family: var(--primary-font);
-        font-size: 1.2rem;
+        font-family: var(--secondary-font);
     }
   }
   
@@ -36,36 +39,33 @@
   /* Modify & Delete Button Base */
   .modify-btn, .delete-btn {
     padding: 10px 20px;
-    box-shadow: inset -4px -4px 0px 0px #808080;
     cursor: pointer;
-    font-family: var(--primary-font);
+    font-family: var(--secondary-font);
     color: var(--text-color);
+    border-radius: 10px;
   }
   
 /* Modify Button */
-.modify-btn {
-    background-color: var(--button-green);
-    box-shadow: inset -4px -4px 0px 0px var(--button-green-shadow);
+  .modify-btn {
+    background-color: var(--button-light);
   }
   
   .modify-btn:hover {
-    background-color: var(--button-green-hover);
-    box-shadow: inset -6px -6px 0px 0px var(--button-green-shadow);
+    background-color: var(--button-light-hover);
   }
   
   .modify-btn:active {
-    box-shadow: inset 4px 4px 0px 0px var(--button-green-shadow);
+    box-shadow: inset 4px 4px 0px 0px var(--button-light-shadow);
   }
   
   /* Delete Button */
   .delete-btn {
     background-color: var(--button-red);
-    box-shadow: inset -4px -4px 0px 0px var(--button-red-shadow);
+    color: var(--background-color);
   }
   
   .delete-btn:hover {
     background-color: var(--button-red-hover);
-    box-shadow: inset -6px -6px 0px 0px var(--button-red-shadow);
   }
   
   .delete-btn:active {

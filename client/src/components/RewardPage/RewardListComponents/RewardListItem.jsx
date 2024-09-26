@@ -6,7 +6,9 @@ export default function RewardListItem({ reward }) {
   return (
     <div className="reward-list-item">
       <div className="reward-name">
-        <img src={goldCoin} ></img>
+        <div className="reward-list-checkbox"> 
+          <input type="checkbox" />
+        </div>
         <p>{reward}</p>
       </div>
       <div className="reward-actions">

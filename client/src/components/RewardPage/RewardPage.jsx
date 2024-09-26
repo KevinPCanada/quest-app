@@ -11,43 +11,54 @@ export default function RewardPage() {
     return <>
     <main className="rewardpage">
         <div className="rewardpage-left">
-            <div className="rewardpage-left-container">
-                <h1>【 Rewards 】</h1>
-                <div className="rewardpage-left-form">
-                <img src={treasureChest} ></img>
-                <h2>Set new reward</h2>
-                <form>
-                    <input type="text" />
-                    <input type='submit' value='add new reward'/>
-                </form>
+            <div className="rewardpage-left-top">
+                <div className="rewardpage-header">
+                    <h1>Rewards </h1>
+                    <i className="material-icons">download_done</i>
                 </div>
-                    <span>Set milestone</span>
-                <form>
-                    <p>How often would you like to set your milestone?</p>
-                        <RewardRadio label='Every level'></RewardRadio>
-                        <RewardRadio label='Every 2 levels'></RewardRadio>
-                        <RewardRadio label ='Every 5 levels'></RewardRadio>
-                        <RewardRadio label='Every 10 levels'></RewardRadio>
-                </form>
+                <span>Your list of rewards</span>
+            </div>
+            <div className="rewardpage-left-bottom">
+                <RewardListItem reward="Coffee"></RewardListItem>
+                <RewardListItem reward="Fish and chips"></RewardListItem>
+                <RewardListItem reward="New watch"></RewardListItem>
+                <RewardListItem reward="Coffee"></RewardListItem>
+                <RewardListItem reward="Fish and chips"></RewardListItem>
+                <RewardListItem reward="New watch"></RewardListItem>
+                <RewardListItem reward="Coffee"></RewardListItem>
+                <RewardListItem reward="Fish and chips"></RewardListItem>
+                <RewardListItem reward="New watch"></RewardListItem>
+                <RewardListItem reward="Coffee"></RewardListItem>
+                <RewardListItem reward="Fish and chips"></RewardListItem>
+                <RewardListItem reward="New watch"></RewardListItem>
             </div>
         </div>
+
         <div className="rewardpage-right">
-        <div className="rewardpage-right-banner">
-            <p>Some banner</p>
-        </div>
-                <RewardListItem reward="Coffee"></RewardListItem>
-                <RewardListItem reward="Fish and chips"></RewardListItem>
-                <RewardListItem reward="New watch"></RewardListItem>
-                <RewardListItem reward="Coffee"></RewardListItem>
-                <RewardListItem reward="Fish and chips"></RewardListItem>
-                <RewardListItem reward="New watch"></RewardListItem>
-                <RewardListItem reward="Coffee"></RewardListItem>
-                <RewardListItem reward="Fish and chips"></RewardListItem>
-                <RewardListItem reward="New watch"></RewardListItem>
-                <RewardListItem reward="Coffee"></RewardListItem>
-                <RewardListItem reward="Fish and chips"></RewardListItem>
-                <RewardListItem reward="New watch"></RewardListItem>
+        <div className="rewardpage-right-top">
+            <div className="rewardpage-right-top-header">
+                <h2>Set new reward</h2>
+                <i className="material-icons">add</i>
             </div>
+            <form>
+                <input type="text" placeholder="Enter new reward" />
+                <input type='submit' value='add new reward'/>
+            </form>
+        </div>
+        <div className="rewardpage-right-bottom">
+            <form>
+                <div className="rewardpage-right-bottom-header">
+                    <h2>Set milestone</h2>
+                    <i className="material-icons">vertical_align_bottom</i>
+                </div>
+                <span>How often would you like to set your milestone?</span>
+                    <RewardRadio label='Every level'></RewardRadio>
+                    <RewardRadio label='Every 2 levels'></RewardRadio>
+                    <RewardRadio label ='Every 5 levels'></RewardRadio>
+                    <RewardRadio label='Every 10 levels'></RewardRadio>
+            </form>
+        </div>
+        </div>
     </main>
     </>
     
