@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { AuthContext } from "/src/context/AuthContext";
+import ProfileButton from "../Profile/Profile.jsx";
 import "./Sidebar.css";
 
 export function Sidebar() {
@@ -19,10 +20,7 @@ export function Sidebar() {
   return (
     <div>
       <aside className="sidebar">
-        <Link to="/profile" className="profile">
-          <i className="material-icons">account_circle</i>
-          <h1>{currentUser ? currentUser.username : 'Guest'}</h1>
-        </Link>
+        <ProfileButton />
         <nav className="sidebar-menu">
           <ul>
             <Link to="/rewards" className="sidebar-button">

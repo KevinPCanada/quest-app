@@ -15,7 +15,6 @@ import Sidebar from "./components/Sidebar/Sidebar"
 import Privacy from './pages/Privacy/PrivacyPolicy';
 import AboutUs from './pages/About/AboutUs';
 
-import Profile from './pages/Profile/Profile';
 
 import FullQuest from "./components/Full_Quest/Full_Quest";
 
@@ -60,10 +59,6 @@ const router = createBrowserRouter([
       {
         path: "/rewards",
         element: <Reward />,
-      },
-      {
-        path: "/profile",
-        element: <Profile />,
       },
     ],
   },
