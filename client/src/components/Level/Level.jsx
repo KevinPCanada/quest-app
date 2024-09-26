@@ -17,9 +17,9 @@ export default function LevelBar({exp}) {
     
     <h2>Level {level}</h2>
     
-    <meter min="0" max="100" value={nextExp} ></meter>
+    <div className="levelbar">
+        <div className="level-progress" style={{ width: `${nextExp}%` }}></div>
+    </div>
     
     </>
-
-
 }
