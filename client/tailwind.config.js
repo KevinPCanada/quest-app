@@ -21,6 +21,7 @@ export default {
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
+          progress: "#4a9b48", // Add the custom progress color here
         },
         secondary: {
           DEFAULT: "var(--secondary-color)",

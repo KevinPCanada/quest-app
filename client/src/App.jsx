@@ -14,6 +14,7 @@ import NewQuest from "./components/NewQuest/NewQuest";
 import Sidebar from "./components/Sidebar/Sidebar"
 import Privacy from './pages/Privacy/PrivacyPolicy';
 import AboutUs from './pages/About/AboutUs';
+import Profile from './pages/Profile/Profile';
 
 
 const Layout = () => {
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
       {
         path: "/rewards",
         element: <Reward />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },
