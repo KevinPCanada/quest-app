@@ -37,11 +37,9 @@
 
 .sidebar-menu {
     flex-grow: 1;
-    margin-top: 20px;
+    margin-top: 15px;
 
-    ul {
-        list-style: none;
-    }
+ 
 }
 
 .sidebar-button {
