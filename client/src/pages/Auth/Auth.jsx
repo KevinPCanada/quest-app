@@ -21,7 +21,7 @@ function Auth() {
             checked={!isLogin}
             onChange={handleToggle}
           />
-          <span className="slider round"></span>
+          <span className="slider"></span>
         </label>
         <span className={`toggle-label ${!isLogin ? 'active' : ''}`}>Sign Up</span>
       </div>
