@@ -19,7 +19,6 @@
     --accent-color: #d4a373; /* Warm Tan */
 
     /* Fonts */
-
     --primary-font: 'Pixelify Sans', sans-serif;
     --secondary-font: "Roboto", sans-serif;
 
@@ -36,9 +35,9 @@
     --button-transform-click: transform: translateY(2px);
 
     /* Button Colors */
-    --button-green: #4caf50;
-    --button-green-hover: #388e3c;
-    --button-green-shadow: #2e7d32;
+    --button-light: #f2f2f2;
+    --button-light-hover: #e0e0e0;
+    --button-light-shadow: #cccccc;    
 
     --button-red: #f44336;
     --button-red-hover: #d32f2f;
