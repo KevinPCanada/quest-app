@@ -1,5 +1,3 @@
-// Home.jsx
-
 import React, { useEffect, useState } from 'react';
 
 import Quest from '../../components/Quest/Quest';
@@ -10,9 +8,9 @@ import './Home.css';
 function Home() {
 
   const [quests, setQuests] = useState([]);
-  const [questExp, setQuestExp] = useState([])
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+ 
 
 
   useEffect(() => {
@@ -32,8 +30,18 @@ function Home() {
         }
 
         const data = await response.json();
+        const questWithExp = await Promise.all(
+          data.map(async (quest) => {
 
-        setQuests(data);
+            const exp = await fetchExp(quest.id)
+
+
+            return { ...quest, exp }
+          })
+        )
+
+        setQuests(questWithExp);
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -42,8 +50,41 @@ function Home() {
     };
 
     fetchQuests();
-    // fetchExp(quest.id)
+
   }, []);
+
+  async function fetchExp(quest) {
+    try {
+      
+      
+      const token = localStorage.getItem('token');
+  
+      const response = await fetch(`http://localhost:8800/api/quests/exp/${quest}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+      if (!response.ok) {
+        throw new Error(`Failed to fetch exp for quest ${questId}`);
+      }
+  
+      const data = await response.json();
+      
+      
+      
+      return data[0].exp_reward
+      
+  
+    } catch (error) {
+      console.error(error.message);
+  
+  
+  
+    }
+  }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
@@ -59,7 +100,7 @@ function Home() {
             key={index}
             title={quest.quest_name}
             description={quest.quest_description}
-            exp
+            exp={quest.exp}
           />
         ))
       ) : (
@@ -67,33 +108,7 @@ function Home() {
       )}
     </section>
   );
+  
 }
 
-// async function fetchExp(quest) {
-//   try {
-//     const token = localStorage.getItem('token');
-//     console.log('Token:', token);
-
-//     const response = await fetch(`http://localhost:8800/api/quests/exp/${quest}`, {
-//       method: 'GET',
-//       credentials: 'include',
-//       headers: {
-//         'Authorization': `Bearer ${token}`,
-//         'Content-Type': 'application/json'
-//       }
-//     });
-
-//     if (!response.ok) {
-//       throw new Error('Failed to get EXP');
-//     }
-
-//     const data = await response.json();
-//     setQuestExp(data);
-
-//   } catch (error) {
-//     console.error(error.message);
-//   }
-// }
-
 export default Home;
-

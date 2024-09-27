@@ -11,7 +11,7 @@ export default function LevelBar({exp}) {
     const nextExp = exp % 100
     const level = Math.floor(exp / 100)
 
-    console.log(nextExp)
+    
 
     return <>
     
