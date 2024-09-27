@@ -69,10 +69,11 @@ export const modifyQuest = async (req, res) => {
 
 export const displayAllQuests = async (req, res) => {
     try {
-        const userId = req.user.id; // The user ID from the decoded token
+        const userId = req.user.id;
 
         const query = `
             SELECT 
+                quests.id,
                 quests.quest_name, 
                 quests.quest_description, 
                 difficulty.difficulty_name 
@@ -99,6 +100,7 @@ export const getQuestByID = async (req, res) => {
 
         const query = `
             SELECT 
+                quests.id
                 quests.quest_name, 
                 quests.quest_description, 
                 difficulty.difficulty_name 

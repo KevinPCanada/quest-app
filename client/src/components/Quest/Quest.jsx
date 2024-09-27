@@ -4,6 +4,7 @@ import EditQuest from '../EditQuest/EditQuest';
 import './Quest.css';
 
 function Quest({ title, description, exp }) {
+  
   return (
     <article className="quest-container">
       <div className="quest-container-bottom">
