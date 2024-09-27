@@ -32,6 +32,7 @@
 
 .rewardpage-header, .rewardpage-right-top-header,
 .rewardpage-right-bottom-header {
+    font-family: var(--primary-font);
     display: flex;
     align-items: center;
     gap: 5px;
@@ -70,18 +71,27 @@
         margin-bottom: 10px;
         font-family: var(--secondary-font);
         border-radius: 5px;
-        padding: 2px;
+        padding: 10px;
     }
 
     input[type="submit"] {
         cursor: pointer;
         width: 160px;
-        background-color: black;
         padding: 5px;
         color: var(--background-color);
         text-transform: capitalize;
-        border-radius: 5px;
+        background-color: var( --text-color-light);
+        font-family: var(--primary-font);
+        border: var(--button-border);
+        box-shadow: var(--button-shadow);
+        font-size: 1rem;
+        cursor: pointer;
     }
+      
+      input[type="submit"]:active {
+        box-shadow: var(--button-shadow-click);
+        transform: var(--button-transform-click);
+      }
 }
 
 .rewardpage-right-top-header {
