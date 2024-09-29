@@ -1,6 +1,5 @@
 import React from "react"
 import "./RewardListItem.css"
-import goldCoin from"../../../assets/img/gold-coin.png"
 
 export default function RewardListItem({ reward }) {
   return (
