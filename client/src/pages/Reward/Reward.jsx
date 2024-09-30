@@ -10,7 +10,9 @@ import "./Reward.css";
 export default function RewardPage() {
   const { currentUser, fetchRewards } = useContext(AuthContext);
   const [rewards, setRewards] = useState([]);
+  const [newReward, setNewReward] = useState("");
 
+  //   Display the rewards.
   useEffect(() => {
     const getRewards = async () => {
       try {
@@ -27,6 +29,62 @@ export default function RewardPage() {
     }
   }, [currentUser, fetchRewards]);
 
+  //   Create the reward
+
+  const handleAddReward = async (e) => {
+    e.preventDefault();
+    if (!newReward.trim()) return; // Don't submit if the input is empty
+
+    try {
+      const response = await fetch("http://localhost:8800/api/rewards/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include", // to include the cookie
+        body: JSON.stringify({ description: newReward }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to add reward");
+      }
+
+      // Refresh the rewards list
+      const updatedRewards = await fetchRewards();
+      setRewards(updatedRewards);
+
+      // Clear the input field
+      setNewReward("");
+    } catch (error) {
+      console.error("Error adding reward:", error);
+      // Change to show the error to the the user later
+    }
+  };
+
+  //   Delete the reward
+
+  const handleDeleteReward = async (rewardId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8800/api/rewards/delete/${rewardId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete reward");
+      }
+
+      // Remove the deleted reward from the state
+      setRewards(rewards.filter((reward) => reward.id !== rewardId));
+    } catch (error) {
+      console.error("Error deleting reward:", error);
+      // You might want to show an error message to the user here
+    }
+  };
+
   return (
     <>
       <main className="rewardpage">
@@ -41,7 +99,11 @@ export default function RewardPage() {
           <div className="rewardpage-left-bottom">
             {rewards.length > 0 ? (
               rewards.map((reward) => (
-                <RewardListItem key={reward.id} reward={reward.description} />
+                <RewardListItem
+                  key={reward.id}
+                  reward={reward}
+                  onDelete={handleDeleteReward}
+                />
               ))
             ) : (
               <p>No rewards found. Add some rewards to get started!</p>
@@ -55,8 +117,13 @@ export default function RewardPage() {
               <h2>Set new reward</h2>
               <i className="material-icons">add</i>
             </div>
-            <form>
-              <input type="text" placeholder="Enter new reward" />
+            <form onSubmit={handleAddReward}>
+              <input
+                type="text"
+                placeholder="Enter new reward"
+                value={newReward}
+                onChange={(e) => setNewReward(e.target.value)}
+              />
               <input type="submit" value="add new reward" />
             </form>
           </div>

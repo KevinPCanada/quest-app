@@ -13,6 +13,6 @@ router.get('/:id', verifyToken, getReward);
 router.get('/', verifyToken, getRewards);
 router.put('/claim/:id', verifyToken, claimReward);
 router.put('/edit/:id', verifyToken, upload.none(), editReward);
-router.delete('/:id', verifyToken, deleteReward);
+router.delete('/delete/:id', verifyToken, deleteReward);
 
 export default router;
