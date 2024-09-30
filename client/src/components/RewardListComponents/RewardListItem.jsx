@@ -6,7 +6,6 @@ export default function RewardListItem({ reward }) {
   return (
     <div className="reward-list-item">
       <div className="reward-name">
-
         <p>{reward}</p>
       </div>
       <div className="reward-actions">

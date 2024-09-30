@@ -89,9 +89,26 @@ export const AuthContextProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
 
+  // New Context To Fetch Rewards
+const fetchRewards = async () => {
+  try {
+    const res = await fetch("http://localhost:8800/api/rewards", {
+      method: "GET",
+      credentials: "include", 
+    });
+    if (!res.ok) {
+      throw new Error("Failed to fetch rewards");
+    }
+    return await res.json();
+  } catch (err) {
+    console.error("Error fetching rewards:", err);
+    throw err;
+  }
+};
+
   // Provide AuthContext to children components
   return (
-    <AuthContext.Provider value={{ currentUser, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, login, logout, fetchRewards  }}>
       {children}
     </AuthContext.Provider>
   );
