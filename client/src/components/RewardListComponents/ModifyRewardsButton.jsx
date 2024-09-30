@@ -32,7 +32,7 @@ export default function ModifyRewardButton({ reward, onModify }) {
           Modify
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] rounded-none ">
         <DialogHeader>
           <DialogTitle className="font-pixelify font-thin">Edit Reward</DialogTitle>
           <DialogDescription>
