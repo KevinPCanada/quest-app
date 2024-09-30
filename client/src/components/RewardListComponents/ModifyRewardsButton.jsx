@@ -50,6 +50,7 @@ export default function ModifyRewardButton({ reward, onModify }) {
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
                 className="col-span-3"
+                autoComplete="off"  
               />
             </div>
           </div>

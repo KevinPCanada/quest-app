@@ -85,6 +85,36 @@ export default function RewardPage() {
     }
   };
 
+//   Edit the reward
+
+const handleEditReward = async (rewardId, newDescription) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8800/api/rewards/edit/${rewardId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ description: newDescription }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to edit reward");
+      }
+
+      // Update the reward in the local state
+      setRewards(rewards.map(reward => 
+        reward.id === rewardId ? {...reward, description: newDescription} : reward
+      ));
+    } catch (error) {
+      console.error("Error editing reward:", error);
+      // You might want to show an error message to the user here
+    }
+  };
+
   return (
     <>
       <main className="rewardpage">
@@ -103,6 +133,7 @@ export default function RewardPage() {
                   key={reward.id}
                   reward={reward}
                   onDelete={handleDeleteReward}
+                  onEdit={handleEditReward}
                 />
               ))
             ) : (
