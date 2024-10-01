@@ -1,27 +1,4 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-:root {
-    /* Color Palette */
-    --primary-color: #4a9b48;
-    /* Green */
-    --secondary-color: #d4c5a1;
-    /* Light Parchment */
-    --text-color: #333333;
-    /* Dark Gray */
-    --background-color: #f2f2f2;
-    /* Light Gray */
-    --accent-color: #d4a373;
-    /* Warm Tan */
-
-    /* Fonts */
-    --primary-font: 'Pixelify sans', sans-serif;
-    --secondary-font: 'Roboto', sans-serif;
-}
-
+/* Scoping all the styles to the Auth component */
 .Auth {
     display: flex;
     flex-direction: column;
@@ -31,11 +8,9 @@
     padding: 10px;
     gap: 5px;
     font-family: var(--primary-font);
-    /* Retro font for consistency */
     width: 100%;
     max-width: 320px;
     height: 325px;
-    /* Fixed height to maintain consistent size */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -43,12 +18,9 @@
     text-align: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     border: solid 3px var(--primary-color);
-    /* Thick border for pixelated look */
-
-}
-
-
-.toggle-container {
+  }
+  
+  .Auth .toggle-container {
     position: sticky;
     top: 0;
     display: flex;
@@ -60,24 +32,24 @@
     padding: 10px 0;
     z-index: 10;
     border-bottom: 2px solid var(--primary-color);
-}
-
-.switch {
+  }
+  
+  .Auth .switch {
     position: relative;
     display: inline-block;
     width: 60px;
     height: 37px;
     margin: 0 10px;
     border: 2px solid var(--primary-color);
-}
-
-.switch input {
+  }
+  
+  .Auth .switch input {
     opacity: 0;
     width: 0;
     height: 0;
-}
-
-.slider {
+  }
+  
+  .Auth .slider {
     position: absolute;
     cursor: pointer;
     top: 0;
@@ -86,9 +58,9 @@
     bottom: 0;
     background-color: var(--primary-color);
     transition: background-color 0.4s;
-}
-
-.slider:before {
+  }
+  
+  .Auth .slider:before {
     position: absolute;
     content: "";
     height: 26px;
@@ -97,90 +69,90 @@
     bottom: 4px;
     background-color: var(--background-color);
     transition: transform 0.4s;
-}
-
-input:checked+.slider {
+  }
+  
+  .Auth input:checked + .slider {
     background-color: var(--secondary-color);
-
-}
-
-input:checked+.slider:before {
+  }
+  
+  .Auth input:checked + .slider:before {
     transform: translateX(24px);
-}
-
-.toggle-label {
+  }
+  
+  .Auth .toggle-label {
     font-size: 1.2rem;
     font-weight: bold;
     color: var(--text-color);
     transition: color 0.2s ease;
-}
-
-.toggle-label.active {
+  }
+  
+  .Auth .toggle-label.active {
     color: var(--primary-color);
-}
-
-.form-container {
+  }
+  
+  .Auth .form-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     width: 100%;
     max-width: 400px;
-    overflow-y: auto;
+    /* overflow-y: auto; */
     flex-grow: 1;
     padding: 15px;
-    gap: 10px;
-}
-
-.form {
+    /* gap: 10px; */
+  }
+  
+  .Auth .form {
     opacity: 0;
     transform: translateY(10px);
     animation: fadeInUp 0.3s forwards ease-in-out;
-}
-
-@keyframes fadeInUp {
+  }
+  
+  @keyframes fadeInUp {
     from {
-        opacity: 0;
-        transform: translateY(20px);
+      opacity: 0;
+      transform: translateY(20px);
     }
-
+  
     to {
-        opacity: 1;
-        transform: translateY(0);
+      opacity: 1;
+      transform: translateY(0);
     }
-}
-
-form {
-    margin-top: 5px;
+  }
+  
+  .Auth form {
+    /* margin-top: 5px; */
     display: flex;
     flex-direction: column;
+    /* gap: 5px; */
+  }
+  
+  .loginFormText{
+    font-size: 1.3rem;
+  }
+
+  .signupFormText{
+    font-size: 1.3rem;
+  }
+  /* Input styling scoped to .Auth */
+  .Auth input {
+    display: flex;
+    flex-direction: column;
+    margin: 8px 0;
     gap: 5px;
-}
-
-input {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 0;
-    gap: 10px;
-    padding: 20px 15px;
-    /* Added more padding for the placeholder to move right */
+    /* padding: 20px 15px; */
     border: none;
-    /* Removed border */
     border-radius: 0px;
     font-size: 1rem;
     background-color: var(--background-color);
-    /* Optional: Set input background color */
-    /* box-shadow: 0 0 3px rgba(0, 0, 0, 0.1); Optional: Light shadow for depth */
-}
-
-input::placeholder {
+  }
+  
+  .Auth input::placeholder {
     color: var(--text-color);
-    /* Optional: Change the color of the placeholder text */
     padding-left: 20px;
-    /* Additional padding to move placeholder slightly more to the right */
-}
-
-
-button.btn {
+  }
+  
+  .Auth button.btn {
     background-color: var(--primary-color);
     color: white;
     border: solid 2px black;
@@ -189,10 +161,10 @@ button.btn {
     cursor: pointer;
     transition: background-color 0.3s;
     margin-top: 10px;
-    /* Add some space between button and input fields */
     margin-bottom: 10px;
-}
-
-button.btn:hover {
+  }
+  
+  .Auth button.btn:hover {
     box-shadow: 0 0 3px 2px var(--primary-color), 0 4px 15px rgba(0, 0, 0, 0.25);
-}
+  }
+  
