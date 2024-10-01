@@ -13,23 +13,41 @@ export default function RewardPage() {
   const [rewards, setRewards] = useState([]);
   const [newReward, setNewReward] = useState("");
   const [selectedMilestone, setSelectedMilestone] = useState("1");
+  const [isLoading, setIsLoading] = useState(true);
 
-  //   Display the rewards.
+  //   Display the rewards and correct Milestone Settings.
   useEffect(() => {
-    const getRewards = async () => {
+    const getRewardsAndMilestone = async () => {
+      setIsLoading(true);
       try {
         const fetchedRewards = await fetchRewards();
         setRewards(fetchedRewards);
+
+        // Fetch the user's current milestone setting
+        const response = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}/milestone`, {
+          method: 'GET',
+          credentials: 'include',
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch milestone');
+        }
+
+        const data = await response.json();
+        setSelectedMilestone(data.milestone.toString());
       } catch (error) {
-        console.error("Failed to fetch rewards:", error);
+        console.error("Failed to fetch rewards or milestone:", error);
         // Handle error (e.g., show error message to user)
+      } finally {
+        setIsLoading(false);
       }
     };
 
     if (currentUser) {
-      getRewards();
+      getRewardsAndMilestone();
     }
   }, [currentUser, fetchRewards]);
+
 
   //   Create the reward
 
@@ -121,7 +139,7 @@ export default function RewardPage() {
     }
   };
 
-  // Set the milestone
+  // Milestones
 
   // Update the Milestone state
 
@@ -209,36 +227,41 @@ export default function RewardPage() {
                 <i className="material-icons">vertical_align_bottom</i>
               </div>
               <span>How often would you like to set your milestone?</span>
-              <RewardRadio
-                name="milestone"
-                value="1"
-                label="Every level"
-                checked={selectedMilestone === "1"}
-                onChange={handleMilestoneChange}
-              />
-              <RewardRadio
-                name="milestone"
-                value="2"
-                label="Every 2 levels"
-                checked={selectedMilestone === "2"}
-                onChange={handleMilestoneChange}
-              />
-              <RewardRadio
-                name="milestone"
-                value="5"
-                label="Every 5 levels"
-                checked={selectedMilestone === "5"}
-                onChange={handleMilestoneChange}
-              />
-              <RewardRadio
-                name="milestone"
-                value="10"
-                label="Every 10 levels"
-                checked={selectedMilestone === "10"}
-                onChange={handleMilestoneChange}
-              />
-              <MilestoneButton />
-              {/* <input type="submit" value="set milestone" /> */}
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : (
+                <>
+                  <RewardRadio
+                    name="milestone"
+                    value="1"
+                    label="Every level"
+                    checked={selectedMilestone === "1"}
+                    onChange={handleMilestoneChange}
+                  />
+                  <RewardRadio
+                    name="milestone"
+                    value="2"
+                    label="Every 2 levels"
+                    checked={selectedMilestone === "2"}
+                    onChange={handleMilestoneChange}
+                  />
+                  <RewardRadio
+                    name="milestone"
+                    value="5"
+                    label="Every 5 levels"
+                    checked={selectedMilestone === "5"}
+                    onChange={handleMilestoneChange}
+                  />
+                  <RewardRadio
+                    name="milestone"
+                    value="10"
+                    label="Every 10 levels"
+                    checked={selectedMilestone === "10"}
+                    onChange={handleMilestoneChange}
+                  />
+                  <MilestoneButton />
+                </>
+              )}
             </form>
           </div>
         </div>
