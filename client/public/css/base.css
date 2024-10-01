@@ -17,6 +17,7 @@
     --text-color-light: #444444; /* Gray */
     --background-color: #f2f2f2; /* Light Gray */
     --accent-color: #d4a373; /* Warm Tan */
+    --link-color: #1f7cb8;
 
     /* Fonts */
     --primary-font: 'Pixelify Sans', sans-serif;
