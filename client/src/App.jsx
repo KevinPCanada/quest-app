@@ -14,6 +14,7 @@ import NewQuest from "./components/NewQuest/NewQuest";
 import Sidebar from "./components/Sidebar/Sidebar"
 import Privacy from './pages/Privacy/PrivacyPolicy';
 import AboutUs from './pages/About/AboutUs';
+import { Toaster } from "./components/ui/toaster"
 
 
 import FullQuest from "./components/Full_Quest/Full_Quest";
@@ -24,9 +25,11 @@ const Layout = () => {
   return (
     <div className="layout">
       <Sidebar />
+      <Toaster /> 
       <div className="layout-outlet">
         <Outlet />
       </div>
+      
     </div>
   )
 }
