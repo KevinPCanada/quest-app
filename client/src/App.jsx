@@ -25,7 +25,6 @@ const Layout = () => {
   return (
     <div className="layout">
       <Sidebar />
-      <Toaster /> 
       <div className="layout-outlet">
         <Outlet />
       </div>
