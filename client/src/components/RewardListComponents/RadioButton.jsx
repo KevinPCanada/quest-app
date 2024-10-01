@@ -6,6 +6,7 @@ export default function RewardRadio({ label, value, checked, onChange }) {
 
   return (
     <div className="reward-radio">
+      <label htmlFor={id}>{label}</label>
       <input 
         id={id} 
         name="milestone" 
@@ -14,7 +15,6 @@ export default function RewardRadio({ label, value, checked, onChange }) {
         checked={checked}
         onChange={onChange}
       />
-      <label htmlFor={id}>{label}</label>
     </div>
   )
 }
