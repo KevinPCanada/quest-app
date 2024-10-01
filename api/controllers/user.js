@@ -143,16 +143,24 @@ export const updateUserMilestone = async (req, res) => {
 export const getUserClassInfo = async (req, res) => {
   try {
     const userId = req.params.id;
+    
+    // Check if the requested user ID matches the authenticated user's ID
+    if (userId != req.user.id) {
+      return res.status(403).json({ message: "You don't have permission to access this information" });
+    }
+
     const [rows] = await pool.query(
-      `SELECT c.class_id, c.class_name, c.class_avatar 
-       FROM users u 
-       JOIN classes c ON u.class_id = c.class_id 
+      `SELECT c.class_id, c.class_name, c.class_avatar
+       FROM users u
+       JOIN classes c ON u.class_id = c.class_id
        WHERE u.user_id = ?`,
       [userId]
     );
+
     if (rows.length === 0) {
       return res.status(404).json({ message: "User or class not found" });
     }
+
     res.status(200).json(rows[0]);
   } catch (error) {
     console.error('Error fetching user class info:', error);

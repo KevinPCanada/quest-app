@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.js';
 import questRoutes from './routes/quests.js'
 import rewardsRoutes from './routes/rewards.js'
 import userRoutes from './routes/user.js'
+import classRoutes from './routes/class.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -35,6 +36,7 @@ app.use("/api/auth", authRoutes);
 app.use('/api/quests', questRoutes);
 app.use('/api/rewards', rewardsRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/classes', classRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
