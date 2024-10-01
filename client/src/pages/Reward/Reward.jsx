@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import RewardRadio from "../../components/RewardListComponents/RadioButton";
 import RewardListItem from "../../components/RewardListComponents/RewardListItem";
+import MilestoneButton from "../../components/RewardListComponents/MilestoneButton";
 import { AuthContext } from "../../context/AuthContext";
 import "./Reward.css";
 
@@ -11,6 +12,7 @@ export default function RewardPage() {
   const { currentUser, fetchRewards } = useContext(AuthContext);
   const [rewards, setRewards] = useState([]);
   const [newReward, setNewReward] = useState("");
+  const [selectedMilestone, setSelectedMilestone] = useState("1");
 
   //   Display the rewards.
   useEffect(() => {
@@ -85,9 +87,9 @@ export default function RewardPage() {
     }
   };
 
-//   Edit the reward
+  //   Edit the reward
 
-const handleEditReward = async (rewardId, newDescription) => {
+  const handleEditReward = async (rewardId, newDescription) => {
     try {
       const response = await fetch(
         `http://localhost:8800/api/rewards/edit/${rewardId}`,
@@ -106,12 +108,54 @@ const handleEditReward = async (rewardId, newDescription) => {
       }
 
       // Update the reward in the local state
-      setRewards(rewards.map(reward => 
-        reward.id === rewardId ? {...reward, description: newDescription} : reward
-      ));
+      setRewards(
+        rewards.map((reward) =>
+          reward.id === rewardId
+            ? { ...reward, description: newDescription }
+            : reward
+        )
+      );
     } catch (error) {
       console.error("Error editing reward:", error);
       // You might want to show an error message to the user here
+    }
+  };
+
+  // Set the milestone
+
+  // Update the Milestone state
+
+  const handleMilestoneChange = (event) => {
+    setSelectedMilestone(event.target.value);
+  };
+
+  // Hande the milestone submit
+
+  const handleMilestoneSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}/milestone`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ milestone: selectedMilestone }),
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update milestone');
+      }
+  
+      const data = await response.json();
+      console.log(data.message);
+      // I will show a success message to the user here later
+    } catch (error) {
+      console.error('Error updating milestone:', error);
+      console.error('Response status:', error.response?.status);
+      console.error('Response text:', await error.response?.text());
+      // Handle the error (e.g., show an error message to the user)
     }
   };
 
@@ -159,16 +203,42 @@ const handleEditReward = async (rewardId, newDescription) => {
             </form>
           </div>
           <div className="rewardpage-right-bottom">
-            <form>
+            <form onSubmit={handleMilestoneSubmit}>
               <div className="rewardpage-right-bottom-header">
                 <h2>Set milestone</h2>
                 <i className="material-icons">vertical_align_bottom</i>
               </div>
               <span>How often would you like to set your milestone?</span>
-              <RewardRadio label="Every level"></RewardRadio>
-              <RewardRadio label="Every 2 levels"></RewardRadio>
-              <RewardRadio label="Every 5 levels"></RewardRadio>
-              <RewardRadio label="Every 10 levels"></RewardRadio>
+              <RewardRadio
+                name="milestone"
+                value="1"
+                label="Every level"
+                checked={selectedMilestone === "1"}
+                onChange={handleMilestoneChange}
+              />
+              <RewardRadio
+                name="milestone"
+                value="2"
+                label="Every 2 levels"
+                checked={selectedMilestone === "2"}
+                onChange={handleMilestoneChange}
+              />
+              <RewardRadio
+                name="milestone"
+                value="5"
+                label="Every 5 levels"
+                checked={selectedMilestone === "5"}
+                onChange={handleMilestoneChange}
+              />
+              <RewardRadio
+                name="milestone"
+                value="10"
+                label="Every 10 levels"
+                checked={selectedMilestone === "10"}
+                onChange={handleMilestoneChange}
+              />
+              <MilestoneButton />
+              {/* <input type="submit" value="set milestone" /> */}
             </form>
           </div>
         </div>
