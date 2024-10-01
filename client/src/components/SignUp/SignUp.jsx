@@ -43,7 +43,7 @@ function SignUp({ onToggle }) {
 
   return (
     <div className="form">
-      <h2>Create a new account</h2>
+      <p className="signupFormText">Create a new account</p>
       <form onSubmit={handleSubmit}>
         <input
           type="email"
@@ -72,7 +72,7 @@ function SignUp({ onToggle }) {
         {err && <p style={{ color: "red" }}>{err}</p>}
         <button type="submit" className="btn">Sign Up</button>
       </form>
-      <p>Already a member? <button onClick={onToggle}>Log in</button></p>
+      {/* <p>Already a member? <button onClick={onToggle}>Log in</button></p> */}
     </div>
   );
 }
