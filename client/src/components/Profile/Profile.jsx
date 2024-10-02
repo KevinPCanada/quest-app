@@ -6,11 +6,13 @@ import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
 
 function ProfileButton() {
+  // State variables to store user data, class data, experience data, and any errors
   const [userData, setUserData] = useState(null);
   const [classData, setClassData] = useState(null);
   const [experienceData, setExperienceData] = useState(null);
   const [error, setError] = useState(null);
 
+  // useEffect hook to fetch user, class, and experience data when the component mounts
   useEffect(() => {
     async function fetchData() {
       try {
@@ -23,7 +25,7 @@ function ProfileButton() {
         const parsedUserData = JSON.parse(userDataString);
         setUserData(parsedUserData);
 
-        // Fetch class data
+        // Fetch class data from the server
         const classResponse = await fetch(
           `http://localhost:8800/api/user/${parsedUserData.user_id}/class`,
           {
@@ -38,7 +40,7 @@ function ProfileButton() {
         const classData = await classResponse.json();
         setClassData(classData);
 
-        // Fetch experience data
+        // Fetch experience data from the server
         const expResponse = await fetch(
           `http://localhost:8800/api/user/${parsedUserData.user_id}/exp`,
           {
@@ -62,30 +64,30 @@ function ProfileButton() {
     fetchData();
   }, []);
 
+  // Display error message if there's an error
   if (error) {
     return <div>Error: {error}</div>;
   }
 
+  // Display loading message while data is being fetched
   if (!userData || !classData || !experienceData) {
     return <div>Loading...</div>;
   }
 
+  // Calculate user's level and experience to next level
   const level = Math.floor(experienceData.experience / 100) + 1;
   const expToNextLevel = experienceData.experience % 100;
 
   // Construct the full URL for the class avatar
   const avatarUrl = `http://localhost:8800${classData.class_avatar}`;
 
+  // Render the profile button and popover
   return (
     <Popover>
       <PopoverTrigger asChild>
-
-        <Button className="flex items-center justify-start bg-transparent hover:bg-transparent active:bg-transparent focus:ring-0 focus:ring-offset-0 px-0 font-thin">
-=======
         <Button
           className="profile-avatar flex items-center justify-start bg-transparent hover:bg-transparent active:bg-transparent focus:ring-0 focus:ring-offset-0 px-0 font-thin"
         >
-
           <Avatar className="h-8 w-8 mr-2">
             <AvatarImage 
               src={avatarUrl} 
@@ -106,6 +108,7 @@ function ProfileButton() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* User avatar and class information */}
             <div className="flex items-center space-x-4">
               <Avatar className="h-16 w-16">
                 <AvatarImage
@@ -125,6 +128,7 @@ function ProfileButton() {
                 </p>
               </div>
             </div>
+            {/* User level and experience information */}
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Level:</span>
@@ -139,6 +143,7 @@ function ProfileButton() {
                 {expToNextLevel}/100 XP to next level
               </p>
             </div>
+            {/* User email information */}
             <div className="text-sm">
               <span className="font-medium">Email: </span>
               <span>{userData.email}</span>
