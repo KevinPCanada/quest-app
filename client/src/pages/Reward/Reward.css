@@ -21,7 +21,7 @@
     gap: 2px;
 
     h1 {
-        font-size: 1.5rem; 
+        font-size: 1.5rem;
         font-weight: 420;
     }
 
@@ -30,7 +30,8 @@
     }
 }
 
-.rewardpage-header, .rewardpage-right-top-header,
+.rewardpage-header,
+.rewardpage-right-top-header,
 .rewardpage-right-bottom-header {
     font-family: var(--primary-font);
     display: flex;
@@ -60,9 +61,15 @@
     padding: 20px;
 
     h2 {
-        font-size: 1.5rem; 
+        font-size: 1.5rem;
         font-weight: 420;
         text-transform: capitalize;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
 
     input[type="text"] {
@@ -80,18 +87,18 @@
         padding: 5px;
         color: var(--background-color);
         text-transform: capitalize;
-        background-color: var( --text-color-light);
+        background-color: var(--text-color-light);
         font-family: var(--primary-font);
         border: var(--button-border);
         box-shadow: var(--button-shadow);
         font-size: 1rem;
         cursor: pointer;
     }
-      
-      input[type="submit"]:active {
+
+    input[type="submit"]:active {
         box-shadow: var(--button-shadow-click);
         transform: var(--button-transform-click);
-      }
+    }
 }
 
 .rewardpage-right-top-header {
@@ -107,7 +114,7 @@
     border-radius: 10px;
 
     h2 {
-        font-size: 1.5rem; 
+        font-size: 1.5rem;
         font-weight: 420;
         text-transform: capitalize;
     }
@@ -119,7 +126,17 @@
 
 }
 
-.rewardpage-right-top-header, .rewardpage-right-bottom-header {
+.rewardpage-right-top-header,
+.rewardpage-right-bottom-header {
     display: flex;
     align-items: center;
 }
+
+.milestone-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+
+}
+

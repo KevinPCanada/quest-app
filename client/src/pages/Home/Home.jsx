@@ -42,6 +42,8 @@ function Home() {
 
         setQuests(questWithExp);
 
+        console.log(quests)
+
       } catch (error) {
         setError(error.message);
       } finally {
@@ -68,14 +70,14 @@ function Home() {
         }
       })
       if (!response.ok) {
-        throw new Error(`Failed to fetch exp for quest ${questId}`);
+        throw new Error(`Failed to fetch exp for quest`);
       }
   
-      const data = await response.json();
+      const expData = await response.json();
       
       
       
-      return data[0].exp_reward
+      return expData[0].exp_reward
       
   
     } catch (error) {
@@ -96,7 +98,9 @@ function Home() {
       {quests.length > 0 ? (
         quests.map((quest, index) => (
 
-          <Quest
+          
+
+          <Quest id={quest.id}
             key={index}
             title={quest.quest_name}
             description={quest.quest_description}

@@ -35,6 +35,7 @@ import FullQuest from '../Full_Quest/Full_Quest';
 import Modal from '../Modal/Modal';
 import './Quest.css';
 
+
 function Quest({ title, description, exp }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -46,6 +47,10 @@ function Quest({ title, description, exp }) {
     setIsModalOpen(false);
   };
 
+
+function Quest({ id, title, description, exp }) {
+  
+
   return (
     <article className="quest-container">
       <div className="quest-container-bottom">
@@ -53,9 +58,11 @@ function Quest({ title, description, exp }) {
         <div className="quest-container-left">
           <p>{description}</p>
           <div className="quest-options">
+
             {/* Replace the <a> tag with a button to open the modal */}
             <button onClick={handleOpenModal}>View Full Quest</button>
-            <EditQuest />
+            <EditQuest thisQuestId={id} />
+
           </div>
         </div>
       </div>
