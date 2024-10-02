@@ -37,9 +37,7 @@
 
 .sidebar-menu {
     flex-grow: 1;
-    margin-top: 15px;
-
- 
+    margin-top: 15px; 
 }
 
 .sidebar-button {
@@ -102,4 +100,82 @@
 
 .logout:hover {
     color: var(--background-color);
+}
+
+
+@media (max-width: 390px) {
+    .sidebar {
+        width: 100%;
+        position: fixed;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: 10px;
+        height: 50px;
+        background-color: var(--primary-color);
+
+        ul {
+            display: flex;
+            gap: 10px;
+        }
+    }
+
+    .sidebar-menu {
+        margin-top: 0; 
+
+        i {
+            padding: 0;
+        }
+    }
+
+    .profile-avatar {
+        width: 50px;
+    }
+
+    .sidebar-info {
+        display: flex; 
+        align-items: center;
+        flex-direction: row;
+        gap: 10px;
+        margin-right: 10px;
+
+        a {
+            display: flex;
+        }
+    }
+
+    .sidebar-button:hover {
+        background-color: var(--background-color);
+        color: var(--text-color-light);
+        padding: 5px;
+    }
+
+    .sidebar-button:active {
+        transform: scale(0.98);
+        box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .sidebar-footer {
+        display: flex;
+        align-items: center;
+        flex-direction: row-reverse;
+        gap: 10px;
+
+        i {
+            display: flex;
+        }
+    }
+
+    .sidebar-settings:hover {
+        background-color: var(--background-color);
+        color: var(--text-color-light);
+        padding: 5px;
+    }
+
+    .sidebar-settings:active {
+        transform: scale(0.98);
+        box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.2);
+    }
 }

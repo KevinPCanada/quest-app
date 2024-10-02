@@ -16,10 +16,7 @@ import Privacy from './pages/Privacy/PrivacyPolicy';
 import AboutUs from './pages/About/AboutUs';
 import { Toaster } from "./components/ui/toaster"
 
-
 import FullQuest from "./components/Full_Quest/Full_Quest";
-
-
 
 const Layout = () => {
   return (
@@ -98,10 +95,11 @@ const router = createBrowserRouter([
   },
   {
     //this is  test route to work on the full quest pop-up - need to delete later
-    path: "/fullquesttest",
+    path: "/fullquest",
     element: <FullQuest Quest={{name:'Do homework', description:'Javascript homework for w-coding - get the javascript for the login page finished ', questLevel:'Challenging'}}></FullQuest>
     ,
   },
+
   // general test route, use this to preview what you are working on in the browser 
   //then return to this state when you're done
 
@@ -109,7 +107,6 @@ const router = createBrowserRouter([
   //   path: "/test",
   //   element: <(add React element here)/>  ,
   // },
-
 
 ]);
 
