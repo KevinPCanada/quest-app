@@ -22,7 +22,7 @@ export default function MilestoneButton() {
     <>
       <Button
         onClick={handleSetMilestone}
-        className="flex-none font-pixelify bg-[var(--button-light)] hover:bg-[var(--button-light-hover)] text-[var(--text-color)] rounded-none border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[3px] transition-none"
+        className="flex-none font-pixelify font-thin text-base rounded-none border-2 border-black bg-[var(--text-color-light)] text-[var(--background-color)] shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-[var(--text-color-light)] hover:text-[var(--background-color)] active:shadow-none active:translate-y-[3px] active:translate-x-[3px] w-40 "
       >
         Set Milestone
       </Button>

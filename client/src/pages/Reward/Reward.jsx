@@ -221,7 +221,7 @@ export default function RewardPage() {
             </form>
           </div>
           <div className="rewardpage-right-bottom">
-            <form onSubmit={handleMilestoneSubmit}>
+            <form onSubmit={handleMilestoneSubmit} className="milestone-form">
               <div className="rewardpage-right-bottom-header">
                 <h2>Set milestone</h2>
                 <i className="material-icons">vertical_align_bottom</i>
@@ -259,7 +259,7 @@ export default function RewardPage() {
                     checked={selectedMilestone === "10"}
                     onChange={handleMilestoneChange}
                   />
-                  <MilestoneButton />
+                  <MilestoneButton className="milestone-button" />
                 </>
               )}
             </form>
