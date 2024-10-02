@@ -125,14 +125,10 @@ export default function RewardPage() {
         throw new Error("Failed to edit reward");
       }
 
-      // Update the reward in the local state
-      setRewards(
-        rewards.map((reward) =>
-          reward.id === rewardId
-            ? { ...reward, description: newDescription }
-            : reward
-        )
-      );
+      // Update the rewards on the page
+      const updatedRewards = await fetchRewards();
+      setRewards(updatedRewards);
+
     } catch (error) {
       console.error("Error editing reward:", error);
       // You might want to show an error message to the user here
