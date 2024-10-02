@@ -93,12 +93,7 @@ const router = createBrowserRouter([
     path: "/about",
     element: <AboutUs/>  ,
   },
-  {
-    //this is  test route to work on the full quest pop-up - need to delete later
-    path: "/fullquest",
-    element: <FullQuest Quest={{name:'Do homework', description:'Javascript homework for w-coding - get the javascript for the login page finished ', questLevel:'Challenging'}}></FullQuest>
-    ,
-  },
+
 
   // general test route, use this to preview what you are working on in the browser 
   //then return to this state when you're done

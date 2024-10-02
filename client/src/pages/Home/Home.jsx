@@ -105,6 +105,7 @@ function Home() {
             title={quest.quest_name}
             description={quest.quest_description}
             exp={quest.exp}
+            level={quest.difficulty_name}
           />
         ))
       ) : (
