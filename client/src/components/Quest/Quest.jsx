@@ -3,7 +3,7 @@ import QuestCompleteButton from '../QuestCompleteButton/QuestCompleteButton';
 import EditQuest from '../EditQuest/EditQuest';
 import './Quest.css';
 
-function Quest({ title, description, exp }) {
+function Quest({ id, title, description, exp }) {
   
   return (
     <article className="quest-container">
@@ -13,7 +13,7 @@ function Quest({ title, description, exp }) {
           <p>{description}</p>
           <div className="quest-options">
             <a href="">View Full Quest</a>
-            <EditQuest/>
+            <EditQuest thisQuestId={id} />
           </div>
         </div>
       </div>

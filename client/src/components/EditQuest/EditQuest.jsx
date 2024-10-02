@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Label } from "../ui/label";
+import { editQuest } from "./EditQuestControllers";
 import {
     Dialog,
     DialogContent,
@@ -12,11 +13,28 @@ import {
     DialogTrigger,
 } from "../ui/dialog";
 
-export default function NewQuest() {
+export default function NewQuest({thisQuestId}) {
     const [open, setOpen] = React.useState(false);
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // Handle form submission logic here
+    const [questLevel, setQuestLevel] = useState("1")
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+
+        console.log(e.target)
+
+        const questData = {
+            questId: thisQuestId,
+            questName: e.target.questName.value,
+            questDescription: e.target.questDescription.value,
+            questLevel: questLevel
+        }
+
+
+
+        console.log(questData)
+
+        const editedQuest = editQuest(questData)
+
         console.log("Form submitted");
         setOpen(false);
     };
@@ -46,22 +64,22 @@ export default function NewQuest() {
                             className="font-pixelify resize-none"
                             id="questDescription"
                             placeholder="Describe your quest"
-                            required
+                            
                         />
                     </div>
                     <div className="space-y-2">
                         <Label className="font-pixelify font-thin"> Level</Label>
-                        <RadioGroup defaultValue="easy">
+                        <RadioGroup defaultValue="1" onValueChange={setQuestLevel}>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="easy" id="easy" />
+                                <RadioGroupItem value="1" id="easy" />
                                 <Label htmlFor="easy">Trivial</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="medium" id="medium" />
+                                <RadioGroupItem value="2" id="medium" />
                                 <Label htmlFor="medium">Challenging</Label>
                             </div>
                             <div className="flex items-center space-x-2">
-                                <RadioGroupItem value="hard" id="hard" />
+                                <RadioGroupItem value="3" id="hard" />
                                 <Label htmlFor="hard">Deadly</Label>
                             </div>
                         </RadioGroup>
