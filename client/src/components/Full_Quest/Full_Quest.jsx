@@ -22,21 +22,6 @@ export default function FullQuest({ Quest }) {
         }
     };
 
-    // // Function to return the correct image based on the quest level
-    // const getLevelImage = (level) => {
-    //     switch(level.toLowerCase()) {
-    //         case 'deadly':
-    //             return skullImage;
-    //         case 'challenging':
-    //             return shieldImage;
-    //         case 'trivial':
-    //             return cakeImage;
-    //         default:
-    //             return ''; // or a default image
-    //     }
-    // };
-
-
     const getLevelDetails = (level) => {
         switch (level.toLowerCase()) {
             case 'deadly':
