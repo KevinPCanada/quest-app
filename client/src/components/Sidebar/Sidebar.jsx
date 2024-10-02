@@ -25,29 +25,38 @@ export function Sidebar() {
           <ul>
             <Link to="/rewards" className="sidebar-button">
               <i className="material-icons">star</i>
-              <p>Rewards</p>
+              <p className="hide">Rewards</p>
             </Link>
             <Link to="/" className="sidebar-button">
               <i className="material-icons">receipt_long</i>
-              <p>Questboard</p>
+              <p className="hide">Questboard</p>
             </Link>
             <Link to="/quest-history" className="sidebar-button">
               <i className="material-icons">menu_book</i>
-              <p>Quest History</p>
+              <p className="hide">Quest History</p>
             </Link>
           </ul>
         </nav>
         <nav className="sidebar-info">
-          <Link to="/about">About us</Link>
-          <Link to="/privacy">Privacy Policy</Link>
+
+          <Link to="/about">
+            <i className="material-icons hide-full">info</i>
+            <p className="hide">About us</p>
+          </Link>
+          <Link to="/privacy">
+            <i className="material-icons hide-full">policy</i>
+            <p className="hide">Privacy</p>
+          </Link>
+
         </nav>
         <div className="sidebar-footer">
         {currentUser && (
           <button className="auth-button" onClick={handleLogout}>
-            Logout
+            <i className="material-icons hide-full">logout</i>
+            <p className="hide">Logout</p>
           </button>
         )}
-        <Link to="/settings">
+        <Link className="sidebar-settings"to="/settings">
           <i className="material-icons">settings</i>
         </Link>
         </div>
