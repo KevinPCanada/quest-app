@@ -8,17 +8,17 @@ import cakeImage from '../../assets/img/pieceofcake.jpg';
 export default function FullQuest({ Quest }) {
 
     const handleComplete = () => {
-        alert(`Quest "${Quest.name}" has been completed!`);
+        alert(`Quest "${Quest.title}" has been completed!`);
     };
 
     const handleModify = () => {
-        alert(`Modify the quest: "${Quest.name}".`);
+        alert(`Modify the quest: "${Quest.title}".`);
     };
 
     const handleDelete = () => {
-        const confirmDelete = window.confirm(`Are you sure you want to delete the quest: "${Quest.name}"?`);
+        const confirmDelete = window.confirm(`Are you sure you want to delete the quest: "${Quest.title}"?`);
         if (confirmDelete) {
-            alert(`Quest "${Quest.name}" has been deleted.`);
+            alert(`Quest "${Quest.title}" has been deleted.`);
         }
     };
 
@@ -35,7 +35,7 @@ export default function FullQuest({ Quest }) {
         }
     };
 
-    const levelDetails = getLevelDetails(Quest.questLevel);
+    const levelDetails = getLevelDetails(Quest.Level);
 
     return (
         <div className="full-quest-container">
@@ -43,16 +43,15 @@ export default function FullQuest({ Quest }) {
                 <div className="FullQuestTitleContainer">
                     <p className="QuestTitle">
                         <span className="QuestLabel">Quest:</span>
-                        <span className="Questname">{Quest.name}</span>
-                        <img src={levelDetails.image} alt={Quest.questLevel} className="QuestLevelImage" />
+                        <span className="Questname">{Quest.title}</span>
+                        <img src={levelDetails.image} alt={Quest.Level} className="QuestLevelImage" />
                     </p>
                 </div>
                 <p className="Questdescription">{Quest.description}</p>
                 <p className={`Questlevel`}>
                     <strong>Level: </strong>
-                    <span className={`QuestLevelText ${levelDetails.className}`}>{Quest.questLevel}</span>
+                    <span className={`QuestLevelText ${levelDetails.className}`}>{Quest.level}</span>
                 </p>
-
 
                 <div className="full-quest-buttons">
                     <button onClick={handleComplete} className="full-quest-button complete">Complete</button>
