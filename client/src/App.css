@@ -7,3 +7,28 @@
   flex-grow: 1;
   overflow-y: auto;
 }
+
+.hide-full {
+  display: none;
+}
+
+@media (max-width: 390px) {
+  .hide {
+    display: none;
+  }
+
+  .hide-full {
+    display: inline-block;
+  }
+
+  .layout {
+      flex-direction: column;
+      margin-top: 50px;
+  }
+
+  .layout-outlet {
+      flex-grow: 1;
+      overflow-y: auto;
+  }
+}
+
