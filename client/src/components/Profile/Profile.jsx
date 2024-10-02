@@ -5,46 +5,95 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
 
-const classNames = ["Warrior", "Mage", "Rogue", "Priest"];
-const classImages = [
-  "/placeholder.svg?height=100&width=100",
-  "/placeholder.svg?height=100&width=100",
-  "/placeholder.svg?height=100&width=100",
-  "/placeholder.svg?height=100&width=100",
-];
-
 function ProfileButton() {
   const [userData, setUserData] = useState(null);
+  const [classData, setClassData] = useState(null);
+  const [experienceData, setExperienceData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch user data from local storage
-    const userDataString = localStorage.getItem('user');
-    if (userDataString) {
+    async function fetchData() {
       try {
+        // Fetch user data from local storage
+        const userDataString = localStorage.getItem("user");
+        if (!userDataString) {
+          throw new Error("No user data found in local storage");
+        }
+
         const parsedUserData = JSON.parse(userDataString);
         setUserData(parsedUserData);
+
+        // Fetch class data
+        const classResponse = await fetch(
+          `http://localhost:8800/api/user/${parsedUserData.user_id}/class`,
+          {
+            credentials: "include",
+          }
+        );
+
+        if (!classResponse.ok) {
+          throw new Error(`HTTP error! status: ${classResponse.status}`);
+        }
+
+        const classData = await classResponse.json();
+        setClassData(classData);
+
+        // Fetch experience data
+        const expResponse = await fetch(
+          `http://localhost:8800/api/user/${parsedUserData.user_id}/exp`,
+          {
+            credentials: "include",
+          }
+        );
+
+        if (!expResponse.ok) {
+          throw new Error(`HTTP error! status: ${expResponse.status}`);
+        }
+
+        const expData = await expResponse.json();
+        setExperienceData(expData);
+
       } catch (error) {
-        console.error("Error parsing user data from local storage:", error);
+        console.error("Error fetching data:", error);
+        setError(error.message);
       }
     }
+
+    fetchData();
   }, []);
 
-  if (!userData) {
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!userData || !classData || !experienceData) {
     return <div>Loading...</div>;
   }
 
-  const level = Math.floor(userData.experience / 100) + 1;
-  const expToNextLevel = userData.experience % 100;
+  const level = Math.floor(experienceData.experience / 100) + 1;
+  const expToNextLevel = experienceData.experience % 100;
+
+  // Construct the full URL for the class avatar
+  const avatarUrl = `http://localhost:8800${classData.class_avatar}`;
 
   return (
     <Popover>
       <PopoverTrigger asChild>
+
+        <Button className="flex items-center justify-start bg-transparent hover:bg-transparent active:bg-transparent focus:ring-0 focus:ring-offset-0 px-0 font-thin">
+=======
         <Button
           className="profile-avatar flex items-center justify-start bg-transparent hover:bg-transparent active:bg-transparent focus:ring-0 focus:ring-offset-0 px-0 font-thin"
         >
+
           <Avatar className="h-8 w-8 mr-2">
-            <AvatarImage src="/placeholder.svg?height=32&width=32" />
-            <AvatarFallback>{userData.username[0].toUpperCase()}</AvatarFallback>
+            <AvatarImage 
+              src={avatarUrl} 
+              alt={classData.class_name} 
+            />
+            <AvatarFallback>
+              {userData.username[0].toUpperCase()}
+            </AvatarFallback>
           </Avatar>
           <span className="text-xl hide">{userData.username}</span>
         </Button>
@@ -52,17 +101,19 @@ function ProfileButton() {
       <PopoverContent className="w-80 rounded-none">
         <Card className="shadow-none rounded-none">
           <CardHeader>
-            <CardTitle className="text-2xl font-light font-pixelify">Profile</CardTitle>
+            <CardTitle className="text-2xl font-light font-pixelify">
+              Profile
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center space-x-4">
               <Avatar className="h-16 w-16">
                 <AvatarImage
-                  src={classImages[userData.class_id - 1]}
-                  alt={classNames[userData.class_id - 1]}
+                  src={avatarUrl}
+                  alt={classData.class_name}
                 />
                 <AvatarFallback>
-                  {classNames[userData.class_id - 1][0]}
+                  {classData.class_name[0]}
                 </AvatarFallback>
               </Avatar>
               <div>
@@ -70,7 +121,7 @@ function ProfileButton() {
                   {userData.display_name || userData.username}
                 </h2>
                 <p className="text-sm text-muted-foreground">
-                  {classNames[userData.class_id - 1]}
+                  {classData.class_name}
                 </p>
               </div>
             </div>
@@ -81,7 +132,7 @@ function ProfileButton() {
               </div>
               <div className="flex justify-between text-sm">
                 <span>Experience:</span>
-                <span>{userData.experience} XP</span>
+                <span>{experienceData.experience} XP</span>
               </div>
               <Progress value={expToNextLevel} className="w-full h-2" />
               <p className="text-xs text-muted-foreground text-right">
