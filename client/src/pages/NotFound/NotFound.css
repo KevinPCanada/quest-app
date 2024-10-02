@@ -40,3 +40,36 @@
 .notfound-button:active {
     box-shadow: inset 4px 4px 0px 0px #808080;
 }
+
+@media (max-width: 390px) {
+    .notfound-container {
+        width: 100%;
+        padding: 20px;
+        gap: 20px;
+        top: 30%;
+    }
+
+    .notfound-container-left {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .notfound-title {
+        font-size: 1.5rem;
+    }
+
+    .notfound-code {
+        font-size: 7rem;
+    }
+
+    .notfound-container-right {
+        display: flex;  
+        align-items: flex-end;
+    }
+
+    .notfound-img{
+        width: 100px;
+        margin-top: 20px;
+    }
+}
