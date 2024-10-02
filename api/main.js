@@ -40,7 +40,7 @@ app.use('/api/classes', classRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err.stack); // The stack property of the error tells us where the error occurred
   res.status(500).send('Something broke!');
 });
 
