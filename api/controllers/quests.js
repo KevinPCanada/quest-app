@@ -41,6 +41,8 @@ export const modifyQuest = async (req, res) => {
         const { questId, questName, questDescription, questLevel } = req.body;
         const userId = req.user.id;
 
+        
+
         if (questName) {
             await pool.query(
                 'UPDATE quests SET quest_name = ? WHERE id = ? AND user_id = ?', 
