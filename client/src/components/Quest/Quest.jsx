@@ -37,7 +37,8 @@ import './Quest.css';
 
 
 function Quest({ title, description, exp, id, level }) {
-
+  console.log( title, description, exp, id, level )
+ 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -69,9 +70,11 @@ function Quest({ title, description, exp, id, level }) {
 
       {/* Modal to show the FullQuest component */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <FullQuest Quest = {{title:{title}, description:{description}, level:{level}} }/>
+        <FullQuest Quest = {{title, description, level}}/>
+        
       </Modal>
     </article>
+    
   );
 }
 
