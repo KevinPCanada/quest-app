@@ -33,6 +33,7 @@ export default function FullQuest({ Quest }) {
         }
     }, [Quest.level]);
 
+
     const handleComplete = () => {
         alert(`Quest "${Quest.title}" has been completed!`);
     };

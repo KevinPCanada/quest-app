@@ -65,7 +65,7 @@ function Quest({ title, description, exp, id, level }) {
         </div>
       </div>
       <div className="quest-container-right">
-        <QuestCompleteButton exp={exp} />
+        <QuestCompleteButton thisQuestId={id} exp={exp} />
       </div>
 
       {/* Modal to show the FullQuest component */}
