@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import './Full_Quest.css';
 
 import skullImage from '../../assets/img/skull.png';
@@ -6,6 +6,32 @@ import swordImage from '../../assets/img/sword.png';
 import cakeImage from '../../assets/img/pieceofcake.jpg';
 
 export default function FullQuest({ Quest }) {
+    console.log("Quest Object:", Quest);
+    console.log("Quest Level:", Quest.level);
+
+    const [levelDetails, setLevelDetails] = useState({ className: '', image: '' });
+
+    useEffect(() => {
+        const getLevelDetails = (level) => {
+            switch (level) {
+                case 'deadly':
+                    return { className: 'level-deadly', image: skullImage };
+                case 'challenging':
+                    return { className: 'level-challenging', image: swordImage };
+                case 'trivial':
+                    return { className: 'level-trivial', image: cakeImage };
+                default:
+                    return { className: '', image: '' };
+            }
+        };
+
+        if (typeof Quest.level === 'string') {
+            setLevelDetails(getLevelDetails(Quest.level));
+        } else {
+            console.error("Quest.level is not a string:", Quest.level);
+            setLevelDetails({ className: '', image: '' });
+        }
+    }, [Quest.level]);
 
     const handleComplete = () => {
         alert(`Quest "${Quest.title}" has been completed!`);
@@ -22,21 +48,6 @@ export default function FullQuest({ Quest }) {
         }
     };
 
-    const getLevelDetails = (level) => {
-        switch (level.toLowerCase()) {
-            case 'deadly':
-                return { className: 'level-deadly', image: skullImage };
-            case 'challenging':
-                return { className: 'level-challenging', image: swordImage };
-            case 'trivial':
-                return { className: 'level-trivial', image: cakeImage };
-            default:
-                return { className: '', image: '' };
-        }
-    };
-
-    const levelDetails = getLevelDetails(Quest.Level);
-
     return (
         <div className="full-quest-container">
             <div className="full-quest-section">
@@ -44,11 +55,13 @@ export default function FullQuest({ Quest }) {
                     <p className="QuestTitle">
                         <span className="QuestLabel">Quest:</span>
                         <span className="Questname">{Quest.title}</span>
-                        <img src={levelDetails.image} alt={Quest.Level} className="QuestLevelImage" />
+                        {levelDetails.image && (
+                            <img src={levelDetails.image} alt={Quest.level} className="QuestLevelImage" />
+                        )}
                     </p>
                 </div>
                 <p className="Questdescription">{Quest.description}</p>
-                <p className={`Questlevel`}>
+                <p className="Questlevel">
                     <strong>Level: </strong>
                     <span className={`QuestLevelText ${levelDetails.className}`}>{Quest.level}</span>
                 </p>
