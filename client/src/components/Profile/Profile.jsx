@@ -16,22 +16,30 @@ function ProfileButton() {
   useEffect(() => {
     async function fetchData() {
       try {
-        // Fetch user data from local storage
         const userDataString = localStorage.getItem("user");
         if (!userDataString) {
           throw new Error("No user data found in local storage");
         }
 
-        const parsedUserData = JSON.parse(userDataString);
-        setUserData(parsedUserData);
+        const { user_id } = JSON.parse(userDataString);
 
-        // Fetch class data from the server
-        const classResponse = await fetch(
-          `http://localhost:8800/api/user/${parsedUserData.user_id}/class`,
-          {
-            credentials: "include",
-          }
-        );
+        // Fetch user data
+        const userResponse = await fetch(`http://localhost:8800/api/user/${user_id}`, {
+          credentials: "include",
+        });
+
+        if (!userResponse.ok) {
+          throw new Error(`HTTP error! status: ${userResponse.status}`);
+        }
+
+        const userData = await userResponse.json();
+        setUserData(userData);
+        console.log("Fetched User Data:", userData);
+
+        // Fetch class data
+        const classResponse = await fetch(`http://localhost:8800/api/user/${user_id}/class`, {
+          credentials: "include",
+        });
 
         if (!classResponse.ok) {
           throw new Error(`HTTP error! status: ${classResponse.status}`);
@@ -40,13 +48,10 @@ function ProfileButton() {
         const classData = await classResponse.json();
         setClassData(classData);
 
-        // Fetch experience data from the server
-        const expResponse = await fetch(
-          `http://localhost:8800/api/user/${parsedUserData.user_id}/exp`,
-          {
-            credentials: "include",
-          }
-        );
+        // Fetch experience data
+        const expResponse = await fetch(`http://localhost:8800/api/user/${user_id}/exp`, {
+          credentials: "include",
+        });
 
         if (!expResponse.ok) {
           throw new Error(`HTTP error! status: ${expResponse.status}`);
@@ -81,23 +86,19 @@ function ProfileButton() {
   // Construct the full URL for the class avatar
   const avatarUrl = `http://localhost:8800${classData.class_avatar}`;
 
+  // Determine which name to display
+  const displayName = userData.display_name || userData.username;
+
   // Render the profile button and popover
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button
-          className="profile-avatar flex items-center justify-start bg-transparent hover:bg-transparent active:bg-transparent focus:ring-0 focus:ring-offset-0 px-0 font-thin"
-        >
+        <Button className="profile-avatar flex items-center justify-start bg-transparent hover:bg-transparent active:bg-transparent focus:ring-0 focus:ring-offset-0 px-0 font-thin">
           <Avatar className="h-8 w-8 mr-2">
-            <AvatarImage 
-              src={avatarUrl} 
-              alt={classData.class_name} 
-            />
-            <AvatarFallback>
-              {userData.username[0].toUpperCase()}
-            </AvatarFallback>
+            <AvatarImage src={avatarUrl} alt={classData.class_name} />
+            <AvatarFallback>{displayName[0].toUpperCase()}</AvatarFallback>
           </Avatar>
-          <span className="text-xl hide">{userData.username}</span>
+          <span className="text-xl hide">{displayName}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 rounded-none">
@@ -111,18 +112,11 @@ function ProfileButton() {
             {/* User avatar and class information */}
             <div className="flex items-center space-x-4">
               <Avatar className="h-16 w-16">
-                <AvatarImage
-                  src={avatarUrl}
-                  alt={classData.class_name}
-                />
-                <AvatarFallback>
-                  {classData.class_name[0]}
-                </AvatarFallback>
+                <AvatarImage src={avatarUrl} alt={classData.class_name} />
+                <AvatarFallback>{classData.class_name[0]}</AvatarFallback>
               </Avatar>
               <div>
-                <h2 className="text-lg font-semibold">
-                  {userData.display_name || userData.username}
-                </h2>
+                <h2 className="text-lg font-semibold">{displayName}</h2>
                 <p className="text-sm text-muted-foreground">
                   {classData.class_name}
                 </p>
