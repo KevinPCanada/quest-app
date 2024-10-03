@@ -1,51 +1,158 @@
-import React, { useState } from 'react'
-import "./Settings.css"
-import knight from "../../assets/img/classes/knight.png"
-import mage from "../../assets/img/classes/mage.png"
-import priest from "../../assets/img/classes/priest.png"
-import rogue from "../../assets/img/classes/rogue.png"
+import React, { useState, useEffect } from "react";
+import "./Settings.css";
 
 function Settings() {
   const [userInfo, setUserInfo] = useState({
-    username: 'test',
-    email: 'test@test.com',
-    class: 'Warrior',
-  })
+    username: "",
+    email: "",
+    class_id: null,
+    display_name: "",
+  });
 
-  const [isEditingUsername, setIsEditingUsername] = useState(false)
-  const [editUsername, setEditUsername] = useState(userInfo.username)
+  const [classes, setClasses] = useState([]);
+  const [isEditingDisplayName, setIsEditingDisplayName] = useState(false);
+  const [editDisplayName, setEditDisplayName] = useState("");
+  const [isPopupVisible, setPopupVisible] = useState(false);
+  const [selectedClass, setSelectedClass] = useState("");
 
-  const [isPopupVisible, setPopupVisible] = useState(false)
-  const [selectedClass, setSelectedClass] = useState(userInfo.class)
+  // New state to track changes
+  const [hasChanges, setHasChanges] = useState(false);
+  const [pendingChanges, setPendingChanges] = useState({});
+
+  useEffect(() => {
+    fetchUserData();
+    fetchClasses();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
+      const userDataString = localStorage.getItem("user");
+      if (!userDataString) {
+        throw new Error("No user data found in local storage");
+      }
+
+      const { user_id } = JSON.parse(userDataString);
+      const response = await fetch(
+        `http://localhost:8800/api/user/${user_id}`,
+        {
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+
+      const userData = await response.json();
+      setUserInfo(userData);
+      setSelectedClass(userData.class_id);
+      setEditDisplayName(userData.display_name || "");
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      // Handle error (e.g., redirect to login page or show error message)
+    }
+  };
+
+  const fetchClasses = async () => {
+    try {
+      const response = await fetch("http://localhost:8800/api/classes", {
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch class data");
+      }
+
+      const data = await response.json();
+      setClasses(data);
+    } catch (error) {
+      console.error("Error fetching class data:", error);
+      // Handle error (e.g., show error message)
+    }
+  };
 
   const handleEditClick = (field) => {
-    if (field === 'username') {
-      setIsEditingUsername(true)
-      setEditUsername(userInfo.username)
+    if (field === "display_name") {
+      setIsEditingDisplayName(true);
+      setEditDisplayName(userInfo.display_name || userInfo.username);
     }
-  }
+  };
+
+  const handleDisplayNameChange = (value) => {
+    setEditDisplayName(value);
+    setPendingChanges((prev) => ({ ...prev, display_name: value }));
+    setHasChanges(true);
+  };
 
   const handleSaveClick = (field) => {
-    if (field === 'username') {
-      setUserInfo({ ...userInfo, username: editUsername })
-      setIsEditingUsername(false)
+    if (field === "display_name") {
+      setIsEditingDisplayName(false);
+      setUserInfo((prev) => ({ ...prev, display_name: editDisplayName }));
     }
-  }
+  };
 
   const handleCancelClick = (field) => {
-    if (field === 'username') {
-      setIsEditingUsername(false)
+    if (field === "display_name") {
+      setIsEditingDisplayName(false);
+      setEditDisplayName(userInfo.display_name || userInfo.username);
+      setPendingChanges((prev) => {
+        const { display_name, ...rest } = prev;
+        return rest;
+      });
+      setHasChanges(Object.keys(pendingChanges).length > 1);
     }
-  }
+  };
 
   const togglePopup = () => {
-    setPopupVisible(!isPopupVisible)
-  }
+    setPopupVisible(!isPopupVisible);
+  };
+
+  const handleClassSelection = (classId) => {
+    setSelectedClass(classId);
+    setPendingChanges((prev) => ({ ...prev, class_id: classId }));
+    setHasChanges(true);
+  };
 
   const handleConfirm = () => {
-    setUserInfo({ ...userInfo, class: selectedClass })
-    togglePopup()
-  }
+    setPopupVisible(false);
+    setUserInfo((prev) => ({ ...prev, class_id: selectedClass }));
+  };
+
+  const handleSaveChanges = async () => {
+    try {
+      // Update display name if changed
+      if (pendingChanges.display_name) {
+        await fetch(
+          `http://localhost:8800/api/user/${userInfo.user_id}/display-name`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ display_name: pendingChanges.display_name }),
+          }
+        );
+      }
+
+      // Update class if changed
+      if (pendingChanges.class_id) {
+        await fetch(
+          `http://localhost:8800/api/user/${userInfo.user_id}/class`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+            body: JSON.stringify({ class_id: pendingChanges.class_id }),
+          }
+        );
+      }
+
+      // Refresh the page
+      window.location.reload();
+    } catch (error) {
+      console.error("Error saving changes:", error);
+      // Handle error (e.g., show error message to user)
+    }
+  };
 
   return (
     <main className="settings-page">
@@ -53,27 +160,41 @@ function Settings() {
         <h1>Settings</h1>
       </div>
 
-      {/* Username Section */}
+      {/* Display Name Section */}
       <div className="settings-container">
         <div className="settings-container-top">
-          <h2>Username</h2>
-          {!isEditingUsername && (
-            <a href="#" onClick={() => handleEditClick('username')}>Edit</a>
+          <h2>Display Name</h2>
+          {!isEditingDisplayName && (
+            <a href="#" onClick={() => handleEditClick("display_name")}>
+              Edit
+            </a>
           )}
         </div>
         <div className="settings-container-bottom">
-          {isEditingUsername ? (
+          {isEditingDisplayName ? (
             <>
               <input
                 type="text"
-                value={editUsername}
-                onChange={(e) => setEditUsername(e.target.value)}
+                value={editDisplayName}
+                onChange={(e) => handleDisplayNameChange(e.target.value)}
               />
-              <button className="settings-save-button" onClick={() => handleSaveClick('username')}>Save</button>
-              <button className="settings-cancel-button" onClick={() => handleCancelClick('username')}>Cancel</button>
+              <div>
+                <button
+                  className="settings-save-button"
+                  onClick={() => handleSaveClick("display_name")}
+                >
+                  Confirm
+                </button>
+                <button
+                  className="settings-cancel-button"
+                  onClick={() => handleCancelClick("display_name")}
+                >
+                  Cancel
+                </button>
+              </div>
             </>
           ) : (
-            <p>{userInfo.username}</p>
+            <p>{userInfo.display_name || userInfo.username}</p>
           )}
         </div>
       </div>
@@ -92,43 +213,28 @@ function Settings() {
       {isPopupVisible && (
         <div className="settings-popup-overlay">
           <div className="settings-popup">
-            <span className="settings-close-btn" onClick={togglePopup}>X</span>
             <h3>Select Class</h3>
             <div className="settings-popup-container">
-              <div className="settings-popup-img-container">
-                <img
-                  className={`settings-popup-img ${selectedClass === 'Knight' ? 'selected' : ''}`}
-                  src={knight}
-                  onClick={() => setSelectedClass('Knight')}
-                />
-                <p>Knight</p>
-              </div>
-              <div className="settings-popup-img-container">
-                <img
-                  className={`settings-popup-img ${selectedClass === 'Mage' ? 'selected' : ''}`}
-                  src={mage}
-                  onClick={() => setSelectedClass('Mage')}
-                />
-                <p>Mage</p>
-              </div>
-              <div className="settings-popup-img-container">
-                <img
-                  className={`settings-popup-img ${selectedClass === 'Priest' ? 'selected' : ''}`}
-                  src={priest}
-                  onClick={() => setSelectedClass('Priest')}
-                />
-                <p>Priest</p>
-              </div>
-              <div className="settings-popup-img-container">
-                <img
-                  className={`settings-popup-img ${selectedClass === 'Rogue' ? 'selected' : ''}`}
-                  src={rogue}
-                  onClick={() => setSelectedClass('Rogue')}
-                />
-                <p>Rogue</p>
-              </div>
+              {classes.map((classItem) => (
+                <div
+                  key={classItem.class_id}
+                  className="settings-popup-img-container"
+                >
+                  <img
+                    className={`settings-popup-img ${
+                      selectedClass === classItem.class_id ? "selected" : ""
+                    }`}
+                    src={`http://localhost:8800${classItem.class_avatar}`}
+                    onClick={() => handleClassSelection(classItem.class_id)}
+                    alt={classItem.class_name}
+                  />
+                  <p>{classItem.class_name}</p>
+                </div>
+              ))}
             </div>
-            <button className="settings-confirm-btn" onClick={handleConfirm}>Confirm</button>
+            <button className="settings-confirm-btn" onClick={handleConfirm}>
+              Confirm
+            </button>
           </div>
         </div>
       )}
@@ -137,14 +243,28 @@ function Settings() {
       <div className="settings-container">
         <div className="settings-container-top">
           <h2>Class</h2>
-          <a href="#" onClick={togglePopup}>Edit</a>
+          <a href="#" onClick={togglePopup}>
+            Edit
+          </a>
         </div>
         <div className="settings-container-bottom">
-          <p>{userInfo.class}</p>
+          <p>
+            {userInfo.class_id
+              ? classes.find((c) => c.class_id === userInfo.class_id)
+                  ?.class_name || "Updating..."
+              : "Loading..."}
+          </p>
         </div>
       </div>
+
+      {/* Conditional Save Changes Button */}
+      {hasChanges && (
+        <button onClick={handleSaveChanges} className="save-changes-button">
+          Save Changes
+        </button>
+      )}
     </main>
-  )
+  );
 }
 
-export default Settings
+export default Settings;

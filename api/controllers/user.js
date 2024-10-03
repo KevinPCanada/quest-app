@@ -138,6 +138,43 @@ export const updateUserMilestone = async (req, res) => {
   }
 };
 
+export const updateUserDisplayName = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { display_name } = req.body;
+
+    // Verify that the requesting user is the same as the user being updated
+    if (req.user.id != userId) {
+      return res.status(403).json({
+        message: "You don't have permission to update this information",
+      });
+    }
+
+    // If display_name is an empty string, set it to null
+    const newDisplayName = display_name?.trim() === '' ? null : display_name;
+
+    // Update the display_name in the database
+    const [result] = await pool.query(
+      "UPDATE users SET display_name = ? WHERE user_id = ?",
+      [newDisplayName, userId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Return success message
+    res.status(200).json({ 
+      message: newDisplayName ? "Display name updated successfully" : "Display name removed",
+      display_name: newDisplayName 
+    });
+  } catch (error) {
+    console.error("Error updating user display name:", error);
+    res.status(500).json({ message: "An error occurred while updating user display name" });
+  }
+};
+
+
 // Class related methods
 
 export const getUserClassInfo = async (req, res) => {
@@ -167,3 +204,46 @@ export const getUserClassInfo = async (req, res) => {
     res.status(500).json({ message: "An error occurred while fetching user class info" });
   }
 };
+
+export const updateUserClass = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { class_id } = req.body;
+
+    // Verify that the requesting user is the same as the user being updated
+    if (req.user.id != userId) {
+      return res.status(403).json({
+        message: "You don't have permission to update this information",
+      });
+    }
+
+    // Validate the class_id is a positive integer
+    if (!Number.isInteger(Number(class_id)) || Number(class_id) <= 0) {
+      return res.status(400).json({ message: "Invalid class ID." });
+    }
+
+    // Update the user's class in the database
+    const [result] = await pool.query(
+      "UPDATE users SET class_id = ? WHERE user_id = ?",
+      [class_id, userId]
+    );
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Return success message with updated class info
+    res.status(200).json({
+      message: "Class updated successfully",
+      class_id: class_id
+    });
+  } catch (error) {
+    console.error("Error updating user class:", error);
+    // If it's a foreign key constraint error, it means the class doesn't exist
+    if (error.code === 'ER_NO_REFERENCED_ROW_2') {
+      return res.status(400).json({ message: "Invalid class ID: class does not exist" });
+    }
+    res.status(500).json({ message: "An error occurred while updating user class" });
+  }
+};
+
