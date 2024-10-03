@@ -199,16 +199,6 @@ function Settings() {
         </div>
       </div>
 
-      {/* Email Section */}
-      <div className="settings-container">
-        <div className="settings-container-top">
-          <h2>Email</h2>
-        </div>
-        <div className="settings-container-bottom">
-          <p>{userInfo.email}</p>
-        </div>
-      </div>
-
       {/* Class Popup */}
       {isPopupVisible && (
         <div className="settings-popup-overlay">
@@ -254,6 +244,16 @@ function Settings() {
                   ?.class_name || "Updating..."
               : "Loading..."}
           </p>
+        </div>
+      </div>
+
+      {/* Email Section */}
+      <div className="settings-container">
+        <div className="settings-container-top">
+          <h2>Email</h2>
+        </div>
+        <div className="settings-container-bottom">
+          <p>{userInfo.email}</p>
         </div>
       </div>
 
