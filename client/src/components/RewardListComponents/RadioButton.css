@@ -7,10 +7,20 @@
     font-family: var(--secondary-font);
     color: var(--text-color);
     padding: 5px 10px;
+    cursor: pointer;
+
+    label {
+        cursor: pointer;
+    }
+
 }
 
 .reward-radio p {
     color: var(--text-color);
+    cursor: pointer;
+
+
+
 }
 
 .reward-radio input[type="radio"] {
