@@ -7,6 +7,7 @@ import cakeImage from '../../assets/img/pieceofcake.jpg';
 
 export default function FullQuest({ Quest }) {
 
+
     const handleComplete = () => {
         alert(`Quest "${Quest.title}" has been completed!`);
     };

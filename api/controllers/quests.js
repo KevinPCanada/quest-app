@@ -87,7 +87,7 @@ export const displayAllQuests = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [userId]);
 
-
+        console.log('Query results:', results);
         res.status(200).json(results);
     } catch (error) {
         console.error(error);
@@ -102,7 +102,7 @@ export const getQuestByID = async (req, res) => {
 
         const query = `
             SELECT 
-                quests.id
+                quests.id,
                 quests.quest_name, 
                 quests.quest_description, 
                 difficulty.difficulty_name 
@@ -114,7 +114,7 @@ export const getQuestByID = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [questId, userId]);
 
- 
+        console.log('Query results:', results);
         res.status(200).json(results);
     } catch (error) {
         console.error(error);
@@ -127,14 +127,18 @@ export const completeQuest = async (req, res) => {
         const questId = req.params.questId;
         const userId = req.user.id;
 
-
+        console.log(questId)
 
 
         const result = await pool.query(`
-            UPDATE quests
-            SET completed = 1
-            WHERE id = ? AND user_id = ?;
+           UPDATE users u
+            JOIN quests q ON u.user_id = q.user_id
+            JOIN difficulty d ON q.quest_level = d.difficulty_level
+            SET u.experience = u.experience + d.exp_reward, 
+                q.completed = 1
+            WHERE q.id = ? AND u.user_id = ?;
         `, [questId, userId]);
+
 
         res.status(200).json({ message: "Quest Completed" });
 
@@ -150,6 +154,7 @@ export const getCompletedQuests = async (req, res) => {
 
         const query = `
             SELECT 
+                quests.id,
                 quests.quest_name, 
                 quests.quest_description, 
                 difficulty.difficulty_name 
@@ -161,7 +166,7 @@ export const getCompletedQuests = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [userId]);
 
-
+        console.log('Query results:', results);
         res.status(200).json(results);
     } catch (error) {
         console.error(error);
@@ -175,6 +180,7 @@ export const getIncompleteQuests = async (req, res) => {
 
         const query = `
             SELECT 
+                quests.id,
                 quests.quest_name, 
                 quests.quest_description, 
                 difficulty.difficulty_name 
@@ -186,7 +192,7 @@ export const getIncompleteQuests = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [userId]);
 
-
+        console.log('Query results:', results);
         res.status(200).json(results);
     } catch (error) {
         console.error(error);
@@ -200,7 +206,6 @@ export const getExpByQuest = async (req, res) => {
 
         const query = `
              SELECT 
-                
                 difficulty.exp_reward
             FROM quests
             JOIN difficulty ON quests.quest_level = difficulty.difficulty_level
@@ -210,7 +215,7 @@ export const getExpByQuest = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [questId, userId]);
 
-       
+        console.log('Query results:', results);
         res.status(200).json(results);
     } catch (error) {
         console.error(error);

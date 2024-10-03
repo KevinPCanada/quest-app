@@ -16,7 +16,7 @@ function Home() {
   useEffect(() => {
     const fetchQuests = async () => {
       try {
-        const response = await fetch('http://localhost:8800/api/quests/display-user', {
+        const response = await fetch('http://localhost:8800/api/quests/incomplete', {
           method: 'GET',
           credentials: 'include',
           headers: {
