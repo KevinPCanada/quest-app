@@ -31,7 +31,7 @@ export function Sidebar() {
               <i className="material-icons">receipt_long</i>
               <p className="hide">Questboard</p>
             </Link>
-            <Link to="/quest-history" className="sidebar-button">
+            <Link to="/questhistory" className="sidebar-button">
               <i className="material-icons">menu_book</i>
               <p className="hide">Quest History</p>
             </Link>

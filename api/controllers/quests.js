@@ -150,17 +150,17 @@ export const getCompletedQuests = async (req, res) => {
 
         const query = `
             SELECT 
+                quests.id,
                 quests.quest_name, 
                 quests.quest_description, 
                 difficulty.difficulty_name 
             FROM quests
             JOIN difficulty ON quests.quest_level = difficulty.difficulty_level
-            WHERE user_id = ? AND completed = 1;
+            WHERE quests.user_id = ? AND quests.completed = 1;
         `;
 
         // Execute the query
         const [results] = await pool.query(query, [userId]);
-
 
         res.status(200).json(results);
     } catch (error) {
@@ -217,6 +217,7 @@ export const getExpByQuest = async (req, res) => {
         res.status(500).json({ message: "An error occurred" });
     }
 };
+
 export const deleteAllCompleted = async (req, res) => {
     try {
         
@@ -232,6 +233,41 @@ export const deleteAllCompleted = async (req, res) => {
         res.status(500).json({ message: "An error occurred" });
     }
 }
+
+export const updateQuestCompletion = async (req, res) => {
+    try {
+        const questId = req.params.questId;
+        const userId = req.user.id;
+        const { completed } = req.body;
+
+
+        // Input validation
+        if (!questId || questId === 'undefined') {
+            return res.status(400).json({ message: "Invalid Quest ID" });
+        }
+
+        if (completed === undefined || completed === null) {
+            return res.status(400).json({ message: "Completed status is required" });
+        }
+
+        // Convert the boolean to tinyint (0 or 1)
+        const completedValue = completed ? 1 : 0;
+
+        const [result] = await pool.query(
+            'UPDATE quests SET completed = ? WHERE id = ? AND user_id = ?',
+            [completedValue, questId, userId]
+        );
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Quest not found or you don't have permission to update it" });
+        }
+
+        res.status(200).json({ message: "Quest completion status updated successfully" });
+    } catch (error) {
+        console.error('Error updating quest completion status:', error);
+        res.status(500).json({ message: "An error occurred while updating quest completion status", error: error.message });
+    }
+};
 
 //complete quest
 //get all quests
