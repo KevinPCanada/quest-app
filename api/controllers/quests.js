@@ -87,7 +87,7 @@ export const displayAllQuests = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [userId]);
 
-        console.log('Query results:', results);
+
         res.status(200).json(results);
     } catch (error) {
         console.error(error);
@@ -114,7 +114,7 @@ export const getQuestByID = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [questId, userId]);
 
-        console.log('Query results:', results);
+ 
         res.status(200).json(results);
     } catch (error) {
         console.error(error);
@@ -127,7 +127,7 @@ export const completeQuest = async (req, res) => {
         const questId = req.params.questId;
         const userId = req.user.id;
 
-        console.log(questId)
+
 
 
         const result = await pool.query(`
@@ -161,7 +161,7 @@ export const getCompletedQuests = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [userId]);
 
-        console.log('Query results:', results);
+
         res.status(200).json(results);
     } catch (error) {
         console.error(error);
@@ -186,7 +186,7 @@ export const getIncompleteQuests = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [userId]);
 
-        console.log('Query results:', results);
+
         res.status(200).json(results);
     } catch (error) {
         console.error(error);
@@ -210,7 +210,7 @@ export const getExpByQuest = async (req, res) => {
         // Execute the query
         const [results] = await pool.query(query, [questId, userId]);
 
-        console.log('Query results:', results);
+       
         res.status(200).json(results);
     } catch (error) {
         console.error(error);
