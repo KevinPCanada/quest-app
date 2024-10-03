@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Settings.css";
 
 function Settings() {
@@ -11,6 +11,7 @@ function Settings() {
 
   const [classes, setClasses] = useState([]);
   const [isEditingDisplayName, setIsEditingDisplayName] = useState(false);
+  const displayNameInputRef = useRef(null);
   const [editDisplayName, setEditDisplayName] = useState("");
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [selectedClass, setSelectedClass] = useState("");
@@ -75,11 +76,18 @@ function Settings() {
     if (field === "display_name") {
       setIsEditingDisplayName(true);
       setEditDisplayName(userInfo.display_name || userInfo.username);
+      setTimeout(() => {
+        if (displayNameInputRef.current) {
+          displayNameInputRef.current.focus();
+          displayNameInputRef.current.select();
+        }
+      }, 0);
     }
   };
 
   const handleDisplayNameChange = (value) => {
     setEditDisplayName(value);
+    // Consider empty string as a valid change
     setPendingChanges((prev) => ({ ...prev, display_name: value }));
     setHasChanges(true);
   };
@@ -87,6 +95,7 @@ function Settings() {
   const handleSaveClick = (field) => {
     if (field === "display_name") {
       setIsEditingDisplayName(false);
+      // Update local state, but don't clear pending changes
       setUserInfo((prev) => ({ ...prev, display_name: editDisplayName }));
     }
   };
@@ -120,22 +129,28 @@ function Settings() {
 
   const handleSaveChanges = async () => {
     try {
-      // Update display name if changed
-      if (pendingChanges.display_name) {
-        await fetch(
+      // Update display name if changed (including to empty string)
+      if ("display_name" in pendingChanges) {
+        const response = await fetch(
           `http://localhost:8800/api/user/${userInfo.user_id}/display-name`,
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             credentials: "include",
-            body: JSON.stringify({ display_name: pendingChanges.display_name }),
+            body: JSON.stringify({
+              display_name: pendingChanges.display_name || null,
+            }),
           }
         );
+
+        if (!response.ok) {
+          throw new Error("Failed to update display name");
+        }
       }
 
       // Update class if changed
       if (pendingChanges.class_id) {
-        await fetch(
+        const response = await fetch(
           `http://localhost:8800/api/user/${userInfo.user_id}/class`,
           {
             method: "PUT",
@@ -144,6 +159,10 @@ function Settings() {
             body: JSON.stringify({ class_id: pendingChanges.class_id }),
           }
         );
+
+        if (!response.ok) {
+          throw new Error("Failed to update class");
+        }
       }
 
       // Refresh the page
@@ -177,6 +196,8 @@ function Settings() {
                 type="text"
                 value={editDisplayName}
                 onChange={(e) => handleDisplayNameChange(e.target.value)}
+                ref={displayNameInputRef}
+                autoFocus
               />
               <div>
                 <button

@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { AuthContextProvider } from '/src/context/AuthContext';
-import { react, useState } from "react";
+
 import "./App.css";
 
 import Home from "./pages/Home/Home";
@@ -14,9 +14,8 @@ import NewQuest from "./components/NewQuest/NewQuest";
 import Sidebar from "./components/Sidebar/Sidebar"
 import Privacy from './pages/Privacy/PrivacyPolicy';
 import AboutUs from './pages/About/AboutUs';
-import { Toaster } from "./components/ui/toaster"
+import QuestHistory from './pages/QuestHistory/QuestHistory';
 
-import FullQuest from "./components/Full_Quest/Full_Quest";
 
 const Layout = () => {
   return (
@@ -58,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/rewards",
         element: <Reward />,
+      },
+      {
+        path: "questhistory",
+        element: <QuestHistory />,
       },
     ],
   },
