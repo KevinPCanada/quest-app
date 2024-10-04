@@ -4,9 +4,12 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     min-height: 100vh;
-    min-width: 100vh;
-    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 50px;
     font-family: var(--primary-font);
 }
 
@@ -14,8 +17,9 @@
 .TeamContainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between; /* Space out team members evenly */
-    gap: 20px; /* Space between team members */
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1200px;
 }
 
 /* Style each team member section */
@@ -23,26 +27,25 @@
     background-color: var(--background-color);
     padding: 20px;
     border: 3px solid var(--primary-color);
-    border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
     width: 23%; /* Adjust width to fit 4 items in a row */
     text-align: center;
-    box-sizing: border-box; /* Ensure padding and border are included in width */
-    transition: box-shadow 0.3s ease; /* Transition effect for glow */
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
 }
 
 /* Add glow effect on hover */
 .TeamMember:hover {
-    box-shadow: 0 0 15px 5px var(--primary-color), 0 4px 15px rgba(0, 0, 0, 0.25); /* Glowing green */
+    box-shadow: 0 0 15px 5px var(--primary-color), 0 4px 15px rgba(0, 0, 0, 0.25);
 }
 
 /* Style the images */
 .TeamImage {
     width: 100px;
     height: 100px;
-    border-radius: 50%;
     object-fit: cover;
-    margin-bottom: 10px;
+    margin: 0 auto 10px auto;
+    display: block;
 }
 
 /* Style the team member names and roles */
@@ -60,4 +63,62 @@
 .TeamIntro {
     font-size: 1rem;
     line-height: 1.5;
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+    .TeamMember {
+        width: 45%; /* 2 items per row on tablets */
+    }
+
+    .TeamImage {
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .TeamMember {
+        width: 100%; /* 1 item per row on mobile */
+    }
+
+    .TeamImage {
+        width: 60px;
+        height: 60px;
+    }
+
+    .TeamName {
+        font-size: 1.2rem;
+    }
+
+    .TeamRole {
+        font-size: 1rem;
+    }
+
+    .TeamIntro {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .AboutUs {
+        padding: 20px;
+    }
+
+    .TeamImage {
+        width: 50px;
+        height: 50px;
+    }
+
+    .TeamName {
+        font-size: 1rem;
+    }
+
+    .TeamRole {
+        font-size: 0.9rem;
+    }
+
+    .TeamIntro {
+        font-size: 0.8rem;
+    }
 }
