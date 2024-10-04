@@ -5,7 +5,7 @@ import HeaderButton from "../HeaderButton/HeaderButton";
 import NewQuest from "../NewQuest/NewQuest";
 import "./QuestboardHeader.css";
 
-function HomeHeader() {
+function HomeHeader({updateQuests}) {
   const [userExp, setUserExp] = useState(null);
   const { currentUser } = useContext(AuthContext);
 
@@ -22,9 +22,10 @@ function HomeHeader() {
         if (!response.ok) {
           throw new Error('Failed to fetch user experience');
         }
-
+        
         const data = await response.json();
         setUserExp(data.experience);
+        
       } catch (error) {
         console.error('Error fetching user experience:', error);
         // Handle error (e.g., show error message to user)
@@ -33,7 +34,7 @@ function HomeHeader() {
 
     fetchUserExp();
   }, [currentUser]);
-
+  
   return (
     <div className="questboard-header">
       <div className="questboard-header-left">
@@ -44,7 +45,7 @@ function HomeHeader() {
         )}
       </div>
       <div className="questboard-header-right">
-        <NewQuest/>
+        <NewQuest updateQuests={updateQuests}/>
       </div>
     </div>
   );

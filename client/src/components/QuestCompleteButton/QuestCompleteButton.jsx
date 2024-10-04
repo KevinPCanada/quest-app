@@ -1,7 +1,7 @@
 import React from "react";
 import "./QuestCompleteButton.css";
 
-function QuestCompleteButton({ exp, onClick, thisQuestId }) {
+function QuestCompleteButton({ exp, onClick, thisQuestId, updateQuests }) {
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -22,7 +22,7 @@ function QuestCompleteButton({ exp, onClick, thisQuestId }) {
         throw new Error('Failed to complete quest');
       }
 
-      
+      updateQuests()
       console.log('Quest completed successfully');
       
     } catch (error) {

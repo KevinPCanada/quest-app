@@ -36,8 +36,8 @@ import Modal from '../Modal/Modal';
 import './Quest.css';
 
 
-function Quest({ title, description, exp, id, level }) {
-  console.log( title, description, exp, id, level )
+function Quest({ title, description, exp, id, level, updateQuests }) {
+  
  
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -59,13 +59,13 @@ function Quest({ title, description, exp, id, level }) {
 
             {/* Replace the <a> tag with a button to open the modal */}
             <button onClick={handleOpenModal}>View Full Quest</button>
-            <EditQuest thisQuestId={id} />
+            <EditQuest thisQuestId={id} updateQuests={updateQuests} />
 
           </div>
         </div>
       </div>
       <div className="quest-container-right">
-        <QuestCompleteButton thisQuestId={id} exp={exp} />
+        <QuestCompleteButton thisQuestId={id} exp={exp} updateQuests={updateQuests}/>
       </div>
 
       {/* Modal to show the FullQuest component */}
