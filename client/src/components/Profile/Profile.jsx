@@ -1,30 +1,28 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
+import { AuthContext } from "../../context/AuthContext"; // Adjust the import path as needed
 
 function ProfileButton() {
-  // State variables to store user data, class data, experience data, and any errors
+  const { currentUser } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
   const [classData, setClassData] = useState(null);
-  const [experienceData, setExperienceData] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // useEffect hook to fetch user, class, and experience data when the component mounts
   useEffect(() => {
-    async function fetchData() {
+    async function fetchUserData() {
+      if (!currentUser) {
+        setLoading(false);
+        return;
+      }
+
       try {
-        const userDataString = localStorage.getItem("user");
-        if (!userDataString) {
-          throw new Error("No user data found in local storage");
-        }
-
-        const { user_id } = JSON.parse(userDataString);
-
         // Fetch user data
-        const userResponse = await fetch(`http://localhost:8800/api/user/${user_id}`, {
+        const userResponse = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}`, {
           credentials: "include",
         });
 
@@ -34,10 +32,9 @@ function ProfileButton() {
 
         const userData = await userResponse.json();
         setUserData(userData);
-        console.log("Fetched User Data:", userData);
 
         // Fetch class data
-        const classResponse = await fetch(`http://localhost:8800/api/user/${user_id}/class`, {
+        const classResponse = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}/class`, {
           credentials: "include",
         });
 
@@ -48,48 +45,34 @@ function ProfileButton() {
         const classData = await classResponse.json();
         setClassData(classData);
 
-        // Fetch experience data
-        const expResponse = await fetch(`http://localhost:8800/api/user/${user_id}/exp`, {
-          credentials: "include",
-        });
-
-        if (!expResponse.ok) {
-          throw new Error(`HTTP error! status: ${expResponse.status}`);
-        }
-
-        const expData = await expResponse.json();
-        setExperienceData(expData);
-
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching user data:", error);
         setError(error.message);
+      } finally {
+        setLoading(false);
       }
     }
 
-    fetchData();
-  }, []);
+    fetchUserData();
+  }, [currentUser]);
 
-  // Display error message if there's an error
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-  // Display loading message while data is being fetched
-  if (!userData || !classData || !experienceData) {
-    return <div>Loading...</div>;
+  if (!userData || !classData) {
+    return <div>No user data available</div>;
   }
 
-  // Calculate user's level and experience to next level
-  const level = Math.floor(experienceData.experience / 100) + 1;
-  const expToNextLevel = experienceData.experience % 100;
-
-  // Construct the full URL for the class avatar
+  const level = Math.floor(userData.experience / 100) + 1;
+  const expToNextLevel = userData.experience % 100;
   const avatarUrl = `http://localhost:8800${classData.class_avatar}`;
-
-  // Determine which name to display
   const displayName = userData.display_name || userData.username;
 
-  // Render the profile button and popover
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -109,7 +92,6 @@ function ProfileButton() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {/* User avatar and class information */}
             <div className="flex items-center space-x-4">
               <Avatar className="h-16 w-16">
                 <AvatarImage src={avatarUrl} alt={classData.class_name} />
@@ -122,7 +104,6 @@ function ProfileButton() {
                 </p>
               </div>
             </div>
-            {/* User level and experience information */}
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span>Level:</span>
@@ -130,14 +111,13 @@ function ProfileButton() {
               </div>
               <div className="flex justify-between text-sm">
                 <span>Experience:</span>
-                <span>{experienceData.experience} XP</span>
+                <span>{userData.experience} XP</span>
               </div>
               <Progress value={expToNextLevel} className="w-full h-2" />
               <p className="text-xs text-muted-foreground text-right">
                 {expToNextLevel}/100 XP to next level
               </p>
             </div>
-            {/* User email information */}
             <div className="text-sm">
               <span className="font-medium">Email: </span>
               <span>{userData.email}</span>

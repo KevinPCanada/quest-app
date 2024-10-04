@@ -8,7 +8,7 @@ import {
   updateUserMilestone,
   getUserClassInfo,
   updateUserDisplayName,
-  updateUserClass
+  updateUserClass,
 } from "../controllers/user.js";
 
 const router = express.Router();
