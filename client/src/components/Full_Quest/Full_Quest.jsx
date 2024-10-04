@@ -7,7 +7,7 @@ import cakeImage from '../../assets/img/pieceofcake.png';
 import { deleteQuest } from "./full-quest-controller";
 
 export default function FullQuest({ Quest, updateQuests, id }) {
-    console.log(id)
+    // console.log(id)
 
     const [levelDetails, setLevelDetails] = useState({ className: '', image: '' });
 
