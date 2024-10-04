@@ -4,10 +4,10 @@ import './Full_Quest.css';
 import skullImage from '../../assets/img/skull.png';
 import swordImage from '../../assets/img/sword.png';
 import cakeImage from '../../assets/img/pieceofcake.png';
+import { deleteQuest } from "./full-quest-controller";
 
-export default function FullQuest({ Quest }) {
-    console.log("Quest Object:", Quest);
-    console.log("Quest Level:", Quest.level);
+export default function FullQuest({ Quest, updateQuests, id }) {
+    console.log(id)
 
     const [levelDetails, setLevelDetails] = useState({ className: '', image: '' });
 
@@ -44,9 +44,11 @@ export default function FullQuest({ Quest }) {
 
     const handleDelete = () => {
         const confirmDelete = window.confirm(`Are you sure you want to delete the quest: "${Quest.title}"?`);
+        deleteQuest(id)
         if (confirmDelete) {
             alert(`Quest "${Quest.title}" has been deleted.`);
         }
+        updateQuests()
     };
 
     return (

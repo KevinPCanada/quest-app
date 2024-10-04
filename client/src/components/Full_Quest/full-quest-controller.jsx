@@ -1,21 +1,19 @@
-import { useState, useEffect } from "react";
-
-export const deleteQuest = async (questId) => {
+export const deleteQuest = async (id) => {
     try {
-        const response = await fetch(`http://localhost:8800/api/quests/add-quest/${questId}`, {
+        console.log(id);
+        const response = await fetch(`http://localhost:8800/api/quests/delete-quest/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
-            credentials: "include",
-            body: JSON.stringify(questId),
+            credentials: "include", 
         });
 
         if (!response.ok) {
             throw new Error("Failed to delete quest");
         }
 
-        return await response.json(); 
+        return await response.json();
     } catch (error) {
         console.error("Failed to delete quest, please try again", error);
         throw error;
