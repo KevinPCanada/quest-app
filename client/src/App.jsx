@@ -62,6 +62,15 @@ const router = createBrowserRouter([
         path: "questhistory",
         element: <QuestHistory />,
       },
+      {
+        path: "/privacy",
+        element: <Privacy/>  ,
+      },
+      {
+        path: "/about",
+        element: <AboutUs/>  ,
+      },
+    
     ],
   },
   {
@@ -88,15 +97,7 @@ const router = createBrowserRouter([
       </AuthWrapper>
     ), // Create a NotFound component for 404 errors
   },
-  {
-    path: "/privacy",
-    element: <Privacy/>  ,
-  },
-  {
-    path: "/about",
-    element: <AboutUs/>  ,
-  },
-
+  
 
   // general test route, use this to preview what you are working on in the browser 
   //then return to this state when you're done

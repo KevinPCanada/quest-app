@@ -1,33 +1,33 @@
 :root {
-
     --danger-color: #d9534f; /* Red */
     --warning-color: #f0ad4e; /* Orange */
-   
 }
 
 .full-quest-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-color: var(--background-color); 
-    width: auto;              /* Allow the container to grow based on content */
-    word-wrap: break-word;     /* Break long words if necessary */
-    overflow-wrap: break-word; /* Ensure text wraps within the container */
-    
+    height: 10vh;
+    /* background-color: var(--background-color);  */
+    max-width: 100vw;  /* Prevent overflow beyond viewport */
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 20px;  /* Ensure some space inside the viewport */
 }
+
 
 .full-quest-section {
     padding: 30px;
-    background-color: white;
+    background-color: var(--background-color);
     border: 3px solid var(--primary-color);
-    max-width: 700px;
+    max-width: 800px;
     /* width: 100%; */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     font-family: var(--primary-font);
 }
 
 .FullQuestTitleContainer {
+   
     text-align: left;
     font-size: 2.4rem;
     border-bottom: #4a9b48 3px solid;
@@ -156,4 +156,49 @@
 .full-quest-button:active {
     box-shadow: var(--button-shadow-click);
   transform: var(--button-transform-click)
+}
+
+
+@media (max-width: 768px) {
+    .full-quest-container {
+        flex-direction: column;
+    }
+
+    .full-quest-section {
+        width: 100%;  /* Make the full section fill the screen width */
+        padding: 20px;
+    }
+
+    .FullQuestTitleContainer {
+        
+        text-align: center; /* Center title on small screens */
+    }
+
+    .QuestTitle {
+        display: flex;
+    flex-direction: column;
+        font-size: 1.2rem;
+    }
+
+    .Questdescription, .Questlevel {
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    .QuestLevelText{
+        font-size: 1.2rem;
+    }
+    .Questname {
+        font-size: 2rem;
+    }
+
+    .full-quest-buttons {
+        flex-direction: column; /* Stack buttons vertically on small screens */
+        align-items: center;
+    }
+
+    .full-quest-button {
+        width: 100%; /* Make buttons full-width on small screens */
+        margin-bottom: 10px; /* Add space between buttons */
+    }
 }
