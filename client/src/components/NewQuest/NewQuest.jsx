@@ -13,7 +13,7 @@ import {
     DialogTrigger,
 } from "../ui/dialog";
 
-export default function NewQuest() {
+export default function NewQuest({updateQuests}) {
     const [open, setOpen] = React.useState(false);
     const [questLevel, setQuestLevel] = useState("1")
 
@@ -27,13 +27,14 @@ export default function NewQuest() {
             questLevel: questLevel
         }
 
-        console.log(questData)
+        
 
-        const addedQuest = addQuest(questData)
+        const addedQuest = await addQuest(questData)
 
 
-
+        
         console.log("Form submitted");
+        updateQuests()
         setOpen(false);
     };
     return (
