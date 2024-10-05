@@ -1,4 +1,5 @@
 import { pool } from "../pool.js";
+import { calculateLevel } from '../utils/levelCalculations.js';
 
 export const addQuest = async (req, res) => {
     try {
@@ -140,42 +141,41 @@ export const completeQuest = async (req, res) => {
         const currentExperience = currentUserData[0].experience;
         const currentLevel = currentUserData[0].level;
 
-        // Update experience and complete the quest
+        // Get the quest experience reward
+        const [questData] = await pool.query(`
+            SELECT d.exp_reward
+            FROM quests q
+            JOIN difficulty d ON q.quest_level = d.difficulty_level
+            WHERE q.id = ? AND q.user_id = ?
+        `, [questId, userId]);
+
+        if (questData.length === 0) {
+            return res.status(404).json({ message: "Quest not found" });
+        }
+
+        const expReward = questData[0].exp_reward;
+
+        // Calculate new experience
+        const newExperience = currentExperience + expReward;
+
+        // Calculate new level
+        const newLevel = calculateLevel(newExperience);
+
+        // Update experience, level, and complete the quest
         await pool.query(`
             UPDATE users u
             JOIN quests q ON u.user_id = q.user_id
-            JOIN difficulty d ON q.quest_level = d.difficulty_level
-            SET u.experience = u.experience + d.exp_reward,
+            SET u.experience = ?,
+                u.level = ?,
                 q.completed = 1
             WHERE q.id = ? AND u.user_id = ?;
-        `, [questId, userId]);
+        `, [newExperience, newLevel, questId, userId]);
 
-        // Get the updated experience
-        const [updatedUserData] = await pool.query(
-            "SELECT experience FROM users WHERE user_id = ?",
-            [userId]
-        );
-
-        const newExperience = updatedUserData[0].experience;
-        const experienceGained = newExperience - currentExperience;
-
-        // Calculate the new level
-        const newLevel = Math.floor(newExperience / 100) + 1;
-
-        // Check if level up occurred
         const leveledUp = newLevel > currentLevel;
-
-        // If leveled up, update the level in the database
-        if (leveledUp) {
-            await pool.query(
-                "UPDATE users SET level = ? WHERE user_id = ?",
-                [newLevel, userId]
-            );
-        }
 
         res.status(200).json({ 
             message: "Quest Completed",
-            experienceGained,
+            experienceGained: expReward,
             newExperience,
             newLevel,
             leveledUp
