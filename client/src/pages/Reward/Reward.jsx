@@ -9,7 +9,9 @@ import "./Reward.css";
 //The milestone is how often the user can give themselves a reward
 
 export default function RewardPage() {
+  // Access user data and fetchRewards function from AuthContext
   const { currentUser, fetchRewards } = useContext(AuthContext);
+  // State for storing rewards, new reward input, selected milestone, and loading status
   const [rewards, setRewards] = useState([]);
   const [newReward, setNewReward] = useState("");
   const [selectedMilestone, setSelectedMilestone] = useState("1");
@@ -17,9 +19,11 @@ export default function RewardPage() {
 
   //   Display the rewards and correct Milestone Settings.
   useEffect(() => {
+    // Function to fetch rewards and milestone data
     const getRewardsAndMilestone = async () => {
       setIsLoading(true);
       try {
+        // Fetch rewards using the fetchRewards function from AuthContext
         const fetchedRewards = await fetchRewards();
         setRewards(fetchedRewards);
 
@@ -43,6 +47,7 @@ export default function RewardPage() {
       }
     };
 
+    // Only fetch data if there's a current user
     if (currentUser) {
       getRewardsAndMilestone();
     }
@@ -50,12 +55,13 @@ export default function RewardPage() {
 
 
   //   Create the reward
-
+  // Function to handle adding a new reward
   const handleAddReward = async (e) => {
     e.preventDefault();
     if (!newReward.trim()) return; // Don't submit if the input is empty
 
     try {
+      // Send POST request to add new reward
       const response = await fetch("http://localhost:8800/api/rewards/add", {
         method: "POST",
         headers: {
@@ -82,9 +88,10 @@ export default function RewardPage() {
   };
 
   //   Delete the reward
-
+  // Function to handle deleting a reward
   const handleDeleteReward = async (rewardId) => {
     try {
+      // Send DELETE request to remove the reward
       const response = await fetch(
         `http://localhost:8800/api/rewards/delete/${rewardId}`,
         {
@@ -106,9 +113,10 @@ export default function RewardPage() {
   };
 
   //   Edit the reward
-
+  // Function to handle editing a reward
   const handleEditReward = async (rewardId, newDescription) => {
     try {
+      // Send PUT request to update the reward
       const response = await fetch(
         `http://localhost:8800/api/rewards/edit/${rewardId}`,
         {
@@ -138,16 +146,17 @@ export default function RewardPage() {
   // Milestones
 
   // Update the Milestone state
-
+  // Function to handle milestone selection change
   const handleMilestoneChange = (event) => {
     setSelectedMilestone(event.target.value);
   };
 
-  // Hande the milestone submit
-
+  // Handle the milestone submit
+  // Function to submit the selected milestone
   const handleMilestoneSubmit = async (event) => {
     event.preventDefault();
     try {
+      // Send PUT request to update the milestone
       const response = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}/milestone`, {
         method: 'PUT',
         headers: {
@@ -176,6 +185,7 @@ export default function RewardPage() {
   return (
     <>
       <main className="rewardpage">
+        {/* Left side: Display existing rewards */}
         <div className="rewardpage-left">
           <div className="rewardpage-left-top">
             <div className="rewardpage-header">
@@ -185,6 +195,7 @@ export default function RewardPage() {
             <span>Your list of rewards</span>
           </div>
           <div className="rewardpage-left-bottom">
+            {/* Render rewards if available, otherwise show a message */}
             {rewards.length > 0 ? (
               rewards.map((reward) => (
                 <RewardListItem
@@ -200,7 +211,9 @@ export default function RewardPage() {
           </div>
         </div>
 
+        {/* Right side: Add new rewards and set milestone */}
         <div className="rewardpage-right">
+          {/* Form to add new reward */}
           <div className="rewardpage-right-top">
             <div className="rewardpage-right-top-header">
               <h2>Set new reward</h2>
@@ -216,6 +229,7 @@ export default function RewardPage() {
               <input type="submit" value="add new reward" />
             </form>
           </div>
+          {/* Form to set milestone */}
           <div className="rewardpage-right-bottom">
             <form onSubmit={handleMilestoneSubmit} className="milestone-form">
               <div className="rewardpage-right-bottom-header">
@@ -223,10 +237,12 @@ export default function RewardPage() {
                 <i className="material-icons">vertical_align_bottom</i>
               </div>
               <span>How often would you like to set your milestone?</span>
+              {/* Show loading message or milestone options */}
               {isLoading ? (
                 <p>Loading...</p>
               ) : (
                 <>
+                  {/* Milestone radio button options */}
                   <RewardRadio
                     name="milestone"
                     value="1"
