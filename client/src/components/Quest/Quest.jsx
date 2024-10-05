@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import QuestCompleteButton from '../QuestCompleteButton/QuestCompleteButton';
 import EditQuest from '../EditQuest/EditQuest';
 import FullQuest from '../Full_Quest/Full_Quest';
@@ -16,10 +16,11 @@ function Quest({ title, description, exp, id, level, updateQuests, updateUserDat
     setIsModalOpen(false);
   };
 
-  const handleQuestComplete = async () => {
+  const handleQuestComplete = useCallback(async () => {
+    console.log("Quest complete callback triggered");
     await updateQuests();
     await updateUserData();
-  };
+  }, [updateQuests, updateUserData]);
 
   return (
     <article className="quest-container">
@@ -37,9 +38,7 @@ function Quest({ title, description, exp, id, level, updateQuests, updateUserDat
         <QuestCompleteButton
           thisQuestId={id}
           exp={exp}
-          updateQuests={updateQuests}
-          updateUserData={updateUserData}
-          onComplete={handleQuestComplete}
+          onQuestComplete={handleQuestComplete}
         />
       </div>
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
