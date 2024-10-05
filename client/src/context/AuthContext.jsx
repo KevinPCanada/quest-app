@@ -1,115 +1,110 @@
-// This is a place to store and manage the user's authentication state (whether they're logged in or not, and their user information).
-
-// Allows us to access the user's authentication state and authentication functions (like login and logout) from anywhere in the app without having to pass this information down through props.
-
-// Helps maintain the user's logged-in state even when they refresh the page, by storing the user information in localStorage.
-
-// Holds all the authentication-related logic (like making API calls to login or logout) in one place.
-
-// Ensures that all parts of the app have the same, up-to-date information about the user's authentication status.
+// This file creates a central place to manage user login information.
+// It's like a shared notebook that any part of the app can read from or write to.
+// This helps keep track of whether a user is logged in and who they are/what they do.
 
 import React, { createContext, useState, useEffect } from "react";
 
-// Create a new context for authentication
+// Create a new "notebook" (context) for storing login information
 export const AuthContext = createContext();
 
-// AuthContextProvider component to wrap the app and provide authentication state
+// This is the main function that sets up our "notebook"
 export const AuthContextProvider = ({ children }) => {
-  // Initialize currentUser state with data from localStorage, if any
+  // Check if there's any saved user information when the app starts
   const [currentUser, setCurrentUser] = useState(() => {
-    const user = localStorage.getItem("user");
+    const savedUser = localStorage.getItem("user");
     try {
-      return user ? JSON.parse(user) : null;
+      // If there's saved info, use it; otherwise, start with no user
+      return savedUser ? JSON.parse(savedUser) : null;
     } catch (e) {
-      console.error("Failed to parse user data from localStorage", e);
+      console.error("Couldn't read saved user info", e);
       return null;
     }
   });
 
-  // Login function to authenticate user
+  // This function handles logging in
   const login = async (inputs) => {
     try {
-      // Send POST request to login API.
+      // Send login details to the server
       const res = await fetch("http://localhost:8800/api/auth/login", {
         method: "POST",
-        credentials: "include", // This line is crucial for CORS and cookies to work
+        credentials: "include", // This allows the server to set cookies
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(inputs), // Send the form inputs as JSON
+        body: JSON.stringify(inputs), // Send login info as a special format
       });
 
-      // Handle non-OK responses
+      // If login fails, explain why
       if (!res.ok) {
         if (res.status === 401) {
-          throw new Error("Invalid username or password");
+          throw new Error("Wrong username or password");
         } else {
-          throw new Error(
-            "There seems to be a problem. Please check your username and password and try again."
-          );
+          throw new Error("Login problem. Please try again.");
         }
       }
 
-      // Parse response data
+      // If login succeeds, save the user info
       const data = await res.json();
-      // Update currentUser state with logged in user data
       setCurrentUser(data);
       return data;
     } catch (err) {
-      throw err;
+      throw err; // If there's an error, let other parts of the app know
     }
   };
 
-  // Logout function to end user session
+  // This function handles logging out
   const logout = async () => {
     try {
-      // Send POST request to logout API
+      // Tell the server we're logging out
       const res = await fetch("http://localhost:8800/api/auth/logout", {
         method: "POST",
         credentials: "include",
       });
 
       if (!res.ok) {
-        throw new Error("Logout failed");
+        throw new Error("Logout didn't work");
       }
 
-      // Clear currentUser state and remove user data from localStorage
+      // Clear user info from our app and storage
       setCurrentUser(null);
       localStorage.removeItem("user");
     } catch (err) {
-      console.error("Logout error:", err);
-      // Still clear user data on client side even if server request fails
+      console.error("Logout problem:", err);
+      // Even if server logout fails, clear user info locally
       setCurrentUser(null);
       localStorage.removeItem("user");
     }
   };
 
-  // Effect to update localStorage when currentUser changes
+  // Save user info to local storage whenever it changes
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(currentUser));
   }, [currentUser]);
 
-  // New Context To Fetch Rewards
+  // This function gets the list of rewards for a user
   const fetchRewards = async () => {
     try {
+      // Ask the server for the rewards
       const res = await fetch("http://localhost:8800/api/rewards", {
         method: "GET",
         credentials: "include",
       });
+
       if (!res.ok) {
-        throw new Error("Failed to fetch rewards");
+        throw new Error("Couldn't get rewards");
       }
-      return await res.json();
+
+      return await res.json(); // Return the rewards data
     } catch (err) {
-      console.error("Error fetching rewards:", err);
+      console.error("Problem getting rewards:", err);
       throw err;
     }
   };
 
-  // Provide AuthContext to children components
+  // Make all these functions and data available to the rest of the app
   return (
     <AuthContext.Provider value={{ currentUser, setCurrentUser, login, logout, fetchRewards }}>
-    {children}
-  </AuthContext.Provider>
+      {children}
+    </AuthContext.Provider>
   );
 };
