@@ -1,33 +1,36 @@
 import { pool } from "../pool.js";
+import { calculateLevel } from '../utils/levelCalculations.js';
 
 export const getUser = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    // Fetch the specific user info for the logged-in user
-    const [user] = await pool.query("SELECT * FROM users WHERE user_id = ?", [
-      userId,
-    ]);
+    const [user] = await pool.query("SELECT * FROM users WHERE user_id = ?", [userId]);
 
-    // Check if a user was found
+       // Verify that the requesting user is the same as the user being queried
+       if (req.user.id != userId) {
+        return res
+          .status(403)
+          .json({
+            message: "You don't have permission to access this information",
+          });
+      }
+
     if (user.length === 0) {
-      return res
-        .status(404)
-        .json({
-          message: "User not found or you don't have permission to view it",
-        });
+      return res.status(404).json({
+        message: "User not found or you don't have permission to view it",
+      });
     }
 
-    // Destructure the user object to exclude password_hash
     const { password_hash, ...userWithoutPassword } = user[0];
+    
+    // Calculate the level
+    userWithoutPassword.level = calculateLevel(userWithoutPassword.experience);
 
-    // Return the found user
     res.status(200).json(userWithoutPassword);
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while fetching the user" });
+    res.status(500).json({ message: "An error occurred while fetching the user" });
   }
 };
 
@@ -35,13 +38,10 @@ export const getUserExp = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    // Verify that the requesting user is the same as the user being queried
     if (req.user.id != userId) {
-      return res
-        .status(403)
-        .json({
-          message: "You don't have permission to access this information",
-        });
+      return res.status(403).json({
+        message: "You don't have permission to access this information",
+      });
     }
 
     const [rows] = await pool.query(
@@ -53,12 +53,63 @@ export const getUserExp = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.status(200).json({ experience: rows[0].experience });
+    const experience = rows[0].experience;
+    const level = calculateLevel(experience);
+
+    res.status(200).json({ experience, level });
   } catch (error) {
     console.error("Error fetching user experience:", error);
-    res
-      .status(500)
-      .json({ message: "An error occurred while fetching user experience" });
+    res.status(500).json({ message: "An error occurred while fetching user experience" });
+  }
+};
+
+export const updateUserExpLevel = async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { experienceGained } = req.body;
+
+    if (req.user.id != userId) {
+      return res.status(403).json({
+        message: "You don't have permission to update this information",
+      });
+    }
+
+    // Fetch current user data
+    const [user] = await pool.query(
+      "SELECT experience, level FROM users WHERE user_id = ?",
+      [userId]
+    );
+
+    if (user.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const currentExperience = user[0].experience;
+    const currentLevel = user[0].level;
+
+    // Calculate new experience and level
+    const newExperience = currentExperience + experienceGained;
+    const newLevel = calculateLevel(newExperience);
+
+    // Update user in database
+    await pool.query(
+      "UPDATE users SET experience = ?, level = ? WHERE user_id = ?",
+      [newExperience, newLevel, userId]
+    );
+
+    // Check if user leveled up
+    const leveledUp = newLevel > currentLevel;
+
+    res.status(200).json({
+      message: "Experience and level updated successfully",
+      newExperience,
+      newLevel,
+      leveledUp
+    });
+
+  } catch (error) {
+    console.error("Error updating user experience and level:", error);
+    res.status(500).json({ message: "An error occurred while updating user experience and level" });
   }
 };
 
