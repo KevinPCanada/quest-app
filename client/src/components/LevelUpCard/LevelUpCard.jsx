@@ -6,6 +6,8 @@ import confetti from "canvas-confetti"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 import { Sword } from "lucide-react"
+import RewardSelector from "../../components/RewardSelector/RewardSelector";
+
 
 export default function LevelUpCard({ newLevel, onClose }) {
   useEffect(() => {
