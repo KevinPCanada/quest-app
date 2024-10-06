@@ -1,6 +1,8 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { AuthContextProvider } from '/src/context/AuthContext';
+import { Toaster } from "./components/ui/toaster";
+import { ToastProvider } from "./components/ui/toast";
 
 import "./App.css";
 
@@ -111,11 +113,14 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="app">
-      <div className="app-container">
-        <RouterProvider router={router} />
+    <ToastProvider>
+      <div className="app">
+        <div className="app-container">
+          <RouterProvider router={router} />
+        </div>
       </div>
-    </div>
+      <Toaster />
+    </ToastProvider>
   );
 }
 
