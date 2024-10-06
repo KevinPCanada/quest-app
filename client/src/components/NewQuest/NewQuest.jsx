@@ -56,7 +56,7 @@ export default function NewQuest({updateQuests}) {
                 <form onSubmit={handleSubmit} className="space-y-4 ">
                     <div className="space-y-2">
                         <Label htmlFor="questName">Quest Name</Label>
-                        <Input id="questName" placeholder="Enter quest name" className="font-pixelify" required />
+                        <Input id="questName" placeholder="Enter quest name" className="font-pixelify"  />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="questDescription">Quest Description</Label>
@@ -64,7 +64,7 @@ export default function NewQuest({updateQuests}) {
                             className="font-pixelify resize-none"
                             id="questDescription"
                             placeholder="Describe your quest"
-                            required
+                            
                         />
                     </div>
                     <div className="space-y-2">
