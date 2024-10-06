@@ -1,15 +1,11 @@
-"use client"
-
 import React, { useEffect } from "react"
 import { motion } from "framer-motion"
 import confetti from "canvas-confetti"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 import { Sword } from "lucide-react"
-import RewardSelector from "../../components/RewardSelector/RewardSelector";
 
-
-export default function LevelUpCard({ newLevel, onClose }) {
+export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector }) {
   useEffect(() => {
     console.log("LevelUpCard rendered. newLevel:", newLevel)
     console.log("Triggering confetti")
@@ -49,6 +45,12 @@ export default function LevelUpCard({ newLevel, onClose }) {
             className="bg-black text-white hover:bg-gray-800 border-2 border-white pixel-text"
           >
             Continue Journey
+          </Button>
+          <Button
+            onClick={onOpenRewardSelector}
+            className="bg-[var(--primary-color)] text-white hover:bg-gray-800 border-2 border-white pixel-text"
+          >
+            Select Reward
           </Button>
         </CardContent>
       </Card>
