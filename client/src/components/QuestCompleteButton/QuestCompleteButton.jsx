@@ -47,10 +47,9 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
 
   console.log("Rendering QuestCompleteButton. showLevelUp:", showLevelUp, "newLevel:", newLevel);
 
-  return (
     <div className="relative">
       <button className="quest-complete-button" onClick={handleClick} disabled={showLevelUp}>
-        <span>Quest Complete</span>
+        <span className="hide" >Quest Complete</span>
         <i className="material-icons">done_outline</i>
         <p>+{exp} EXP</p>
       </button>

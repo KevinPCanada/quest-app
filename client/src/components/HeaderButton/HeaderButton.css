@@ -20,3 +20,9 @@
   box-shadow: var(--button-shadow-click);
   transform: var(--button-transform-click);
 }
+
+@media (max-width: 390px) {
+  .questboard-header-button {
+      height: 2px;
+  }
+}

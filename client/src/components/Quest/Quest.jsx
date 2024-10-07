@@ -42,9 +42,10 @@ function Quest({ title, description, exp, id, level, updateQuests, updateUserDat
         <div className="quest-container-left">
           <p>{description}</p>
           <div className="quest-options">
-            {/* Button to view full quest details */}
-            <button onClick={handleOpenModal}>View Full Quest</button>
-            {/* Component to edit the quest */}
+            <button onClick={handleOpenModal}>
+              <span className="hide">View Full Quest</span>
+              <i className="material-icons hide-full">search</i>
+            </button>
             <EditQuest thisQuestId={id} updateQuests={updateQuests} />
           </div>
         </div>

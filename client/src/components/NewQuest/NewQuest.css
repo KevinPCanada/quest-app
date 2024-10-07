@@ -1,0 +1,12 @@
+/* Mobile View */
+
+/* I had to place !imporant since it's the only way I can edit
+the popup. Since it's only for this specific class, it shouldn't
+affect the rest of the code. - Ayumu */
+
+@media (max-width: 390px) {
+    .newquest-popup {
+        top: 35% !important;
+        width: 90% !important;
+    }
+}
