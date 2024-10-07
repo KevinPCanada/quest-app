@@ -19,12 +19,10 @@ export const getClassInfo = async (req, res) => {
 
 
 export const getAllClasses = async (req, res) => {
-  console.log("getAllClasses function called");
   try {
     const [rows] = await pool.query(
       "SELECT class_id, class_name, class_avatar FROM classes"
     );
-    console.log("Query result:", rows);
     res.status(200).json(rows);
   } catch (error) {
     console.error('Error fetching all classes:', error);

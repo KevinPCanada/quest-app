@@ -3,10 +3,10 @@ import './AboutUs.css';
 
 function AboutUs() {
     const teamMembers = [
-        { name: "Kevo", role: "Project Manager", image: "", intro: "Kevin does the heavy lifting, keeps everything on track and ensures our projects run smoothly." },
-        { name: "Stepho", role: "Lead Developer", image: "", intro: "Stephen codes our solutions and tackles the toughest programming challenges." },
-        { name: "Ayumo", role: "UX Designer", image: "", intro: "Ayumu designs intuitive and user-friendly interfaces for our apps." },
-        { name: "Jack", role: "Odd-Jobs", image: "", intro: "Jack is also here." }
+        { name: "Kevo", role: "Project Manager", image: "../../src/assets/img/classes/mage.png", intro: "Kevin does the heavy lifting, keeps everything on track and ensures our projects run smoothly." },
+        { name: "Stepho", role: "Lead Developer", image: "../../src/assets/img/classes/knight.png", intro: "Stephen codes our solutions and tackles the toughest programming challenges." },
+        { name: "Ayumo", role: "UX Designer", image: "../../src/assets/img/classes/rogue.png", intro: "Ayumu designs intuitive and user-friendly interfaces for our apps." },
+        { name: "Jack", role: "Odd-Jobs", image: "../../src/assets/img/classes/priest.png", intro: "Jack is also here." }
     ];
 
     return (

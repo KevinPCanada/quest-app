@@ -1,8 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { useToast } from "../../hooks/use-toast";
-import { ToastAction } from "../ui/toast";
-import { Toaster } from "../ui/toaster";
 
 export default function MilestoneButton() {
   const { toast } = useToast();
@@ -26,7 +24,6 @@ export default function MilestoneButton() {
       >
         Set Milestone
       </Button>
-      <Toaster />
     </>
   );
 }

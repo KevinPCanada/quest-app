@@ -1,50 +1,48 @@
 import React, { useState, useEffect, useContext } from "react";
-import { AuthContext } from '../../context/AuthContext'; // Adjust the import path as needed
+import { AuthContext } from '../../context/AuthContext';
 import LevelBar from "../Level/Level";
 import HeaderButton from "../HeaderButton/HeaderButton";
 import NewQuest from "../NewQuest/NewQuest";
 import "./QuestboardHeader.css";
 
-function HomeHeader() {
-  const [userExp, setUserExp] = useState(null);
+function HomeHeader({updateQuests}) {
+  const [userData, setUserData] = useState(null);
   const { currentUser } = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchUserExp = async () => {
+    const fetchUserData = async () => {
       if (!currentUser) return;
-
       try {
-        const response = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}/exp`, {
+        const response = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}`, {
           method: 'GET',
-          credentials: 'include', // This is important for including the auth cookie
+          credentials: 'include',
         });
-
         if (!response.ok) {
-          throw new Error('Failed to fetch user experience');
+          throw new Error('Failed to fetch user data');
         }
-
+       
         const data = await response.json();
-        setUserExp(data.experience);
+        setUserData(data);
+       
       } catch (error) {
-        console.error('Error fetching user experience:', error);
+        console.error('Error fetching user data:', error);
         // Handle error (e.g., show error message to user)
       }
     };
-
-    fetchUserExp();
+    fetchUserData();
   }, [currentUser]);
-
+ 
   return (
     <div className="questboard-header">
       <div className="questboard-header-left">
-        {userExp !== null ? (
-          <LevelBar className="level-bar" exp={userExp} />
+        {userData ? (
+          <LevelBar className="level-bar" experience={userData.experience} level={userData.level} />
         ) : (
           <div>Loading...</div>
         )}
       </div>
       <div className="questboard-header-right">
-        <NewQuest/>
+        <NewQuest updateQuests={updateQuests}/>
       </div>
     </div>
   );

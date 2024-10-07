@@ -1,35 +1,10 @@
 import express from 'express';
-import mysql from 'mysql2';
 import multer from 'multer';
 import { addQuest, deleteQuest, modifyQuest, displayAllQuests, getQuestByID, completeQuest, getCompletedQuests, getIncompleteQuests, getExpByQuest, deleteAllCompleted, updateQuestCompletion } from '../controllers/quests.js';
 import { verifyToken } from '../middleware/authMiddleware.js';
 
-
-const app = express();
-// const port = 8800;
 const router = express.Router()
-
 const upload = multer()
-
-
-const db = mysql.createConnection({
-  host: 'localhost', 
-  user: 'root',      
-  password: 'root', 
-  database: 'questapp' 
-});
-
-// Connect to the database
-db.connect(err => {
-  if (err) {
-    console.error('Database connection failed:', err);
-    return;
-  }
-  console.log('Connected to the database');
-});
-
-// Define the route to get tasks for a specific user
-
 
 //add a quest. 
 //example query POST http://localhost:8800/api/quests/add-quest

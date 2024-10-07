@@ -14,7 +14,7 @@ import {
 } from "../ui/dialog";
 import "./NewQuest.css"
 
-export default function NewQuest() {
+export default function NewQuest({updateQuests}) {
     const [open, setOpen] = React.useState(false);
     const [questLevel, setQuestLevel] = useState("1")
 
@@ -28,13 +28,14 @@ export default function NewQuest() {
             questLevel: questLevel
         }
 
-        console.log(questData)
+        
 
-        const addedQuest = addQuest(questData)
+        const addedQuest = await addQuest(questData)
 
 
-
+        
         console.log("Form submitted");
+        updateQuests()
         setOpen(false);
     };
     return (
@@ -56,7 +57,7 @@ export default function NewQuest() {
                 <form onSubmit={handleSubmit} className="space-y-4 ">
                     <div className="space-y-2">
                         <Label htmlFor="questName">Quest Name</Label>
-                        <Input id="questName" placeholder="Enter quest name" className="font-pixelify" required />
+                        <Input id="questName" placeholder="Enter quest name" className="font-pixelify"  />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="questDescription">Quest Description</Label>
@@ -64,7 +65,7 @@ export default function NewQuest() {
                             className="font-pixelify resize-none"
                             id="questDescription"
                             placeholder="Describe your quest"
-                            required
+                            
                         />
                     </div>
                     <div className="space-y-2">

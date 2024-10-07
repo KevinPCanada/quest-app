@@ -1,6 +1,8 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import { AuthContextProvider } from '/src/context/AuthContext';
+import { Toaster } from "./components/ui/toaster";
+import { ToastProvider } from "./components/ui/toast";
 
 import "./App.css";
 
@@ -62,6 +64,15 @@ const router = createBrowserRouter([
         path: "questhistory",
         element: <QuestHistory />,
       },
+      {
+        path: "/privacy",
+        element: <Privacy/>  ,
+      },
+      {
+        path: "/about",
+        element: <AboutUs/>  ,
+      },
+    
     ],
   },
   {
@@ -88,15 +99,7 @@ const router = createBrowserRouter([
       </AuthWrapper>
     ), // Create a NotFound component for 404 errors
   },
-  {
-    path: "/privacy",
-    element: <Privacy/>  ,
-  },
-  {
-    path: "/about",
-    element: <AboutUs/>  ,
-  },
-
+  
 
   // general test route, use this to preview what you are working on in the browser 
   //then return to this state when you're done
@@ -110,11 +113,14 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <div className="app">
-      <div className="app-container">
-        <RouterProvider router={router} />
+    <ToastProvider>
+      <div className="app">
+        <div className="app-container">
+          <RouterProvider router={router} />
+        </div>
       </div>
-    </div>
+      <Toaster />
+    </ToastProvider>
   );
 }
 
