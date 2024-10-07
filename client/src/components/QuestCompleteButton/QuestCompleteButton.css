@@ -31,3 +31,17 @@
   box-shadow: var(--button-shadow-click);
   transform: var(--button-transform-click);
 }
+
+@media (max-width: 390px) {
+  .quest-complete-button {
+    flex-direction: row;
+    gap: 5px;
+    height: 30px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+
+    i {
+      font-size: 1.2rem;
+    }
+  }
+}

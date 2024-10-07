@@ -12,6 +12,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "../ui/dialog";
+import "./NewQuest.css"
 
 export default function NewQuest() {
     const [open, setOpen] = React.useState(false);
@@ -48,7 +49,7 @@ export default function NewQuest() {
                     New Quest
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[425px] !rounded-none">
+            <DialogContent className="newquest-popup sm:max-w-[425px] !rounded-none">
                 <DialogHeader>
                     <DialogTitle className="font-pixelify font-thin text-xl">New Quest</DialogTitle>
                 </DialogHeader>

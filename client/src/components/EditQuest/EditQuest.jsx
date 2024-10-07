@@ -46,7 +46,8 @@ export default function NewQuest({thisQuestId}) {
                     variant="outline"
                     className="questboard-header-button font-pixelify bg-secondary-color text-base text-text-color px-3 py-1 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-button-hover active:shadow-none active:translate-y-[3px] flex items-center gap-2 rounded-none font-thin"
                 >
-                    Edit
+                    <span className="hide">Edit</span>
+                    <i className="material-icons hide-full">edit_note</i>
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px] !rounded-none">

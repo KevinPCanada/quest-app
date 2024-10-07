@@ -38,7 +38,7 @@
   margin: 10px 0;
 }
 
-/* Buttons? */
+/* Buttons */
 
 .quest-options {
   display: flex;
@@ -64,4 +64,46 @@
 .quest-options button:active {
   box-shadow: var(--button-shadow-click);
   transform: var(--button-transform-click);
+}
+
+@media (max-width: 390px) {
+  .quest-container {
+      padding: 10px;
+      align-items: flex-end;
+  }
+
+  .quest-container-bottom h2 {
+      font-size: 1.2rem;
+      padding-bottom: 5px;
+      width: 140%;
+  }
+
+  .quest-container-left {
+      gap: 5px;
+
+      p {
+        margin: 5px 0;
+      }
+  }
+
+  .quest-container-right {
+    flex-direction: flex-start;
+    display: flex;
+  }
+
+  .quest-options {
+      gap: 10px; 
+      align-items: center;
+      margin-bottom: 5px;
+
+      button {
+        height: 30px;
+        display: flex;
+        align-items: center;
+      }
+  }
+
+  .quest-options button:nth-of-type(2) {
+    width: 50px;
+  }
 }

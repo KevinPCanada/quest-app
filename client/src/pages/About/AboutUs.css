@@ -13,7 +13,6 @@
 /* Container for the team sections */
 .TeamContainer {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between; /* Space out team members evenly */
     gap: 20px; /* Space between team members */
 }
@@ -60,4 +59,45 @@
 .TeamIntro {
     font-size: 1rem;
     line-height: 1.5;
+}
+
+@media (max-width: 390px) {
+    .AboutUs {
+        padding: 0;
+        padding-top: 10px;  
+        height: 100%;
+    }
+
+    .TeamContainer {
+        flex-direction: column;
+        gap: 15px;
+        align-items: center;
+        width: 100vw;
+    }
+
+    .TeamMember {
+        padding: 15px;
+        width: 90%;
+    }
+
+    .TeamImage {
+        width: 80px; /* Reduce image size */
+        height: 80px; /* Keep the aspect ratio */
+        margin-bottom: 5px; /* Reduce margin below image */
+    }
+
+    .TeamName {
+        font-size: 1.2rem; /* Reduce font size */
+        margin: 5px 0 3px; /* Adjust margin for better spacing */
+    }
+
+    .TeamRole {
+        font-size: 1rem; /* Reduce font size */
+        margin-bottom: 5px; /* Reduce margin for spacing */
+    }
+
+    .TeamIntro {
+        font-size: 0.9rem; /* Reduce font size */
+        line-height: 1.3; /* Adjust line height for readability */
+    }
 }

@@ -25,3 +25,31 @@
   flex-direction: row;
   gap: 10px;
 }
+
+/* Mobile View */
+@media (max-width: 390px) {
+  .questboard-header {
+      flex-direction: column;
+
+      i {
+        font-size: 1.2rem;
+      }
+  }
+
+  .questboard-header-left {
+      margin-bottom: 10px;
+  }
+
+  .questboard-header-right {
+      flex-direction: column;
+      width: 100%;
+      
+      button {
+        height: 95%;
+      }
+  }
+
+  .level-bar {
+      width: 90%;
+  }
+}

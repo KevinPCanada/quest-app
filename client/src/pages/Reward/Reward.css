@@ -140,3 +140,55 @@
 
 }
 
+/* Mobile View */
+@media (max-width: 390px) {
+    .rewardpage {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        height: auto;
+    }
+
+    .rewardpage-left, .rewardpage-right {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .rewardpage-left-top {
+        margin-bottom: 20px;
+        gap: 1px;
+
+        h1 {
+            font-size: 1.2rem;
+        }
+
+    }
+
+    .rewardpage-left-bottom {
+        padding: 10px;
+    }
+
+    .rewardpage-right {
+        gap: 5px;
+        height: 85vh;
+    }
+
+    .rewardpage-right-top, .rewardpage-right-bottom {
+        padding: 15px;
+
+        h2 {
+            font-size: 1.2rem;
+        }
+    }
+
+    input[type="text"] {
+        padding: 8px;
+    }
+
+    input[type="submit"] {
+        width: 140px;
+        padding: 4px;
+    }
+
+}
+

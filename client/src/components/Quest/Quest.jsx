@@ -58,7 +58,10 @@ function Quest({ title, description, exp, id, level }) {
           <div className="quest-options">
 
             {/* Replace the <a> tag with a button to open the modal */}
-            <button onClick={handleOpenModal}>View Full Quest</button>
+            <button onClick={handleOpenModal}>
+              <span className="hide">View Full Quest</span>
+              <i className="material-icons hide-full">search</i>
+              </button>
             <EditQuest thisQuestId={id} />
 
           </div>
