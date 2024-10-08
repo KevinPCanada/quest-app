@@ -15,9 +15,8 @@
     padding: 20px;  /* Ensure some space inside the viewport */
 }
 
-
 .full-quest-section {
-    padding: 30px;
+    padding: 20px;
     background-color: var(--background-color);
     border: 3px solid var(--primary-color);
     max-width: 800px;
@@ -51,9 +50,10 @@
 
 /* Green color for the quest name */
 .Questname {
-    font-size: 3rem;
+    font-size: 2.7rem;
     font-weight: bold;
     color: var(--primary-color); 
+    text-align: center;
 }
 
 /* Image for the difficulty level */
@@ -105,13 +105,13 @@
 
 .full-quest-buttons {
     display: flex;
-    justify-content: space-between; /* Space between buttons */
-    gap: 20px; /* Adjust gap between buttons */
+    flex-wrap: wrap;
+    flex-direction: column; /* Stack buttons vertically */
+    gap: 20px; /* Space between buttons */
     margin-top: 20px;
 }
 
 .full-quest-button {
-    flex: 1; /* Make buttons equally flexible */
     text-align: center; /* Center text inside button */
     color: white;
     border: var(--button-border);
@@ -122,6 +122,14 @@
     transition: background-color 0.3s, box-shadow 0.3s;
 }
 
+.full-quest-complete{
+    width: 100%; /* Make the first button span the whole row */
+}
+.full-quest-buttons .second-third-buttons {
+    display: flex;
+    justify-content: space-between; /* Space the two buttons evenly */
+    gap: 20px;
+}
 .full-quest-button:not(:last-child) {
     margin-right: 10px; /* Add margin between buttons */
 }
@@ -157,7 +165,6 @@
     box-shadow: var(--button-shadow-click);
   transform: var(--button-transform-click)
 }
-
 
 @media (max-width: 768px) {
     .full-quest-container {
