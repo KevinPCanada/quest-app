@@ -81,7 +81,7 @@ function ProfileButton() {
             <AvatarImage src={avatarUrl} alt={classData.class_name} />
             <AvatarFallback>{displayName[0].toUpperCase()}</AvatarFallback>
           </Avatar>
-          <span className="text-xl hide">{displayName}</span>
+          <span className="text-xl hide-1024">{displayName}</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 rounded-none">
