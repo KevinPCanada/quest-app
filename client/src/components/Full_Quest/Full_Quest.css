@@ -19,8 +19,8 @@
     padding: 20px;
     background-color: var(--background-color);
     border: 3px solid var(--primary-color);
-    max-width: 800px;
-    /* width: 100%; */
+    max-width: 900px;
+    width: 100%;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     font-family: var(--primary-font);
 }
@@ -120,6 +120,22 @@
     font-size: 1.5rem;
     cursor: pointer;
     transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+.full-quest-complete .quest-complete-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: var(--primary-color); /* Example: Change background */
+    border: 2px solid black; 
+    font-size: 1.5rem; /* Adjust font size */
+    padding: 15px; /* Adjust padding */    
+    width: 100%; /* Make the first button span the whole row */
+}
+
+.full-quest-complete .quest-complete-button:hover {
+    background-color: #3b7e3b; /* Darker shade on hover */
+    transition: background-color 0.3s ease;
 }
 
 .full-quest-complete{
