@@ -62,7 +62,7 @@ function Quest({ title, description, exp, id, level, updateQuests, updateUserDat
       {/* We use a separate Modal component for reusability and to keep this component clean */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
         <FullQuest 
-          Quest={{title, description, level}} 
+          Quest={{title, description, level, exp}} 
           id={id} 
           updateQuests={updateQuests}
         />

@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import './Full_Quest.css';
 
 import skullImage from '../../assets/img/skull.png';
 import swordImage from '../../assets/img/sword.png';
 import cakeImage from '../../assets/img/pieceofcake.png';
 import { deleteQuest } from "./full-quest-controller";
+import QuestCompleteButton from '../QuestCompleteButton/QuestCompleteButton';
+import EditQuest from "../EditQuest/EditQuest";
 
-export default function FullQuest({ Quest, updateQuests, id }) {
+
+
+export default function FullQuest({ Quest, updateQuests, id, exp, updateUserData }) {
     // console.log(id)
 
     const [levelDetails, setLevelDetails] = useState({ className: '', image: '' });
@@ -41,6 +45,17 @@ export default function FullQuest({ Quest, updateQuests, id }) {
     const handleModify = () => {
         alert(`Modify the quest: "${Quest.title}".`);
     };
+    // Handler for quest completion
+    // We use useCallback here to optimize performance, preventing unnecessary re-renders
+    // This is especially important as this function is passed as a prop to QuestCompleteButton
+    const handleQuestComplete = useCallback(async () => {
+        console.log("Quest complete callback triggered");
+        // We update quests first to refresh the list of available quests
+        await updateQuests();
+        // Then update user data to reflect any changes (like XP gain or level up)
+        await updateUserData();
+        // Note: We might want to add error handling here in the future
+    }, [updateQuests, updateUserData]);
 
     const handleDelete = () => {
         const confirmDelete = window.confirm(`Are you sure you want to delete the quest: "${Quest.title}"?`);
@@ -70,12 +85,31 @@ export default function FullQuest({ Quest, updateQuests, id }) {
                 </p>
 
                 <div className="full-quest-buttons">
-                    <button onClick={handleComplete} className="full-quest-button complete">Complete</button>
-                    <button onClick={handleModify} className="full-quest-button modify">Modify</button>
+                    <div className="full-quest-complete section">
+
+                        <QuestCompleteButton
+
+                            thisQuestId={id}
+                            exp={exp}
+                            onQuestComplete={handleQuestComplete}
+
+                            onClick={handleComplete} className="full-quest-button complete">Complete</QuestCompleteButton>
+                    </div>
+                    
+                    <div className="second-third-buttons">
+
+                    <EditQuest thisQuestId={id} updateQuests={updateQuests}>
+
+                    </EditQuest>
+                    {/* <button onClick={handleModify} className="full-quest-button modify">Modify</button> */}
                     <button onClick={handleDelete} className="full-quest-button delete">Delete</button>
+                    </div>
+                    {/* <button onClick={handleComplete} className="full-quest-button complete">Complete</button> */}
+
+                    
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
