@@ -16,6 +16,7 @@ export function Sidebar() {
       console.error("Logout failed:", error);
     }
   };
+  
 
   return (
     <div>
@@ -38,31 +39,29 @@ export function Sidebar() {
           </ul>
         </nav>
         <nav className="sidebar-info">
-
-          <Link to="/about">
-            <i className="material-icons hide-full">info</i>
-            <p className="hide">About us</p>
-          </Link>
-          <Link to="/privacy">
-            <i className="material-icons hide-full">policy</i>
-            <p className="hide">Privacy</p>
-          </Link>
-
-        </nav>
-        <div className="sidebar-footer">
-        {currentUser && (
-          <button className="auth-button" onClick={handleLogout}>
-            <i className="material-icons hide-full">logout</i>
-            <p className="hide">Logout</p>
-          </button>
-        )}
-        <Link className="sidebar-settings"to="/settings">
-          <i className="material-icons">settings</i>
-        </Link>
-        </div>
+            <Link to="/about" className="sidebar-info-button">
+              <i className="material-icons hide-full">info</i>
+              <p className="hide">About us</p>
+            </Link>
+            <Link to="/privacy" className="sidebar-info-button">
+              <i className="material-icons hide-full">policy</i>
+              <p className="hide">Privacy</p>
+            </Link>
+          </nav>
+          <div className="sidebar-footer">
+            {currentUser && (
+            <button className="auth-button" onClick={handleLogout}>
+              <i className="material-icons hide-full">logout</i>
+              <p className="hide">Logout</p>
+            </button>
+            )}
+            <Link className="sidebar-settings"to="/settings">
+              <i className="material-icons">settings</i>
+            </Link>
+          </div>
       </aside>
     </div>
-  );
+  )
 }
 
 export default Sidebar;
