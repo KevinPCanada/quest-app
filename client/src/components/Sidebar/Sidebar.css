@@ -37,7 +37,7 @@
 
 .sidebar-menu {
     flex-grow: 1;
-    margin-top: 15px; 
+    margin-top: 15px;
 }
 
 .sidebar-button {
@@ -102,7 +102,43 @@
     color: var(--background-color);
 }
 
+/* Responsiveness */
+@media (max-width: 1024px) {
+    .hide {
+        display: none;
+      }
+      .hide-full {
+        display: inline-block;
+      }
 
+      .sidebar {
+        width: auto;
+        padding: 10px;
+        align-items: center;
+
+        ul {
+            gap: 20px;
+        }
+      }
+
+    .profile-avatar {
+        margin-top: 10px;
+        .relative {
+            margin-right: 0 !important; /* override Shadcn preset ui - Ayumu*/
+        }
+      }
+      
+      .sidebar-button:hover {
+        padding: 0 10px;
+
+      }
+
+      .sidebar-footer {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 10px;
+      }
+}
 @media (max-width: 390px) {
     .sidebar {
         width: 100%;
@@ -121,6 +157,7 @@
             gap: 10px;
         }
     }
+
 
     .sidebar-menu {
         margin-top: 0; 

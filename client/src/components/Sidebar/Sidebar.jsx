@@ -20,7 +20,7 @@ export function Sidebar() {
   return (
     <div>
       <aside className="sidebar">
-        <ProfileButton />
+      <ProfileButton />
         <nav className="sidebar-menu">
           <ul>
             <Link to="/rewards" className="sidebar-button">

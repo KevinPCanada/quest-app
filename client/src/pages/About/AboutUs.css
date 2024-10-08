@@ -123,3 +123,10 @@
         font-size: 0.8rem;
     }
 }
+
+@media (max-width: 390px) {
+    .AboutUs {
+        height: 125vh;
+        align-items: flex-start;
+    }
+}
