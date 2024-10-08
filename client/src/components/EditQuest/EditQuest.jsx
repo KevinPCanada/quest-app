@@ -13,10 +13,10 @@ import {
     DialogTrigger,
 } from "../ui/dialog";
 
-export default function EditQuest({ thisQuestId, updateQuests, handleCloseModal }) {
+export default function EditQuest({ thisQuestId, updateQuests, description, title }) {
     const [open, setOpen] = useState(false);
     const [questLevel, setQuestLevel] = useState("1");
-
+//takes all of the data from the form and puts it into one object
     const handleSubmit = async (e) => {
         e.preventDefault();
         
@@ -26,10 +26,11 @@ export default function EditQuest({ thisQuestId, updateQuests, handleCloseModal 
             questDescription: e.target.questDescription.value,
             questLevel: questLevel,
         };
-
+//sends the form data to the backend for an SQL request
         try {
             await editQuest(questData);
             updateQuests();
+            //confirms that the quest was successfully edited
             console.log("Quest updated successfully");
             setOpen(false); // Close the dialog after submission
         } catch (error) {
@@ -37,17 +38,13 @@ export default function EditQuest({ thisQuestId, updateQuests, handleCloseModal 
         }
     };
 
-    // const handleEditClick = () => {
-    //     handleCloseModal(); // Close the parent modal first
-    //     setOpen(true); // Then open the edit quest dialog
-    // };
-
+  
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button
                     variant="outline"
-                    // onClick={handleEditClick} // Handle opening the dialog here
+                    
                     className="questboard-header-button font-pixelify bg-secondary-color text-base text-text-color px-3 py-1 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-button-hover active:shadow-none active:translate-y-[3px] flex items-center gap-2 rounded-none font-thin"
                 >
                     <span className="hide">Edit</span>
@@ -65,7 +62,7 @@ export default function EditQuest({ thisQuestId, updateQuests, handleCloseModal 
                         <Label htmlFor="questName">Quest Name</Label>
                         <Input
                             id="questName"
-                            placeholder="Enter quest name"
+                            placeholder={title}
                             className="font-pixelify"
                         />
                     </div>
@@ -74,7 +71,7 @@ export default function EditQuest({ thisQuestId, updateQuests, handleCloseModal 
                         <Textarea
                             className="font-pixelify resize-none"
                             id="questDescription"
-                            placeholder="Describe your quest"
+                            placeholder={description}
                         />
                     </div>
                     <div className="space-y-2">
