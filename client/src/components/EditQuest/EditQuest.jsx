@@ -13,41 +13,38 @@ import {
     DialogTrigger,
 } from "../ui/dialog";
 
-export default function EditQuest({ thisQuestId, updateQuests }) {
+export default function EditQuest({ thisQuestId, updateQuests, description, title }) {
     const [open, setOpen] = useState(false);
     const [questLevel, setQuestLevel] = useState("1");
-
+//takes all of the data from the form and puts it into one object
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         const questData = {
             questId: thisQuestId,
             questName: e.target.questName.value,
             questDescription: e.target.questDescription.value,
             questLevel: questLevel,
         };
-
+//sends the form data to the backend for an SQL request
         try {
-            
             await editQuest(questData);
-
-           
             updateQuests();
+            //confirms that the quest was successfully edited
             console.log("Quest updated successfully");
-
-            
-            setOpen(false);
+            setOpen(false); // Close the dialog after submission
         } catch (error) {
             console.error("Failed to edit quest:", error);
         }
     };
 
+  
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                {/* New Quest Button */}
                 <Button
                     variant="outline"
+                    
                     className="questboard-header-button font-pixelify bg-secondary-color text-base text-text-color px-3 py-1 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-button-hover active:shadow-none active:translate-y-[3px] flex items-center gap-2 rounded-none font-thin"
                 >
                     <span className="hide">Edit</span>
@@ -65,7 +62,7 @@ export default function EditQuest({ thisQuestId, updateQuests }) {
                         <Label htmlFor="questName">Quest Name</Label>
                         <Input
                             id="questName"
-                            placeholder="Enter quest name"
+                            placeholder={title}
                             className="font-pixelify"
                         />
                     </div>
@@ -74,11 +71,11 @@ export default function EditQuest({ thisQuestId, updateQuests }) {
                         <Textarea
                             className="font-pixelify resize-none"
                             id="questDescription"
-                            placeholder="Describe your quest"
+                            placeholder={description}
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label className="font-pixelify font-thin"> Level</Label>
+                        <Label className="font-pixelify font-thin">Level</Label>
                         <RadioGroup
                             defaultValue="1"
                             onValueChange={setQuestLevel}

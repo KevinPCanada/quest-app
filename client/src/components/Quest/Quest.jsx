@@ -46,7 +46,7 @@ function Quest({ title, description, exp, id, level, updateQuests, updateUserDat
               <span className="hide">View Full Quest</span>
               <i className="material-icons hide-full">search</i>
             </button>
-            <EditQuest thisQuestId={id} updateQuests={updateQuests} />
+            <EditQuest thisQuestId={id} updateQuests={updateQuests} handleCloseModal={handleCloseModal} title={title} description={description} />
           </div>
         </div>
       </div>
@@ -65,6 +65,7 @@ function Quest({ title, description, exp, id, level, updateQuests, updateUserDat
           Quest={{title, description, level, exp}} 
           id={id} 
           updateQuests={updateQuests}
+          handleCloseModal={handleCloseModal}
         />
       </Modal>
     </article>

@@ -10,8 +10,8 @@ import EditQuest from "../EditQuest/EditQuest";
 
 
 
-export default function FullQuest({ Quest, updateQuests, id, exp, updateUserData }) {
-    // console.log(id)
+export default function FullQuest({ Quest, updateQuests, id, exp, updateUserData, handleCloseModal }) {
+    console.log(handleCloseModal)
 
     const [levelDetails, setLevelDetails] = useState({ className: '', image: '' });
 
@@ -99,10 +99,12 @@ export default function FullQuest({ Quest, updateQuests, id, exp, updateUserData
                     </div>
                     
                     <div className="second-third-buttons">
+
                     <EditQuest 
                     className="full-quest-button edit" thisQuestId={id} updateQuests={updateQuests}>
                     </EditQuest>
                     <button onClick={handleDelete} className="full-quest-button delete">Delete</button>
+
                     </div>
 
                     
