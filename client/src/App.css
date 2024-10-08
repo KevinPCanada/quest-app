@@ -12,6 +12,12 @@
   display: none;
 }
 
+@media (max-width: 1024px) {
+  .hide-1024 {
+    display: none;
+  }
+}
+
 @media (max-width: 390px) {
   .hide {
     display: none;

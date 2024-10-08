@@ -1,9 +1,9 @@
 /* Questboard Main Content */
 .questboard {
-    flex-grow: 1; /* Takes up the remaining space */
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: auto;
-    padding: 20px; /* Add some padding if needed */
+    padding: 20px;
 }
