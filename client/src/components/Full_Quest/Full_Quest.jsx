@@ -85,26 +85,25 @@ export default function FullQuest({ Quest, updateQuests, id, exp, updateUserData
                 </p>
 
                 <div className="full-quest-buttons">
+
                     <div className="full-quest-complete section">
 
                         <QuestCompleteButton
-
                             thisQuestId={id}
                             exp={exp}
                             onQuestComplete={handleQuestComplete}
+                            onClick={handleComplete} 
+                            className="full-quest-button complete">Complete
+                        </QuestCompleteButton>
 
-                            onClick={handleComplete} className="full-quest-button complete">Complete</QuestCompleteButton>
                     </div>
                     
                     <div className="second-third-buttons">
-
-                    <EditQuest thisQuestId={id} updateQuests={updateQuests}>
-
+                    <EditQuest 
+                    className="full-quest-button edit" thisQuestId={id} updateQuests={updateQuests}>
                     </EditQuest>
-                    {/* <button onClick={handleModify} className="full-quest-button modify">Modify</button> */}
                     <button onClick={handleDelete} className="full-quest-button delete">Delete</button>
                     </div>
-                    {/* <button onClick={handleComplete} className="full-quest-button complete">Complete</button> */}
 
                     
                 </div>
