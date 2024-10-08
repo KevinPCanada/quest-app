@@ -9,7 +9,10 @@ import {
   getUserClassInfo,
   updateUserDisplayName,
   updateUserClass,
-  updateUserExpLevel
+  updateUserExpLevel,
+  getMilestoneProgress,
+  updateMilestoneProgress,
+  checkMilestone,
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -24,7 +27,18 @@ router.get("/:id/milestone", verifyToken, getUserMilestone);
 // update user display name
 router.put("/:id/display-name", verifyToken, upload.none(), updateUserDisplayName);
 
-// Update user muilestone
+// Milestone stuff
+
+// get user's milestone progress
+router.get('/:id/milestone-progress', verifyToken, getMilestoneProgress);
+
+// Update their milestone-proress
+router.put('/:id/milestone-progress', verifyToken, updateMilestoneProgress);
+
+// Check if a milestone has been reached
+router.get('/:id/check-milestone', verifyToken, checkMilestone);
+
+// Update user milestone
 router.put("/:id/milestone", verifyToken, upload.none(), updateUserMilestone);
 
 // CLASS-related routes

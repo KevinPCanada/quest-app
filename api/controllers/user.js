@@ -1,20 +1,30 @@
 import { pool } from "../pool.js";
-import { calculateLevel } from '../utils/levelCalculations.js';
+import { 
+  calculateLevel, 
+  hasLeveledUp, 
+  experienceToNextLevel, 
+  levelProgress 
+} from '../utils/levelCalculations.js';
+import { 
+  calculateNewMilestoneProgress, 
+  isMilestoneReached, 
+  calculateRemainingProgress 
+} from '../utils/milestoneUtils.js';
 
 export const getUser = async (req, res) => {
   try {
     const userId = req.params.id;
 
-    const [user] = await pool.query("SELECT * FROM users WHERE user_id = ?", [userId]);
+    const [user] = await pool.query("SELECT * FROM users WHERE user_id = ?", [
+      userId,
+    ]);
 
-       // Verify that the requesting user is the same as the user being queried
-       if (req.user.id != userId) {
-        return res
-          .status(403)
-          .json({
-            message: "You don't have permission to access this information",
-          });
-      }
+    // Verify that the requesting user is the same as the user being queried
+    if (req.user.id != userId) {
+      return res.status(403).json({
+        message: "You don't have permission to access this information",
+      });
+    }
 
     if (user.length === 0) {
       return res.status(404).json({
@@ -23,14 +33,16 @@ export const getUser = async (req, res) => {
     }
 
     const { password_hash, ...userWithoutPassword } = user[0];
-    
+
     // Calculate the level
     userWithoutPassword.level = calculateLevel(userWithoutPassword.experience);
 
     res.status(200).json(userWithoutPassword);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "An error occurred while fetching the user" });
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching the user" });
   }
 };
 
@@ -56,12 +68,18 @@ export const getUserExp = async (req, res) => {
     const experience = rows[0].experience;
     const level = calculateLevel(experience);
 
-    res.status(200).json({ experience, level });
+    res.status(200).json({ 
+      experience, 
+      level,
+      experienceToNextLevel: experienceToNextLevel(experience),
+      levelProgress: levelProgress(experience)
+    });
   } catch (error) {
     console.error("Error fetching user experience:", error);
     res.status(500).json({ message: "An error occurred while fetching user experience" });
   }
 };
+
 
 export const updateUserExpLevel = async (req, res) => {
   try {
@@ -69,6 +87,7 @@ export const updateUserExpLevel = async (req, res) => {
     const { experienceGained } = req.body;
 
     if (req.user.id != userId) {
+      console.log(`Authentication failed: ${req.user.id} != ${userId}`);
       return res.status(403).json({
         message: "You don't have permission to update this information",
       });
@@ -76,7 +95,7 @@ export const updateUserExpLevel = async (req, res) => {
 
     // Fetch current user data
     const [user] = await pool.query(
-      "SELECT experience, level FROM users WHERE user_id = ?",
+      "SELECT experience, level, milestone, milestone_progress FROM users WHERE user_id = ?",
       [userId]
     );
 
@@ -84,27 +103,49 @@ export const updateUserExpLevel = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const currentExperience = user[0].experience;
-    const currentLevel = user[0].level;
+    const { experience: currentExperience, level: currentLevel, milestone, milestone_progress: currentMilestoneProgress } = user[0];
+
 
     // Calculate new experience and level
     const newExperience = currentExperience + experienceGained;
     const newLevel = calculateLevel(newExperience);
 
-    // Update user in database
-    await pool.query(
-      "UPDATE users SET experience = ?, level = ? WHERE user_id = ?",
-      [newExperience, newLevel, userId]
-    );
 
     // Check if user leveled up
-    const leveledUp = newLevel > currentLevel;
+    const levelsGained = newLevel - currentLevel;
+
+
+    // Calculate new milestone progress
+    let newMilestoneProgress = currentMilestoneProgress;
+    if (levelsGained > 0) {
+      newMilestoneProgress = (currentMilestoneProgress + levelsGained);
+      if (newMilestoneProgress > parseInt(milestone)) {
+        newMilestoneProgress = newMilestoneProgress % parseInt(milestone);
+        if (newMilestoneProgress === 0) newMilestoneProgress = parseInt(milestone);
+      }
+    }
+
+
+    // Check if milestone is reached
+    const milestoneReached = newMilestoneProgress === parseInt(milestone);
+
+
+    // Update user in database
+    const updateResult = await pool.query(
+      "UPDATE users SET experience = ?, level = ?, milestone_progress = ? WHERE user_id = ?",
+      [newExperience, newLevel, newMilestoneProgress, userId]
+    );
 
     res.status(200).json({
       message: "Experience and level updated successfully",
       newExperience,
       newLevel,
-      leveledUp
+      levelsGained,
+      milestoneReached,
+      newMilestoneProgress,
+      remainingProgress: calculateRemainingProgress(newMilestoneProgress, milestone),
+      experienceToNextLevel: experienceToNextLevel(newExperience),
+      levelProgress: levelProgress(newExperience)
     });
 
   } catch (error) {
@@ -113,17 +154,18 @@ export const updateUserExpLevel = async (req, res) => {
   }
 };
 
+
+// Milestone stuff
+
 export const getUserMilestone = async (req, res) => {
   try {
     const userId = req.params.id;
 
     // Verify that the requesting user is the same as the user being queried
     if (req.user.id != userId) {
-      return res
-        .status(403)
-        .json({
-          message: "You don't have permission to access this information",
-        });
+      return res.status(403).json({
+        message: "You don't have permission to access this information",
+      });
     }
 
     // Fetch the milestone directly from the database
@@ -153,11 +195,9 @@ export const updateUserMilestone = async (req, res) => {
 
     // Verify that the requesting user is the same as the user being updated
     if (req.user.id != userId) {
-      return res
-        .status(403)
-        .json({
-          message: "You don't have permission to update this information",
-        });
+      return res.status(403).json({
+        message: "You don't have permission to update this information",
+      });
     }
 
     // Validate the milestone value
@@ -189,6 +229,87 @@ export const updateUserMilestone = async (req, res) => {
   }
 };
 
+export const getMilestoneProgress = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if (req.user.id != userId) {
+      return res.status(403).json({
+        message: "You don't have permission to access this information",
+      });
+    }
+
+    const [rows] = await pool.query('SELECT milestone, milestone_progress FROM users WHERE user_id = ?', [userId]);
+    
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { milestone, milestone_progress } = rows[0];
+
+    res.status(200).json({
+      milestone,
+      milestone_progress,
+      remainingProgress: calculateRemainingProgress(milestone_progress, milestone)
+    });
+  } catch (error) {
+    console.error("Error fetching milestone progress:", error);
+    res.status(500).json({ message: "Error fetching milestone progress", error: error.message });
+  }
+};
+
+export const updateMilestoneProgress = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { newProgress } = req.body;
+
+    await pool.query(
+      "UPDATE users SET milestone_progress = ? WHERE user_id = ?",
+      [newProgress, userId]
+    );
+
+    res.json({ message: "Milestone progress updated successfully" });
+
+  } catch (error) {
+    res.status(500).json({ message: "Error updating milestone progress" });
+  }
+};
+
+export const checkMilestone = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if (req.user.id != userId) {
+      return res.status(403).json({
+        message: "You don't have permission to access this information",
+      });
+    }
+
+    const [rows] = await pool.query('SELECT milestone, milestone_progress, level FROM users WHERE user_id = ?', [userId]);
+    
+    if (rows.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const { milestone, milestone_progress, level } = rows[0];
+    
+    console.log(`User ${userId}: milestone=${milestone}, progress=${milestone_progress}, level=${level}`);
+
+    const milestoneReached = milestone_progress === 0;
+
+    res.json({ 
+      milestoneReached,
+      level,
+      currentProgress: milestone_progress, 
+      milestone,
+      remainingProgress: calculateRemainingProgress(milestone_progress, milestone)
+    });
+  } catch (error) {
+    console.error("Error checking milestone:", error);
+    res.status(500).json({ message: "Error checking milestone", error: error.message });
+  }
+};
+
 export const updateUserDisplayName = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -202,7 +323,7 @@ export const updateUserDisplayName = async (req, res) => {
     }
 
     // If display_name is an empty string, set it to null
-    const newDisplayName = display_name?.trim() === '' ? null : display_name;
+    const newDisplayName = display_name?.trim() === "" ? null : display_name;
 
     // Update the display_name in the database
     const [result] = await pool.query(
@@ -215,26 +336,31 @@ export const updateUserDisplayName = async (req, res) => {
     }
 
     // Return success message
-    res.status(200).json({ 
-      message: newDisplayName ? "Display name updated successfully" : "Display name removed",
-      display_name: newDisplayName 
+    res.status(200).json({
+      message: newDisplayName
+        ? "Display name updated successfully"
+        : "Display name removed",
+      display_name: newDisplayName,
     });
   } catch (error) {
     console.error("Error updating user display name:", error);
-    res.status(500).json({ message: "An error occurred while updating user display name" });
+    res
+      .status(500)
+      .json({ message: "An error occurred while updating user display name" });
   }
 };
-
 
 // Class related methods
 
 export const getUserClassInfo = async (req, res) => {
   try {
     const userId = req.params.id;
-    
+
     // Check if the requested user ID matches the authenticated user's ID
     if (userId != req.user.id) {
-      return res.status(403).json({ message: "You don't have permission to access this information" });
+      return res.status(403).json({
+        message: "You don't have permission to access this information",
+      });
     }
 
     const [rows] = await pool.query(
@@ -251,8 +377,10 @@ export const getUserClassInfo = async (req, res) => {
 
     res.status(200).json(rows[0]);
   } catch (error) {
-    console.error('Error fetching user class info:', error);
-    res.status(500).json({ message: "An error occurred while fetching user class info" });
+    console.error("Error fetching user class info:", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching user class info" });
   }
 };
 
@@ -286,14 +414,18 @@ export const updateUserClass = async (req, res) => {
     // Return success message with updated class info
     res.status(200).json({
       message: "Class updated successfully",
-      class_id: class_id
+      class_id: class_id,
     });
   } catch (error) {
     console.error("Error updating user class:", error);
     // If it's a foreign key constraint error, it means the class doesn't exist
-    if (error.code === 'ER_NO_REFERENCED_ROW_2') {
-      return res.status(400).json({ message: "Invalid class ID: class does not exist" });
+    if (error.code === "ER_NO_REFERENCED_ROW_2") {
+      return res
+        .status(400)
+        .json({ message: "Invalid class ID: class does not exist" });
     }
-    res.status(500).json({ message: "An error occurred while updating user class" });
+    res
+      .status(500)
+      .json({ message: "An error occurred while updating user class" });
   }
 };
