@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui
 import { Button } from "../ui/button"
 import { Sword } from "lucide-react"
 
-export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector }) {
+export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector, milestoneReached }) {
   useEffect(() => {
     console.log("LevelUpCard rendered. newLevel:", newLevel)
     console.log("Triggering confetti")
@@ -46,12 +46,14 @@ export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector })
           >
             Continue Journey
           </Button>
-          <Button
-            onClick={onOpenRewardSelector}
-            className="bg-[var(--primary-color)] text-white hover:bg-gray-800 border-2 border-white pixel-text"
-          >
-            Select Reward
-          </Button>
+          {milestoneReached && (
+            <Button
+              onClick={onOpenRewardSelector}
+              className="bg-[var(--primary-color)] text-white hover:bg-gray-800 border-2 border-white pixel-text"
+            >
+              Select Reward
+            </Button>
+          )}
         </CardContent>
       </Card>
     </motion.div>
