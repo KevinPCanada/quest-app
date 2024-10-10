@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "../../components/ui/card";
 import { Button } from "../../components/ui/button";
 import { Trash2, RefreshCw } from "lucide-react";
+import { DeleteAllButton } from "../../components/QuestHistory/delete-all-quests";
 
 export default function QuestHistory() {
   // These variables store information that can change
@@ -149,6 +150,7 @@ export default function QuestHistory() {
   return (
     <div className="font-thin mx-auto p-5 min-h-screen bg-background font-pixelify">
       <h1 className="text-3xl mb-6 text-primary">Quest History</h1>
+      <DeleteAllButton fetchCompletedQuests={fetchCompletedQuests}></DeleteAllButton>
       {/* This shows any success or error messages */}
       {message && (
         <div
