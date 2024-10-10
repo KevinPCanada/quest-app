@@ -1,11 +1,14 @@
-import React, { useEffect } from "react"
+import React, { useEffect,useState  } from "react"
 import { motion } from "framer-motion"
 import confetti from "canvas-confetti"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 import { Sword } from "lucide-react"
+import levelUpSound from "../../assets/sfx/level-up-sound.mp3"; // Import your audio file
 
 export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector, milestoneReached }) {
+  const [audio] = useState(new Audio(levelUpSound)); // Initialize the audio in the state
+
   useEffect(() => {
     console.log("LevelUpCard rendered. newLevel:", newLevel)
     console.log("Triggering confetti")
@@ -14,7 +17,11 @@ export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector, m
       spread: 70,
       origin: { y: 0.6 },
     })
-  }, [newLevel])
+    // Play the audio
+    audio.volume = 0.3; // Set the volume to 30%
+    audio.currentTime = 0; // Reset the audio to start at the beginning
+    audio.play(); // Play the audio
+  }, [newLevel, audio]);
 
   const handleClose = () => {
     console.log("LevelUpCard close button clicked")
