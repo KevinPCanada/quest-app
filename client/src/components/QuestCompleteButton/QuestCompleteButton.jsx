@@ -1,14 +1,26 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./QuestCompleteButton.css";
 import LevelUpandRewardManager from "../LevelUpandRewardManager/LevelUpandRewardManager";
+import questCompleteSound from '../../assets/sfx/quest-complete-sound.mp3'; // Import audio file
 
 function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [newLevel, setNewLevel] = useState(null);
+  const [audio] = useState(new Audio(questCompleteSound)); // Initialize audio in state
+
+  useEffect(() => {
+    audio.load(); // Preload the audio when the component mounts
+  }, [audio]);
 
   const handleClick = useCallback(async (e) => {
     e.preventDefault();
     console.log("Quest complete button clicked. Quest ID:", thisQuestId);
+
+    // Play preloaded audio
+    audio.volume = 0.3; // Set the volume to 30%
+    audio.currentTime = 0; // Ensure the sound starts from the beginning if it's already played
+    audio.play(); // Play the preloaded sound
+
     try {
       const response = await fetch(`http://localhost:8800/api/quests/complete-quest/${thisQuestId}`, {
         method: "PUT",
