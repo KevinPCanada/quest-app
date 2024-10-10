@@ -1,7 +1,5 @@
 /* Questboard Header Progess Bar and Buttons */
-
 .questboard-header {
-
   display: flex;
   align-items: end;
   margin-bottom: 20px;
@@ -17,7 +15,6 @@
   flex-direction: column;
   align-items: start;
   flex: 1;
-
 }
 
 .questboard-header-right {
@@ -26,30 +23,55 @@
   gap: 10px;
 }
 
-/* Mobile View */
-@media (max-width: 390px) {
+
+
+/* For 500px screen width */
+@media (max-width: 600px) {
   .questboard-header {
-      flex-direction: column;
-
-      i {
-        font-size: 1.2rem;
-      }
+    flex-direction: column;
+    align-items: center;
   }
 
-  .questboard-header-left {
-      margin-bottom: 10px;
-  }
-
+  .questboard-header-left, 
   .questboard-header-right {
-      flex-direction: column;
-      width: 100%;
-      
-      button {
-        height: 95%;
-      }
+    width: 100%;
+    align-items: center;
+    flex: 1;
   }
 
   .level-bar {
-      width: 90%;
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+  }
+}
+
+/* Mobile View for 390px screen width */
+@media (max-width: 390px) {
+  .questboard-header {
+    flex-direction: column;
+
+    i {
+      font-size: 1.2rem;
+    }
+  }
+
+  .questboard-header-left {
+    margin-bottom: 10px;
+  }
+
+  .questboard-header-right {
+    flex-direction: column;
+    width: 100%;
+
+    button {
+      height: 95%;
+    }
+  }
+
+  .level-bar {
+    width: 90%;
   }
 }

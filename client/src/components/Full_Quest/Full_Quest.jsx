@@ -91,7 +91,7 @@ export default function FullQuest({ Quest, updateQuests, id, exp, updateUserData
                             exp={exp}
                             onQuestComplete={handleQuestComplete}
                             onClick={handleComplete} 
-                            className="full-quest-button complete">Complete
+                            className="full-quest-specific-button full-quest-button complete">Complete
                         </QuestCompleteButton>
                     </div>
                     

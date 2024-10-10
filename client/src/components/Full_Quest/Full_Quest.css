@@ -157,6 +157,27 @@
   transform: var(--button-transform-click)
 }
 
+@media (max-width: 600px) {
+    .full-quest-complete.section {
+        .hide-600 {
+            display: inline-block;
+        }
+    }
+
+    .full-quest-complete .quest-complete-button {
+        height: 70px;
+        margin-bottom: 0;
+        gap:0;
+        
+        i {
+            font-size: 1.5rem;
+        }
+
+        p {
+            font-size: 0.8rem;
+        }
+    }
+}
 /* @media (max-width: 768px) {
     .full-quest-container {
         flex-direction: column;
