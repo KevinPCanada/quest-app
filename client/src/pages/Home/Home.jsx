@@ -3,6 +3,8 @@ import Quest from '../../components/Quest/Quest';
 import HomeHeader from '../../components/HomeHeader/QuestboardHeader';
 import { AuthContext } from '../../context/AuthContext';
 import './Home.css';
+import Skeleton from '../../components/HomeSkeleton/HomeSkeleton';
+
 
 function Home() {
   // State for storing quests, loading status, and any errors
@@ -48,7 +50,7 @@ function Home() {
       setLoading(false);
     }
   };
- 
+
   async function fetchExp(quest) {
     try {
       const token = localStorage.getItem('token');
@@ -109,7 +111,9 @@ function Home() {
   };
 
   // Show loading message to improve user experience during data fetch
-  if (loading) return <p>Loading...</p>;
+  if (loading)
+    setTimeout
+  return <Skeleton></Skeleton>
 
   // Display errors to user, allowing for graceful failure
   if (error) return <p>Error: {error}</p>;
