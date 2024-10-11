@@ -128,18 +128,15 @@ export const completeQuest = async (req, res) => {
         const questId = req.params.questId;
         const userId = req.user.id;
 
-        // Get the current experience and level
+        // Get the current experience, level, milestone, and milestone progress
         const [currentUserData] = await pool.query(
-            "SELECT experience, level FROM users WHERE user_id = ?",
+            "SELECT experience, level, milestone, milestone_progress FROM users WHERE user_id = ?",
             [userId]
         );
-
         if (currentUserData.length === 0) {
             return res.status(404).json({ message: "User not found" });
         }
-
-        const currentExperience = currentUserData[0].experience;
-        const currentLevel = currentUserData[0].level;
+        const { experience: currentExperience, level: currentLevel, milestone, milestone_progress: currentMilestoneProgress } = currentUserData[0];
 
         // Get the quest experience reward
         const [questData] = await pool.query(`
@@ -148,11 +145,9 @@ export const completeQuest = async (req, res) => {
             JOIN difficulty d ON q.quest_level = d.difficulty_level
             WHERE q.id = ? AND q.user_id = ?
         `, [questId, userId]);
-
         if (questData.length === 0) {
             return res.status(404).json({ message: "Quest not found" });
         }
-
         const expReward = questData[0].exp_reward;
 
         // Calculate new experience
@@ -161,24 +156,37 @@ export const completeQuest = async (req, res) => {
         // Calculate new level
         const newLevel = calculateLevel(newExperience);
 
-        // Update experience, level, and complete the quest
+        // Calculate new milestone progress
+        const levelsGained = newLevel - currentLevel;
+        let newMilestoneProgress = currentMilestoneProgress;
+        let milestoneReached = false;
+
+        if (levelsGained > 0) {
+            newMilestoneProgress = (currentMilestoneProgress + levelsGained) % milestone;
+            milestoneReached = newMilestoneProgress === 0;
+        }
+
+        // Update experience, level, milestone progress, and complete the quest
         await pool.query(`
             UPDATE users u
             JOIN quests q ON u.user_id = q.user_id
             SET u.experience = ?,
                 u.level = ?,
+                u.milestone_progress = ?,
                 q.completed = 1
             WHERE q.id = ? AND u.user_id = ?;
-        `, [newExperience, newLevel, questId, userId]);
+        `, [newExperience, newLevel, newMilestoneProgress, questId, userId]);
 
         const leveledUp = newLevel > currentLevel;
 
-        res.status(200).json({ 
+        res.status(200).json({
             message: "Quest Completed",
             experienceGained: expReward,
             newExperience,
             newLevel,
-            leveledUp
+            leveledUp,
+            newMilestoneProgress,
+            milestoneReached
         });
     } catch (error) {
         console.error(error);

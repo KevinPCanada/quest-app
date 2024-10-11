@@ -105,30 +105,26 @@ export const updateUserExpLevel = async (req, res) => {
 
     const { experience: currentExperience, level: currentLevel, milestone, milestone_progress: currentMilestoneProgress } = user[0];
 
-
     // Calculate new experience and level
     const newExperience = currentExperience + experienceGained;
     const newLevel = calculateLevel(newExperience);
 
-
     // Check if user leveled up
+    const leveledUp = hasLeveledUp(currentExperience, newExperience);
     const levelsGained = newLevel - currentLevel;
-
 
     // Calculate new milestone progress
     let newMilestoneProgress = currentMilestoneProgress;
-    if (levelsGained > 0) {
-      newMilestoneProgress = (currentMilestoneProgress + levelsGained);
-      if (newMilestoneProgress > parseInt(milestone)) {
-        newMilestoneProgress = newMilestoneProgress % parseInt(milestone);
-        if (newMilestoneProgress === 0) newMilestoneProgress = parseInt(milestone);
+    let milestoneReached = false;
+
+    for (let i = 0; i < levelsGained; i++) {
+      newMilestoneProgress = calculateNewMilestoneProgress(newMilestoneProgress, milestone, true);
+      if (isMilestoneReached(newMilestoneProgress, true)) {
+        milestoneReached = true;
+        // If a milestone is reached, we keep the progress at 0
+        newMilestoneProgress = 0;
       }
     }
-
-
-    // Check if milestone is reached
-    const milestoneReached = newMilestoneProgress === parseInt(milestone);
-
 
     // Update user in database
     const updateResult = await pool.query(
@@ -260,17 +256,42 @@ export const getMilestoneProgress = async (req, res) => {
 
 export const updateMilestoneProgress = async (req, res) => {
   try {
-    const userId = req.params.userId;
+    const userId = req.params.id;
     const { newProgress } = req.body;
 
-    await pool.query(
-      "UPDATE users SET milestone_progress = ? WHERE user_id = ?",
-      [newProgress, userId]
+    // Validate newProgress
+    if (typeof newProgress !== 'number' || newProgress < 0) {
+      return res.status(400).json({ message: "Invalid progress value" });
+    }
+
+    // Fetch the user's current milestone
+    const [user] = await pool.query(
+      "SELECT milestone FROM users WHERE user_id = ?",
+      [userId]
     );
 
-    res.json({ message: "Milestone progress updated successfully" });
+    if (user.length === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
+    const { milestone } = user[0];
+
+    // Ensure newProgress is always less than milestone
+    const validatedProgress = newProgress % milestone;
+
+    // Update the milestone progress in the database
+    await pool.query(
+      "UPDATE users SET milestone_progress = ? WHERE user_id = ?",
+      [validatedProgress, userId]
+    );
+
+    res.json({ 
+      message: "Milestone progress updated successfully", 
+      newProgress: validatedProgress,
+      milestoneReached: validatedProgress === 0
+    });
   } catch (error) {
+    console.error("Error updating milestone progress:", error);
     res.status(500).json({ message: "Error updating milestone progress" });
   }
 };
