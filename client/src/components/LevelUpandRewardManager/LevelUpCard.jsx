@@ -1,25 +1,41 @@
-import React, { useEffect } from "react"
-import { motion } from "framer-motion"
-import confetti from "canvas-confetti"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { Button } from "../ui/button"
-import { Sword } from "lucide-react"
+import React, { useEffect } from "react";
+import { motion } from "framer-motion";
+import confetti from "canvas-confetti";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import { Button } from "../ui/button";
+import { Sword } from "lucide-react";
 
-export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector, milestoneReached }) {
+export default function LevelUpCard({
+  newLevel,
+  onClose,
+  onOpenRewardSelector,
+  milestoneReached,
+}) {
   useEffect(() => {
-    console.log("LevelUpCard rendered. newLevel:", newLevel)
-    console.log("Triggering confetti")
+    console.log("LevelUpCard rendered. newLevel:", newLevel, "milestoneReached:", milestoneReached);
+    console.log("Triggering confetti");
     confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 },
-    })
-  }, [newLevel])
+    });
+  }, [newLevel, milestoneReached]);
 
   const handleClose = () => {
-    console.log("LevelUpCard close button clicked")
-    onClose()
-  }
+    console.log("LevelUpCard close button clicked");
+    onClose();
+  };
+
+  const handleSelectReward = () => {
+    console.log("Select Reward button clicked");
+    onOpenRewardSelector();
+  };
 
   return (
     <motion.div
@@ -30,7 +46,9 @@ export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector, m
     >
       <Card className="w-[350px] bg-white border-4 border-black text-black pointer-events-auto font-pixelify">
         <CardHeader className="border-b-4 border-black">
-          <CardTitle className="text-4xl font-bold text-center pixel-text">LEVEL UP!</CardTitle>
+          <CardTitle className="text-4xl font-bold text-center pixel-text">
+            LEVEL UP!
+          </CardTitle>
           <CardDescription className="text-xl text-gray-700 text-center pixel-text">
             Congratulations, Adventurer!
           </CardDescription>
@@ -48,7 +66,7 @@ export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector, m
           </Button>
           {milestoneReached && (
             <Button
-              onClick={onOpenRewardSelector}
+              onClick={handleSelectReward}
               className="bg-[var(--primary-color)] text-white hover:bg-gray-800 border-2 border-white pixel-text"
             >
               Select Reward
@@ -57,5 +75,5 @@ export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector, m
         </CardContent>
       </Card>
     </motion.div>
-  )
+  );
 }

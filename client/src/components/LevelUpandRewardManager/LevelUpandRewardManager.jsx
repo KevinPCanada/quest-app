@@ -2,7 +2,20 @@ import React, { useState } from 'react';
 import LevelUpCard from './LevelUpCard';
 import RewardSelector from './RewardSelector';
 
-export default function LevelUpandRewardManager({ newLevel, onClose }) {
+export default function LevelUpandRewardManager({
+  newLevel,
+  onClose,
+  milestoneReached,
+  milestoneProgress,
+  milestone,
+}) {
+  console.log("LevelUpandRewardManager props:", {
+    newLevel,
+    milestoneReached,
+    milestoneProgress,
+    milestone,
+  });
+
   const [showLevelUp, setShowLevelUp] = useState(true);
   const [showRewardSelector, setShowRewardSelector] = useState(false);
 
@@ -33,6 +46,9 @@ export default function LevelUpandRewardManager({ newLevel, onClose }) {
           newLevel={newLevel}
           onClose={handleLevelUpClose}
           onOpenRewardSelector={handleOpenRewardSelector}
+          milestoneReached={milestoneReached}
+          milestoneProgress={milestoneProgress}
+          milestone={milestone}
         />
       )}
       {showRewardSelector && (
