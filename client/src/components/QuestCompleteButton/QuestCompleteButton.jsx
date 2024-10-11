@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useContext } from "react";
 import "./QuestCompleteButton.css";
 import LevelUpandRewardManager from "../LevelUpandRewardManager/LevelUpandRewardManager";
 import { AuthContext } from "../../context/AuthContext";
+import questCompleteSound from '../../assets/sfx/quest-complete-sound.mp3'; // Import audio file
 
 function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
   const { currentUser } = useContext(AuthContext);
@@ -10,6 +11,7 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
   const [milestoneProgress, setMilestoneProgress] = useState(0);
   const [milestone, setMilestone] = useState(null);
   const [milestoneReached, setMilestoneReached] = useState(false);
+  const [audio] = useState(new Audio(questCompleteSound)); // Initialize audio in state
 
   const fetchMilestoneData = useCallback(async () => {
     if (!currentUser || !currentUser.user_id) {
@@ -37,7 +39,8 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
 
   useEffect(() => {
     fetchMilestoneData();
-  }, [fetchMilestoneData]);
+    audio.load(); // Preload the audio when the component mounts
+  }, [fetchMilestoneData, audio]);
 
   useEffect(() => {
     console.log(
@@ -51,6 +54,12 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
     async (e) => {
       e.preventDefault();
       console.log("Quest complete button clicked. Quest ID:", thisQuestId);
+
+      // Play preloaded audio
+      audio.volume = 0.3; // Set the volume to 30%
+      audio.currentTime = 0; // Ensure the sound starts from the beginning if it's already played
+      audio.play(); // Play the preloaded sound
+
       try {
         const response = await fetch(
           `http://localhost:8800/api/quests/complete-quest/${thisQuestId}`,
@@ -77,9 +86,6 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
           setShowLevelUp(true);
           setMilestoneProgress(data.newMilestoneProgress);
           setMilestoneReached(data.milestoneReached);
-
-          // No need to fetch milestone data again, as we have it from the response
-          // await fetchMilestoneData();
         } else {
           console.log("No level up occurred.");
           onQuestComplete();
@@ -88,7 +94,7 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
         console.error("Error completing quest:", error);
       }
     },
-    [thisQuestId, onQuestComplete]
+    [thisQuestId, onQuestComplete, audio]
   );
 
   const handleFinalClose = useCallback(() => {
@@ -119,7 +125,7 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
         onClick={handleClick}
         disabled={showLevelUp}
       >
-        <span className="hide">Quest Complete</span>
+        <span className="hide-600">Quest Complete</span>
         <i className="material-icons">done_outline</i>
         <p>+{exp} EXP</p>
       </button>

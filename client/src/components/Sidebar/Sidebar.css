@@ -128,7 +128,7 @@
         align-items: center;
         justify-content: center;
 
-        a:hover {
+        i:hover {
             text-decoration: none;
         }
     }
