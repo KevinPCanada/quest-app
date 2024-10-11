@@ -1,0 +1,140 @@
+.quest-container {
+  display: flex;
+  justify-content: space-between;
+  /* max-width: 1000px; */
+  padding: 20px;
+  margin-bottom: 30px;
+  /* margin-right: 20px; */
+  background-color: var(--background-color);
+  align-items: center;
+  border-radius: 1px;
+  border: var(--button-border);
+  box-shadow:rgba(74, 155, 72, 0.4) 5px 5px, rgba(74, 155, 72, 0.3) 10px 10px}
+
+.quest-container-bottom {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.quest-container-bottom h2 {
+  font-family: var(--primary-font);
+  font-size: 2rem;
+  /* margin-left: 20px; */
+  color: var(--text-color);
+  padding-bottom: 10px;
+  width: calc(100% - 20px);
+  border-bottom: 1.5px solid var(--text-color);
+}
+
+.quest-container-left {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* margin-left: 20px; */
+  width: calc(100% - 20px);
+}
+
+.quest-container-left p {
+  font-family: var(--secondary-font);
+  font-size: .9rem;
+  color: var(--text-color);
+  margin: 10px 0;
+}
+
+/* Buttons */
+
+.quest-options {
+  display: flex;
+  gap: 20px;
+}
+
+.quest-options button {
+  font-family: var(--primary-font);
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: var(--text-color);
+  background-color: var(--secondary-color);
+  padding: 3px 8px;
+  border: var(--button-border);
+  box-shadow: var(--button-shadow);
+  transition: background-color 0.3s ease, box-shadow, transform;
+}
+
+.quest-options button:hover {
+  background-color: var(--button-hover-color);
+}
+
+.quest-options button:active {
+  box-shadow: var(--button-shadow-click);
+  transform: var(--button-transform-click);
+}
+
+@media (max-width: 600px) {
+  .quest-option {
+    width: 50px;
+  }
+
+  .quest-container-left {
+    padding-right: 10px;
+  }
+
+  .quest-container-right {
+    align-self: flex-end;
+    margin-top: auto; 
+    margin-left: -10px;
+  }
+
+  .quest-container-bottom h2 {
+    border-bottom: none;
+    margin-bottom: -20px;
+  }
+
+  .quest-options button {
+    height: 30px;
+    margin-bottom: 5px;
+  }
+}
+
+
+@media (max-width: 390px) {
+  .quest-container {
+      padding: 10px;
+      align-items: flex-end;
+  }
+
+  .quest-container-bottom h2 {
+      font-size: 1.2rem;
+      padding-bottom: 5px;
+  }
+
+  .quest-container-left {
+      gap: 5px;
+
+      p {
+        margin: 5px 0;
+      }
+  }
+
+  .quest-container-right {
+    flex-direction: flex-start;
+    display: flex;
+  }
+
+  .quest-options {
+      gap: 10px; 
+      align-items: center;
+      margin-bottom: 5px;
+      width: 50px;
+
+      button {
+        height: 30px;
+        display: flex;
+        align-items: center;
+      }
+  }
+
+  .quest-options button:nth-of-type(2) {
+    width: 50px;
+  }
+}
