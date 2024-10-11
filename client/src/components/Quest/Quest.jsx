@@ -1,11 +1,19 @@
-import React, { useState, useCallback } from 'react';
-import QuestCompleteButton from '../QuestCompleteButton/QuestCompleteButton';
-import EditQuest from '../EditQuest/EditQuest';
-import FullQuest from '../Full_Quest/Full_Quest';
-import Modal from '../Modal/Modal';
-import './Quest.css';
+import React, { useState, useCallback } from "react";
+import QuestCompleteButton from "../QuestCompleteButton/QuestCompleteButton";
+import EditQuest from "../EditQuest/EditQuest";
+import FullQuest from "../Full_Quest/Full_Quest";
+import Modal from "../Modal/Modal";
+import "./Quest.css";
 
-function Quest({ title, description, exp, id, level, updateQuests, updateUserData }) {
+function Quest({
+  title,
+  description,
+  exp,
+  id,
+  level,
+  updateQuests,
+  updateUserData,
+}) {
   // State to control the visibility of the modal
   // This allows us to show/hide the full quest details on user interaction
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,35 +43,34 @@ function Quest({ title, description, exp, id, level, updateQuests, updateUserDat
   }, [updateQuests, updateUserData]);
 
   return (
-    // We use an article tag for semantic HTML, as each quest is a self-contained piece of content
     <article className="quest-container">
       <div className="quest-container-bottom">
-        <h2>{title}</h2>
-        <div className="quest-container-left">
-          <p>{description}</p>
+        <div className="quest-header">
+          <div className="quest-header-text">
+            <h2>{title}</h2>
+            <p>{description}</p>
+          </div>
+          <QuestCompleteButton
+            thisQuestId={id}
+            exp={exp}
+            onQuestComplete={handleQuestComplete}
+          />
+        </div>
+
+      
           <div className="quest-options">
-            <button onClick={handleOpenModal}>
-              <span className="hide">View Full Quest</span>
-              <i className="material-icons hide-full">search</i>
-            </button>
+            {/* Replace the <a> tag with a button to open the modal */}
+            <button onClick={handleOpenModal}>View Full Quest</button>
             <EditQuest thisQuestId={id} updateQuests={updateQuests} handleCloseModal={handleCloseModal} title={title} description={description} />
           </div>
-        </div>
+     
       </div>
-      <div className="quest-container-right">
-        {/* Button to mark the quest as complete */}
-        <QuestCompleteButton
-          thisQuestId={id}
-          exp={exp}
-          onQuestComplete={handleQuestComplete}
-        />
-      </div>
-      {/* Modal for displaying full quest details */}
-      {/* We use a separate Modal component for reusability and to keep this component clean */}
+
+      {/* Modal to show the FullQuest component */}
       <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
-        <FullQuest 
-          Quest={{title, description, level, exp}} 
-          id={id} 
+        <FullQuest
+          Quest={{ title, description, level, exp }}
+          id={id}
           updateQuests={updateQuests}
           handleCloseModal={handleCloseModal}
         />
