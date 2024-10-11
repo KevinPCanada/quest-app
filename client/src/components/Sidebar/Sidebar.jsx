@@ -16,21 +16,20 @@ export function Sidebar() {
       console.error("Logout failed:", error);
     }
   };
-  
 
   return (
     <div>
       <aside className="sidebar">
-      <ProfileButton />
+        <ProfileButton />
         <nav className="sidebar-menu">
           <ul>
-            <Link to="/rewards" className="sidebar-button">
-              <i className="material-icons">star</i>
-              <p className="hide-1024">Rewards</p>
-            </Link>
             <Link to="/" className="sidebar-button">
               <i className="material-icons">receipt_long</i>
               <p className="hide-1024">Questboard</p>
+            </Link>
+            <Link to="/rewards" className="sidebar-button">
+              <i className="material-icons">star</i>
+              <p className="hide-1024">Rewards</p>
             </Link>
             <Link to="/questhistory" className="sidebar-button">
               <i className="material-icons">menu_book</i>
@@ -39,29 +38,29 @@ export function Sidebar() {
           </ul>
         </nav>
         <nav className="sidebar-info">
-            <Link to="/about" className="sidebar-info-button">
-              <i className="material-icons hide-full-sidebar">info</i>
-              <p className="hide-1024">About us</p>
-            </Link>
-            <Link to="/privacy" className="sidebar-info-button">
-              <i className="material-icons hide-full-sidebar">policy</i>
-              <p className="hide-1024">Privacy</p>
-            </Link>
-          </nav>
-          <div className="sidebar-footer">
-            {currentUser && (
+          <Link to="/about" className="sidebar-info-button">
+            <i className="material-icons hide-full-sidebar">info</i>
+            <p className="hide-1024">About us</p>
+          </Link>
+          <Link to="/privacy" className="sidebar-info-button">
+            <i className="material-icons hide-full-sidebar">policy</i>
+            <p className="hide-1024">Privacy</p>
+          </Link>
+        </nav>
+        <div className="sidebar-footer">
+          {currentUser && (
             <button className="auth-button" onClick={handleLogout}>
               <i className="material-icons hide-full-sidebar">logout</i>
               <p className="hide-1024">Logout</p>
             </button>
-            )}
-            <Link className="sidebar-settings"to="/settings">
-              <i className="material-icons">settings</i>
-            </Link>
-          </div>
+          )}
+          <Link className="sidebar-settings" to="/settings">
+            <i className="material-icons">settings</i>
+          </Link>
+        </div>
       </aside>
     </div>
-  )
+  );
 }
 
 export default Sidebar;
