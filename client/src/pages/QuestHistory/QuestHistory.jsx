@@ -136,11 +136,6 @@ export default function QuestHistory() {
     }
   }, [message]);
 
-  // If we're still loading, show a loading message
-  if (loading) {
-    return <div>Loading quests...</div>;
-  }
-
   // If there's an error, show the error message
   if (error) {
     return <div>Error: {error}</div>;
