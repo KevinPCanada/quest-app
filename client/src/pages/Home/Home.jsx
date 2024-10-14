@@ -112,7 +112,7 @@ function Home() {
 
   // Show loading message to improve user experience during data fetch
   if (loading)
-  
+  setTimeout
   return <Skeleton></Skeleton>
 
   // Display errors to user, allowing for graceful failure
