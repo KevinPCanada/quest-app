@@ -20,8 +20,8 @@ function Quest({
       <div className="quest-container-bottom">
         <div className="quest-header">
           <div className="quest-header-text">
-            <h2>This is a title</h2>
-            <p>This is a description</p>
+            <h2>...</h2>
+            <p>...</p>
           </div>
           <QuestCompleteButton
             thisQuestId={0}
@@ -33,7 +33,7 @@ function Quest({
       
           <div className="quest-options">
             {/* Replace the <a> tag with a button to open the modal */}
-            <button>View Full Quest</button>
+            <button>...</button>
             <EditQuest thisQuestId={0} updateQuests={0} title={0} description={0} />
           </div>
      
