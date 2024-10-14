@@ -1,122 +1,102 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useState, useEffect, useCallback, useContext, useRef } from "react";
 import "./QuestCompleteButton.css";
 import LevelUpandRewardManager from "../LevelUpandRewardManager/LevelUpandRewardManager";
 import { AuthContext } from "../../context/AuthContext";
-import questCompleteSound from '../../assets/sfx/quest-complete-sound.mp3'; // Import audio file
+import questCompleteSound from '../../assets/sfx/quest-complete-sound.mp3';
 
 function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
   const { currentUser } = useContext(AuthContext);
+  // State for managing level up and milestone information
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [newLevel, setNewLevel] = useState(null);
   const [milestoneProgress, setMilestoneProgress] = useState(0);
   const [milestone, setMilestone] = useState(null);
   const [milestoneReached, setMilestoneReached] = useState(false);
-  const [audio] = useState(new Audio(questCompleteSound)); // Initialize audio in state
+  
+  // Create a persistent reference to the Audio object
+  const audioRef = useRef(new Audio(questCompleteSound));
 
+  useEffect(() => {
+    const audio = audioRef.current;
+    audio.volume = 0.2; // Set the volume to 20%
+    
+    // No cleanup function needed as we want the audio to continue playing if unmounted
+  }, []);
+
+  // Function to fetch milestone data from the server
   const fetchMilestoneData = useCallback(async () => {
     if (!currentUser || !currentUser.user_id) {
-      console.error("User ID is not available");
       return;
     }
     try {
       const response = await fetch(
         `http://localhost:8800/api/user/${currentUser.user_id}/milestone-progress`,
-        {
-          credentials: "include",
-        }
+        { credentials: "include" }
       );
-      if (!response.ok) {
-        throw new Error("Failed to fetch milestone data");
-      }
+      if (!response.ok) throw new Error("Failed to fetch milestone data");
       const data = await response.json();
-      console.log("Fetched milestone data:", data);
       setMilestoneProgress(data.milestone_progress);
       setMilestone(data.milestone);
     } catch (error) {
-      console.error("Error fetching milestone data:", error);
+      // Error handling can be implemented here if needed
     }
   }, [currentUser]);
 
+  // Fetch milestone data when the component mounts
   useEffect(() => {
     fetchMilestoneData();
-    audio.load(); // Preload the audio when the component mounts
-  }, [fetchMilestoneData, audio]);
+  }, [fetchMilestoneData]);
 
-  useEffect(() => {
-    console.log(
-      "milestoneProgress or milestone changed:",
-      milestoneProgress,
-      milestone
-    );
-  }, [milestoneProgress, milestone]);
+  // Function to play the quest complete sound
+  const playAudio = () => {
+    const audio = audioRef.current;
+    audio.currentTime = 0; // Reset audio to start
+    audio.play().catch(error => {
+      // Error handling can be implemented here if needed
+    });
+  };
 
-  const handleClick = useCallback(
-    async (e) => {
-      e.preventDefault();
-      console.log("Quest complete button clicked. Quest ID:", thisQuestId);
+  // Handler for quest completion
+  const handleClick = useCallback(async (e) => {
+    e.preventDefault();
+    playAudio();
 
-      // Play preloaded audio
-      audio.volume = 0.3; // Set the volume to 30%
-      audio.currentTime = 0; // Ensure the sound starts from the beginning if it's already played
-      audio.play(); // Play the preloaded sound
-
-      try {
-        const response = await fetch(
-          `http://localhost:8800/api/quests/complete-quest/${thisQuestId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify({ questId: thisQuestId }),
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Failed to complete quest");
+    try {
+      const response = await fetch(
+        `http://localhost:8800/api/quests/complete-quest/${thisQuestId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({ questId: thisQuestId }),
         }
-        const data = await response.json();
-        console.log("Quest completed successfully. Full response data:", data);
+      );
+      if (!response.ok) throw new Error("Failed to complete quest");
+      
+      const data = await response.json();
 
-        if (data.leveledUp) {
-          console.log("Level up detected! New level:", data.newLevel);
-          console.log("New milestone progress:", data.newMilestoneProgress);
-          console.log("Milestone reached:", data.milestoneReached);
-          setNewLevel(data.newLevel);
-          setShowLevelUp(true);
-          setMilestoneProgress(data.newMilestoneProgress);
-          setMilestoneReached(data.milestoneReached);
-        } else {
-          console.log("No level up occurred.");
-          onQuestComplete();
-        }
-      } catch (error) {
-        console.error("Error completing quest:", error);
+      if (data.leveledUp) {
+        // Update state for level up scenario
+        setNewLevel(data.newLevel);
+        setShowLevelUp(true);
+        setMilestoneProgress(data.newMilestoneProgress);
+        setMilestoneReached(data.milestoneReached);
+      } else {
+        // If no level up, call the completion callback
+        onQuestComplete();
       }
-    },
-    [thisQuestId, onQuestComplete, audio]
-  );
+    } catch (error) {
+      // Error handling can be implemented here if needed
+    }
+  }, [thisQuestId, onQuestComplete]);
 
+  // Handler for closing the level up display
   const handleFinalClose = useCallback(() => {
-    console.log("Final close of LevelUp and Reward process");
     setShowLevelUp(false);
     setNewLevel(null);
     setMilestoneReached(false);
     onQuestComplete();
   }, [onQuestComplete]);
-
-  console.log(
-    "Rendering QuestCompleteButton. showLevelUp:",
-    showLevelUp,
-    "newLevel:",
-    newLevel,
-    "milestoneProgress:",
-    milestoneProgress,
-    "milestone:",
-    milestone,
-    "milestoneReached:",
-    milestoneReached
-  );
 
   return (
     <div className="relative">
@@ -129,9 +109,10 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete }) {
         <i className="material-icons">done_outline</i>
         <p>+{exp} EXP</p>
       </button>
+      {/* Render LevelUpandRewardManager component if user leveled up */}
       {showLevelUp && newLevel && (
         <LevelUpandRewardManager
-          key={Date.now()}
+          key={newLevel}
           newLevel={newLevel}
           onClose={handleFinalClose}
           milestoneReached={milestoneReached}
