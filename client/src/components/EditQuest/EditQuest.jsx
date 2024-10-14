@@ -96,7 +96,7 @@ export default function EditQuest({ thisQuestId, updateQuests, description, titl
                     </div>
                     <Button
                         type="submit"
-                        className="font-pixelify font-thin questboard-header-button bg-secondary-color text-base text-text-color h-[50px] px-3 py-1 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-button-hover active:shadow-none active:translate-y-[3px] flex items-center gap-2 rounded-none"
+                        className="font-pixelify font-thin questboard-header-button bg-secondary-color text-base text-text-color h-[50px] px-3 py-1 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] hover:bg-button-hover active:shadow-none active:translate-y-[3px] flex items-center w-full gap-2 rounded-none"
                     >
                         Edit
                     </Button>
