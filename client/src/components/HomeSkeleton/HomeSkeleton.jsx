@@ -13,9 +13,7 @@ export default function Skeleton() {
            
 
         <BlankQuest></BlankQuest>
-        <BlankQuest></BlankQuest>
-        <BlankQuest></BlankQuest>
-        <BlankQuest></BlankQuest>
+
 
         </div>
     )
