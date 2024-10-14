@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from '../../context/AuthContext';
 import LevelBar from "../Level/Level";
+import LevelSkeleton from "../Level/LevelSkeleton";
 import HeaderButton from "../HeaderButton/HeaderButton";
 import NewQuest from "../NewQuest/NewQuest";
 import "./QuestboardHeader.css";
@@ -38,7 +39,7 @@ function HomeHeader({updateQuests}) {
         {userData ? (
           <LevelBar className="level-bar" experience={userData.experience} level={userData.level} />
         ) : (
-          <div>Loading...</div>
+          <LevelSkeleton />
         )}
       </div>
       <div className="questboard-header-right">

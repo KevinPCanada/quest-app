@@ -4,7 +4,7 @@ import HomeHeader from '../../components/HomeHeader/QuestboardHeader';
 import { AuthContext } from '../../context/AuthContext';
 import './Home.css';
 import Skeleton from '../../components/HomeSkeleton/HomeSkeleton';
-
+import HomeHeaderSkeleton from '../../components/HomeHeader/QuestboardHeaderSkeleton';
 
 function Home() {
   // State for storing quests, loading status, and any errors
@@ -110,18 +110,15 @@ function Home() {
     }
   };
 
-  // Show loading message to improve user experience during data fetch
-  if (loading)
-  
-  return <Skeleton></Skeleton>
-
-  // Display errors to user, allowing for graceful failure
-  if (error) return <p>Error: {error}</p>;
-
   return (
     <section className="questboard">
       {/* HomeHeader is separate for modularity and potential reuse */}
-      <HomeHeader updateQuests={updateQuests} />
+      {loading ? (
+        <HomeHeaderSkeleton />
+      ) : (
+        <HomeHeader updateQuests={updateQuests} />
+      )}
+
 
       {/* Conditional rendering based on quest availability improves user experience */}
       {quests.length > 0 ? (
