@@ -10,14 +10,7 @@ export default function Skeleton() {
 
             
 
-            <div className='skeleton-div'>
-
-            <h1>
-                ...
-            </h1>
-            <meter></meter>
-            </div>
-
+           
 
         <BlankQuest></BlankQuest>
         <BlankQuest></BlankQuest>

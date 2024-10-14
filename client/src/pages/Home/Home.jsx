@@ -127,12 +127,17 @@ function Home() {
       )}
 
 
-      {/* Conditional rendering based on quest availability improves user experience */}
-      {quests.length > 0 ? (
-        quests.map((quest, index) => (
+   
+
+      {loading ? (
+        <Skeleton />
+      ) : error ? (
+        <p>Error: {error}</p>
+      ) : quests.length > 0 ? (
+        quests.map((quest) => (
           <Quest
+            key={quest.id}
             id={quest.id}
-            key={index}
             title={quest.quest_name}
             description={quest.quest_description}
             exp={quest.exp}
@@ -144,6 +149,7 @@ function Home() {
       ) : (
         <p>No quests available.</p>
       )}
+
     </section>
   );
 }
