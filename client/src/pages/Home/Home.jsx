@@ -110,6 +110,13 @@ function Home() {
     }
   };
 
+
+
+  // Display errors to user, allowing for graceful failure
+  if (error) return <p>Error: {error}</p>;
+
+
+
   return (
     <section className="questboard">
       {/* HomeHeader is separate for modularity and potential reuse */}
