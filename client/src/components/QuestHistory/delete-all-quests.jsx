@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { deleteAllCompleted } from "./delete-all-controller";
+import "./delete-all-quests.css"
 
 export function DeleteAllButton({ fetchCompletedQuests }) {
     const handleClick = async (e) => {
@@ -16,10 +17,9 @@ export function DeleteAllButton({ fetchCompletedQuests }) {
     };
   
     return (
-      <div className="relative">
+      <div>
         <button className="quest-delete-button" onClick={handleClick}>
-          <span className="hide">Delete All Quests</span>
-          <i className="material-icons">done_outline</i>
+          <span>Delete All Quests</span>
         </button>
       </div>
     );
