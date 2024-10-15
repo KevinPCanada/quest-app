@@ -19,7 +19,7 @@ export function DeleteAllButton({ fetchCompletedQuests }) {
     return (
       <div>
         <button className="quest-delete-button" onClick={handleClick}>
-          <span>Delete All Quests</span>
+          <span>Clear All</span>
         </button>
       </div>
     );

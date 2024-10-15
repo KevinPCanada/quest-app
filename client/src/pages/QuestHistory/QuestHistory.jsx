@@ -145,7 +145,7 @@ export default function QuestHistory() {
   return (
     <div className="font-thin mx-auto p-5 min-h-screen bg-background font-pixelify">
       <h1 className="text-3xl mb-6 text-primary">Quest History</h1>
-      <DeleteAllButton fetchCompletedQuests={fetchCompletedQuests}></DeleteAllButton>
+     
       {/* This shows any success or error messages */}
       {message && (
         <div
@@ -201,6 +201,7 @@ export default function QuestHistory() {
           ))}
         </div>
       )}
+       <DeleteAllButton fetchCompletedQuests={fetchCompletedQuests}></DeleteAllButton>
     </div>
   );
 }
