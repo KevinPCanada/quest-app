@@ -13,34 +13,40 @@ import Reward from "./pages/Reward/Reward";
 import NotFound from "./pages/NotFound/NotFound";
 import Settings from "./pages/Settings/Settings";
 import NewQuest from "./components/NewQuest/NewQuest";
-import Sidebar from "./components/Sidebar/Sidebar"
+import Sidebar from "./components/Sidebar/Sidebar";
 import Privacy from './pages/Privacy/PrivacyPolicy';
 import AboutUs from './pages/About/AboutUs';
 import QuestHistory from './pages/QuestHistory/QuestHistory';
 
+// New: Import the ProtectedRoute component
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'; // <-- New code
 
 const Layout = () => {
-  return (
+  return ( 
     <div className="layout">
       <Sidebar />
       <div className="layout-outlet">
         <Outlet />
       </div>
-      
     </div>
-  )
-}
+  );
+};
 
+// AuthWrapper provides authentication context to the app
 const AuthWrapper = ({ children }) => (
   <AuthContextProvider>{children}</AuthContextProvider>
 );
 
+// Define the routes
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <AuthWrapper>
-        <Layout />
+        {/* New: Wrap the Layout in ProtectedRoute to protect the inner routes */}
+        <ProtectedRoute> {/* <-- auth code */}
+          <Layout />
+        </ProtectedRoute> {/* <-- auth code */}
       </AuthWrapper>
     ),
     children: [
@@ -57,29 +63,24 @@ const router = createBrowserRouter([
         element: <Settings />,
       },
       {
-        path: "/rewards",
-        element: <Reward />,
-      },
-      {
-        path: "questhistory",
+        path: "/questhistory",
         element: <QuestHistory />,
       },
       {
         path: "/privacy",
-        element: <Privacy/>  ,
+        element: <Privacy />,
       },
       {
         path: "/about",
-        element: <AboutUs/>  ,
+        element: <AboutUs />,
       },
-    
     ],
   },
   {
     path: "/auth",
     element: (
       <AuthWrapper>
-        <Auth />,
+        <Auth />
       </AuthWrapper>
     ),
   },
@@ -97,18 +98,8 @@ const router = createBrowserRouter([
       <AuthWrapper>
         <NotFound />
       </AuthWrapper>
-    ), // Create a NotFound component for 404 errors
+    ),
   },
-  
-
-  // general test route, use this to preview what you are working on in the browser 
-  //then return to this state when you're done
-
-  // {
-  //   path: "/test",
-  //   element: <(add React element here)/>  ,
-  // },
-
 ]);
 
 function App() {
