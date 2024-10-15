@@ -7,49 +7,52 @@ import Skeleton from '../../components/HomeSkeleton/HomeSkeleton';
 import HomeHeaderSkeleton from '../../components/HomeHeader/QuestboardHeaderSkeleton';
 
 function Home() {
-
-  const [quests, setQuests] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [updating, setUpdating] = useState(false);
-  const [error, setError] = useState(null);
+  // State management for quests, loading status, and errors
+  // These states work together to manage the component's lifecycle and user experience
+  const [quests, setQuests] = useState([]); // Stores the list of quests
+  const [loading, setLoading] = useState(true); // Controls initial loading state
+  const [updating, setUpdating] = useState(false); // Indicates when quests are being refreshed
+  const [error, setError] = useState(null); // Stores any error messages
+  
+  // Access to user context for personalized data
   const { currentUser, setCurrentUser } = useContext(AuthContext);
 
   const fetchQuests = async (isInitialLoad = false) => {
     try {
-      // We only set updating to true if it's not the initial load. This prevents showing a loading state on top of the skeleton loader during the initial render.
+      // Differentiate between initial load and updates to manage loading states
+      // This prevents flickering of content during updates
       if (!isInitialLoad) setUpdating(true);
       
+      // Fetch quests from the server, including authentication for secure access
       const response = await fetch('http://localhost:8800/api/quests/incomplete', {
         method: 'GET',
-        credentials: 'include', // This ensures that cookies are sent with the request, which is necessary for authentication
+        credentials: 'include', // Ensures user session is maintained
         headers: {
-          // We use a JWT stored in localStorage for authentication.
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`, // JWT for secure API access
           'Content-Type': 'application/json'
         }
       });
 
       if (!response.ok) {
-        // If the response is not ok, we throw an error. This will be caught by the catch block below.
         throw new Error('Failed to fetch quests');
       }
 
       const data = await response.json();
 
-      // We use Promise.all to fetch experience points for all quests concurrently. This is more efficient than fetching them sequentially.
+      // Fetch experience points for each quest concurrently
+      // This optimizes performance by reducing wait time for sequential requests
       const questWithExp = await Promise.all(
         data.map(async (quest) => {
           const exp = await fetchExp(quest.id);
-          return { ...quest, exp }; // We create a new object with all quest properties plus the exp
+          return { ...quest, exp }; // Combine quest data with its exp
         })
       );
 
-      setQuests(questWithExp);
+      setQuests(questWithExp); // Update state with fetched quests
     } catch (error) {
-      // If an error occurs during fetching, we store it in state to display to the user
-      setError(error.message);
+      setError(error.message); // Store error for user feedback
     } finally {
-      // Regardless of whether the fetch succeeded or failed, we need to update our loading states
+      // Update loading states to reflect completed fetch operation
       setLoading(false);
       setUpdating(false);
     }
@@ -58,7 +61,6 @@ function Home() {
   async function fetchExp(quest) {
     try {
       const token = localStorage.getItem('token');
-      // We fetch exp separately for each quest. This allows for potential future expansions where exp might be calculated dynamically on the server based on user-specific factors.
       const response = await fetch(`http://localhost:8800/api/quests/exp/${quest}`, {
         method: 'GET',
         credentials: 'include',
@@ -76,24 +78,26 @@ function Home() {
       return expData[0].exp_reward;
     } catch (error) {
       console.error(error.message);
-      // If we fail to fetch exp, we return 0 as a default value. This allows the application to continue functioning even if exp fetch fails for a quest.
-      return 0;
+      return 0; // Return 0 exp on error to prevent breaking the UI
     }
   }
 
   useEffect(() => {
-    // We call fetchQuests when the component mounts to load the initial data. The 'true' argument indicates this is the initial load, affecting how loading states are handled.
+    // Initial data fetch when component mounts
+    // This ensures data is loaded as soon as the page is accessed
     fetchQuests(true);
-  }, []); // The empty dependency array ensures this effect only runs once on mount
+  }, []);
 
   const updateQuests = () => {
-    // This function allows child components to trigger a refresh of the quests data. It's useful for updating the quest list after completing a quest, for example.
+    // Allows child components to trigger quest list refresh
+    // This function helps maintain data consistency across the app
     fetchQuests();
   };
 
   const updateUserData = async () => {
     try {
-      // We fetch updated user data separately from quests. This allows us to update user-specific information (like experience points) without refreshing all quests.
+      // Fetch updated user data independently of quests
+      // This allows for updating user info without refreshing all quests
       const response = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}`, {
         credentials: 'include',
       });
@@ -103,32 +107,30 @@ function Home() {
       }
 
       const userData = await response.json();
-      // We update the current user in the AuthContext, which will propagate the changes to all components that consume this context.
-      setCurrentUser(userData);
+      setCurrentUser(userData); // Update global user context
     } catch (error) {
       console.error('Error updating user data:', error);
-      // We don't set an error state here to avoid disrupting the main quest view. Instead, we just log the error to the console for debugging purposes.
     }
   };
 
-  // If there's an error, we display it prominently. This helps users understand what went wrong and potentially how to resolve it (e.g., by refreshing the page).
+  // Error handling for a better user experience
   if (error) return <p>Error: {error}</p>;
 
   return (
     <section className="questboard">
       {loading ? (
-        // We show a skeleton loader for the header while data is being fetched. This provides a better user experience than a blank screen or generic loading spinner.
+        // Show skeleton loader during initial load for a smoother user experience
         <HomeHeaderSkeleton />
       ) : (
-        // Once data is loaded, we render the actual header, passing the updateQuests function to allow the header to trigger quest list refreshes if needed.
+        // Render actual header once data is loaded
         <HomeHeader updateQuests={updateQuests} />
       )}
 
       {loading ? (
-        // Similar to the header, we show a skeleton loader for the quest list while loading.
+        // Show skeleton loader for quest list during initial load
         <Skeleton />
       ) : quests.length > 0 ? (
-        // If we have quests, we map over them and render a Quest component for each one. We pass all necessary data and functions to each Quest component.
+        // Render quests if available, passing necessary props for functionality
         quests.map((quest) => (
           <Quest
             key={quest.id}
@@ -143,7 +145,7 @@ function Home() {
           />
         ))
       ) : (
-        // If we've finished loading but have no quests, we display a message to the user. This prevents confusion that might arise from an empty, silent interface.
+        // Provide feedback if no quests are available
         <p>No quests available.</p>
       )}
     </section>
