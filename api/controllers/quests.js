@@ -85,7 +85,7 @@ export const displayAllQuests = async (req, res) => {
             WHERE quests.user_id = ?;
         `;
 
-        // Execute the query
+        
         const [results] = await pool.query(query, [userId]);
 
         
@@ -319,6 +319,29 @@ export const updateQuestCompletion = async (req, res) => {
         res.status(500).json({ message: "An error occurred while updating quest completion status", error: error.message });
     }
 };
+
+export const deleteUserQuests = async (req, res) => {
+    try {
+        
+        // const userId = req.user.id
+        const userId = req.params.id
+  
+        const query = `
+           DELETE FROM quests 
+           WHERE user_id = ?
+        `;
+  
+        // Execute the query
+        const [results] = await pool.query(query, [userId]);
+  
+        
+        res.status(200).json(results);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "An error occurred" });
+    }
+  };
+  
 
 //complete quest
 //get all quests

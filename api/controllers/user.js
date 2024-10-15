@@ -450,3 +450,25 @@ export const updateUserClass = async (req, res) => {
       .json({ message: "An error occurred while updating user class" });
   }
 };
+
+export const deleteUser = async (req, res) => {
+  try {
+      
+      // const userId = req.user.id
+      const userId = req.params.id
+
+      const query = `
+         DELETE FROM users 
+         WHERE user_id = ?
+      `;
+
+      // Execute the query
+      const [results] = await pool.query(query, [userId]);
+
+      
+      res.status(200).json(results);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "An error occurred" });
+  }
+};
