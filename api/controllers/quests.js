@@ -323,9 +323,8 @@ export const updateQuestCompletion = async (req, res) => {
 export const deleteUserQuests = async (req, res) => {
     try {
         
-        // const userId = req.user.id
-        const userId = req.params.id
-  
+        const userId = req.user.id
+        
         const query = `
            DELETE FROM quests 
            WHERE user_id = ?

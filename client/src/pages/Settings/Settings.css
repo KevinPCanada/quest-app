@@ -210,6 +210,18 @@
     transform: var(--button-transform-click);
   }
 
+ .delete-user-button {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    font-family: var(--secondary-font);
+    background-color: #333333;
+  }
+
 
   
   @media (max-width: 390px) {
