@@ -18,7 +18,7 @@
 }
 
 .quest-complete-button p {
-  font-family: var(--tertiary-font);
+  font-family: var(--secondary-font);
   margin-top: 5px;
   font-size: 0.8rem;
   color: var(--text-color);
