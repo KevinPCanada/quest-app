@@ -92,6 +92,32 @@
         font-size: 6rem;
         margin-bottom: 50px;
     }
+
+    /* Initial state styles */
+    opacity: 1;
+    transform: scale(1);
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+  }
+  
+  .animate-out {
+    /* Pixelated enlarge and disappear */
+    opacity: 0;
+    transform: scale(2); /* Enlarge */
+    filter: url(#pixelate); /* Apply pixelation */
+  }
+  
+  /* Optional pixelation filter */
+  svg {
+    display: none;
+  }
+  
+  @keyframes pixelation {
+    0% {
+      filter: none;
+    }
+    100% {
+      filter: url(#pixelate);
+    }
 }
 
 /* Clouds */
@@ -267,4 +293,35 @@
         width: 150px;
         height: 55px;
     }
+
 }
+
+/*pixel transition code*/
+
+.landing-container {
+    /* Initial state styles */
+    opacity: 1;
+    transform: scale(1);
+    transition: transform 0.8s ease-in-out, opacity 0.8s ease-in-out;
+  }
+  
+  .animate-out {
+    /* Pixelated enlarge and disappear */
+    opacity: 0;
+    transform: scale(2); /* Enlarge */
+    filter: url(#pixelate); /* Apply pixelation */
+  }
+  
+  /* Optional pixelation filter */
+  svg {
+    display: none;
+  }
+  
+  @keyframes pixelation {
+    0% {
+      filter: none;
+    }
+    100% {
+      filter: url(#pixelate);
+    }
+  }
