@@ -13,6 +13,7 @@ import {
   getMilestoneProgress,
   updateMilestoneProgress,
   checkMilestone,
+  deleteUserData,
 } from "../controllers/user.js";
 
 const router = express.Router();
@@ -56,6 +57,10 @@ router.get("/:id/exp", verifyToken, getUserExp);
 
 // Route to UPDATE user experience and Level
 router.put("/:id/explvlupdate", verifyToken, updateUserExpLevel);
+
+
+//Route to delete the user from the users table
+router.delete("/delete", verifyToken, deleteUserData)
 
 
 export default router;

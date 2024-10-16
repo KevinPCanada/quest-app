@@ -8,6 +8,7 @@ import "./App.css";
 
 import Home from "./pages/Home/Home";
 import Auth from "./pages/Auth/Auth";
+import Auth2 from "./pages/AuthPage/AuthPage";
 import Landing from "./pages/Landing/Landing";
 import Reward from "./pages/Reward/Reward";
 import NotFound from "./pages/NotFound/NotFound";
@@ -20,6 +21,7 @@ import QuestHistory from './pages/QuestHistory/QuestHistory';
 
 // New: Import the ProtectedRoute component
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'; // <-- New code
+import AuthPage from "./pages/AuthPage/AuthPage";
 
 const Layout = () => {
   return ( 
@@ -80,10 +82,18 @@ const router = createBrowserRouter([
     path: "/auth",
     element: (
       <AuthWrapper>
-        <Auth />
+        <AuthPage />
       </AuthWrapper>
     ),
   },
+  // {
+  //   path: "/auth2",
+  //   element: (
+  //     <AuthWrapper>
+  //       <Auth2 />
+  //     </AuthWrapper>
+  //   ),
+  // },
   {
     path: "/landing",
     element: (

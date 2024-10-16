@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import { addQuest, deleteQuest, modifyQuest, displayAllQuests, getQuestByID, completeQuest, getCompletedQuests, getIncompleteQuests, getExpByQuest, deleteAllCompleted, updateQuestCompletion } from '../controllers/quests.js';
+import { addQuest, deleteQuest, modifyQuest, displayAllQuests, getQuestByID, completeQuest, getCompletedQuests, getIncompleteQuests, getExpByQuest, deleteAllCompleted, updateQuestCompletion, deleteUserQuests } from '../controllers/quests.js';
 import { verifyToken } from '../middleware/authMiddleware.js';
 
 const router = express.Router()
@@ -51,6 +51,8 @@ router.delete('/delete-all', verifyToken, deleteAllCompleted)
 // Update quest completion status
 // Example query: PUT http://localhost:8800/api/quests/update-completion/2
 router.put('/update-completion/:questId', verifyToken, updateQuestCompletion);
+
+router.delete('/delete-all', verifyToken, deleteUserQuests)
 
 
 export default router

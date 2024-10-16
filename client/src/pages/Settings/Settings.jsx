@@ -173,6 +173,44 @@ function Settings() {
     }
   };
 
+  const deleteUser = async () => {
+    try {
+        console.log('Deleting Quests')
+        const response = await fetch(`http://localhost:8800/api/user/delete`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include", 
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed to delete quest");
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error("Failed to delete user, please try again", error);
+        throw error;
+    }
+};
+const handleDeleteUser = async () => {
+  const confirmDelete = window.confirm(`Are you sure you want to delete your account?`);
+  if (confirmDelete) {
+      try {
+          
+          await deleteUser();
+          console.log("User deleted.");
+
+          
+          alert(`User account and associated quests have been deleted.`);
+        
+          
+      } catch (error) {
+          console.error("Error during account deletion process:", error);
+      }
+  }
+};
   return (
     <main className="settings-page">
       <div className="settings-header">
@@ -284,6 +322,8 @@ function Settings() {
           Save Changes
         </button>
       )}
+
+      <button className="delete-user-button" onClick={handleDeleteUser}>Delete Account</button>
     </main>
   );
 }

@@ -63,13 +63,13 @@ export default function EditQuest({ thisQuestId, updateQuests, description, titl
                         <Input
                             id="questName"
                             defaultValue={title}
-                            className="font-pixelify"
+      
                         />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="questDescription">Quest Description</Label>
                         <Textarea
-                            className="font-pixelify resize-none"
+                            className="resize-none"
                             id="questDescription"
                             defaultValue={description}
                         />
