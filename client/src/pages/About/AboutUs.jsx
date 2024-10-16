@@ -1,6 +1,6 @@
 import React from 'react';
 import './AboutUs.css';
-
+import cloud from '../../assets/img/landing-page/cloud.png';
 function AboutUs() {
     const teamMembers = [
         { name: "Kevo", role: "Project Manager", image: "../../src/assets/img/classes/mage.png", intro: "Kevin does the heavy lifting, keeps everything on track and ensures our projects run smoothly." },
@@ -21,6 +21,11 @@ function AboutUs() {
                     </div>
                 ))}
             </section>
+            {/* Clouds */}
+            <img src={cloud} className="cloud cloud1 hide-full " alt="Cloud 1" />
+            <img src={cloud} className="cloud cloud2 hide-full " alt="Cloud 2" />
+            <img src={cloud} className="cloud cloud3 hide-full " alt="Cloud 3" />
+            <img src={cloud} className="cloud cloud4 hide-full " alt="Cloud 4" />
         </div>
     );
 }

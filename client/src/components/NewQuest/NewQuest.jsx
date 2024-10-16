@@ -73,15 +73,15 @@ export default function NewQuest({updateQuests}) {
                         <RadioGroup defaultValue="1" onValueChange={setQuestLevel}>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="1" id="easy" />
-                                <Label htmlFor="easy">Trivial</Label>
+                                <Label htmlFor="easy">Trivial + 10xp</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="2" id="medium" />
-                                <Label htmlFor="medium">Challenging</Label>
+                                <Label htmlFor="medium">Challenging + 25xp</Label>
                             </div>
                             <div className="flex items-center space-x-2">
                                 <RadioGroupItem value="3" id="hard" />
-                                <Label htmlFor="hard">Deadly</Label>
+                                <Label htmlFor="hard">Deadly +50xp</Label>
                             </div>
                         </RadioGroup>
                     </div>

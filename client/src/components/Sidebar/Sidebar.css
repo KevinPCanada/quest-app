@@ -155,6 +155,12 @@
     }
 
 }
+
+@media (max-width: 600px) {
+    .profile-avatar {
+        margin-right: 10px;
+      }
+}
 @media (max-width: 390px) {
     .profile-avatar {
         margin: 10px;

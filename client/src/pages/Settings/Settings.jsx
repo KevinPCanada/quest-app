@@ -303,6 +303,7 @@ return (
       </div>
     </div>
 
+
     {/* Email Section */}
     <div className="settings-container">
       <div className="settings-container-top">
@@ -313,16 +314,19 @@ return (
       </div>
     </div>
 
-    {/* Conditional Save Changes Button */}
-    {hasChanges && (
-      <button onClick={handleSaveChanges} className="save-changes-button">
-        Save Changes
-      </button>
-    )}
+  
 
-    <button className="delete-user-button" onClick={handleDeleteUser}>Delete User</button>
-  </main>
-);
+      {/* Conditional Save Changes Button */}
+      {hasChanges && (
+        <button onClick={handleSaveChanges} className="save-changes-button">
+          Save Changes
+        </button>
+      )}
+
+      <button className="delete-user-button" onClick={handleDeleteUser}>Delete Account</button>
+    </main>
+  );
+
 }
 
 export default Settings;
