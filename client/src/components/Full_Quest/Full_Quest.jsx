@@ -97,7 +97,7 @@ export default function FullQuest({ Quest, updateQuests, id, exp, updateUserData
                     
                     <div className="second-third-buttons">
                         <EditQuest 
-                            className="full-quest-button edit" thisQuestId={id} updateQuests={updateQuests}>
+                            className="full-quest-button-edit" thisQuestId={id} updateQuests={updateQuests}>
                         </EditQuest>
                         <button onClick={handleDelete} className="full-quest-button delete">Delete</button>
                     </div>

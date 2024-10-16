@@ -91,6 +91,7 @@
 
 .full-quest-button {
     text-align: center;
+    justify-content: center;
     color: white;
     border: var(--button-border);
     box-shadow: var(--button-shadow);
@@ -173,4 +174,16 @@
             font-size: 0.8rem;
         }
     }
+}
+
+@media (max-width: 390px) {
+    .full-quest-complete .quest-complete-button {
+        width: 260px;
+    }
+    .second-third-buttons  {
+        button {
+            width: 130px !important;
+        }
+    }
+
 }
