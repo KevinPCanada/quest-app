@@ -451,19 +451,27 @@ export const updateUserClass = async (req, res) => {
   }
 };
 
-export const deleteUser = async (req, res) => {
+export const deleteUserData = async (req, res) => {
   try {
       
-      // const userId = req.user.id
-      const userId = req.params.id
+      const userId = req.user.id
+      
+      const query1 = await pool.query(`
+      DELETE FROM quests 
+      WHERE user_id = ?
+   `, [userId])
 
-      const query = `
+      const query2 = await pool.query(`
          DELETE FROM users 
          WHERE user_id = ?
-      `;
+      `, [userId])
 
       // Execute the query
-      const [results] = await pool.query(query, [userId]);
+    
+      const query3 = await pool.query(`
+        DELETE FROM rewards
+        WHERE user_id = ?
+        `, [userId])
 
       
       res.status(200).json(results);

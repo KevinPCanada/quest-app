@@ -52,7 +52,7 @@ router.delete('/delete-all', verifyToken, deleteAllCompleted)
 // Example query: PUT http://localhost:8800/api/quests/update-completion/2
 router.put('/update-completion/:questId', verifyToken, updateQuestCompletion);
 
-router.delete('/:id/delete', deleteUserQuests)
+router.delete('/delete-all', verifyToken, deleteUserQuests)
 
 
 export default router
