@@ -1,0 +1,161 @@
+.auth-background {
+  background-image: url('../../assets/img/landing-page/background-blank.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden; /* Prevent overflow but retain visibility of elements */
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 10;
+
+  span, h1 {
+      color: var(--background-color);
+      font-family: 'Pixelify Sans', sans-serif;
+      text-transform: uppercase;
+  }
+
+  span {
+      font-size: 4rem;
+  }
+
+  h1 {
+      font-size: 6rem;
+      margin-bottom: 50px;
+  }
+}
+
+/* Clouds */
+.cloud {
+  position: absolute;
+  opacity: 0.8;
+  animation: drift-right 30s linear infinite;
+}
+
+.cloud1 {
+  left: -10%;
+  top: 50px;
+  width: 250px;
+  animation-duration: 35s;
+}
+
+.cloud2 {
+  left: -15%;
+  bottom: 90px;
+  width: 450px;
+  animation-duration: 40s;
+}
+
+.cloud3 {
+  right: 0;
+  top: 200px;
+  width: 250px;
+  animation-duration: 30s;
+}
+
+.cloud4 {
+  right: 5%;
+  bottom: 90px;
+  width: 450px;
+  animation-duration: 50s;
+}
+
+@keyframes drift-right {
+  0% {
+      transform: translateX(-120vw);
+  }
+  100% {
+      transform: translateX(120vw);
+  }
+}
+
+/* Mountain and Castle */
+.mountain {
+  position: absolute;
+  bottom: 100px;
+  left: 25%;
+  height: 170px;
+  z-index: 5;
+}
+
+.castle {
+  position: absolute;
+  bottom: 90px;
+  right: 50px;
+  height: 300px;
+  z-index: 5;
+}
+
+/* Ground, Bushes, and Tree */
+.ground-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  background-image: url('../../assets/img/landing-page/ground.png');
+  background-repeat: repeat-x;
+  background-size: auto 100%;
+  z-index: 5;
+}
+
+.tree {
+  height: 200px;
+  margin-left: -200px;
+  margin-right: -200px;
+}
+
+.bush-container {
+  position: absolute;
+  bottom: 100px;
+  width: 105%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  z-index: 15;
+}
+
+.bush {
+  height: 70px;
+}
+
+.bush:nth-child(1) {
+  margin-left: -50px;
+}
+
+.bush:nth-child(4) {
+  margin-right: -50px;
+  margin-left: -100px;
+}
+
+.ground {
+  display: none;
+}
+
+
+/* Mobile View */
+@media (max-width: 390px) {
+  .landing-container span {
+      font-size: 2.5rem;
+  }
+
+  .landing-container h1 {
+      font-size: 3.5rem;
+      margin-bottom: 25px;
+  }
+
+  .landing-btn {
+      font-size: 1rem;
+      width: 150px;
+      height: 55px;
+  }
+}

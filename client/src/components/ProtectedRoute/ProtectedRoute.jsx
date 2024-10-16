@@ -6,8 +6,8 @@ const ProtectedRoute = ({ children }) => {
   const { currentUser } = useContext(AuthContext);  // Access AuthContext
 
   if (!currentUser) {
-    // If no user is logged in, redirect to the login page
-    return <Navigate to="/auth"/>;
+    // If no user is logged in, redirect to the landing page
+    return <Navigate to="/landing"/>;
   }
 
   // If the user is logged in, render the children components
