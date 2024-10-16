@@ -56,13 +56,13 @@ export default function NewQuest({updateQuests}) {
                 </DialogHeader>
                 <form onSubmit={handleSubmit} className="space-y-4 ">
                     <div className="space-y-2">
-                        <Label htmlFor="questName">Quest Name</Label>
-                        <Input id="questName" placeholder="Enter quest name" className="font-pixelify"  />
+                        <Label htmlFor="questName" >Quest Name</Label>
+                        <Input id="questName" placeholder="Enter quest name"   />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="questDescription">Quest Description</Label>
                         <Textarea
-                            className="font-pixelify resize-none"
+                            className="resize-none"
                             id="questDescription"
                             placeholder="Describe your quest"
                             

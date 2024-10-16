@@ -1,13 +1,19 @@
 /* Questboard Header Progess Bar and Buttons */
 .questboard-header {
   display: flex;
-  align-items: end;
+  align-items: center;
   margin-bottom: 20px;
 
   h2 {
-    font-family: var(--primary-font);
-    font-size: 2rem;
+    font-family: var(--tertiary-font);
+    font-size: 1.875rem;
+    font-weight: 800;
   }
+
+  p {
+    opacity: 0.5;
+  }
+
 }
 
 .questboard-header-left {
@@ -15,6 +21,7 @@
   flex-direction: column;
   align-items: start;
   flex: 1;
+  gap: 5px;
 }
 
 .questboard-header-right {

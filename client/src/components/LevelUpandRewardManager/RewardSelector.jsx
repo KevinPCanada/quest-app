@@ -82,7 +82,7 @@ export default function RewardSelector({ onClose }) {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-6 w-[425px] max-w-full">
-      <h2 className="text-2xl font-bold mb-4">Select a Reward</h2>
+      <h2 className="text-2xl font-light font-pixelify mb-4 ">Select a Reward</h2>
       <Command>
         <CommandInput placeholder="Search rewards..." />
         <CommandList>
@@ -110,7 +110,7 @@ export default function RewardSelector({ onClose }) {
           </CommandGroup>
         </CommandList>
       </Command>
-      <Button onClick={onClose} className="mt-4">Close</Button>
+      <Button onClick={onClose} className="font-pixelify font-thin bg-[var(--text-color-light)] text-[var(--background-color)] rounded-none border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[3px] transition-none my-5">Close</Button>
     </div>
   )
 }
