@@ -323,7 +323,7 @@ const handleDeleteUser = async () => {
         </button>
       )}
 
-      <button className="delete-user-button" onClick={handleDeleteUser}>Delete User</button>
+      <button className="delete-user-button" onClick={handleDeleteUser}>Delete Account</button>
     </main>
   );
 }
