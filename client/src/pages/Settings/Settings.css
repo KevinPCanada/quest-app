@@ -132,6 +132,35 @@
   }
 }
 
+
+  .settings-popup-img {
+    width: 100px;
+    cursor: pointer;
+    padding: 10px;
+  }
+  
+  .settings-popup-img.selected {
+    border: 2px solid var(--background-color);
+  }
+  
+  .settings-confirm-btn {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    padding: 5px 15px;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    font-family: var(--secondary-font);
+    background-color: #333333;
+    width: 85px;
+    height: 35px;
+  }
+  
+  .settings-confirm-btn:hover {
+    background-color: black;
+  }
+
 .settings-close-btn {
   position: absolute;
   top: 10px;
@@ -140,6 +169,7 @@
   font-size: 1.2rem;
   font-weight: bold;
 }
+
 
 .settings-popup-container {
   display: flex;

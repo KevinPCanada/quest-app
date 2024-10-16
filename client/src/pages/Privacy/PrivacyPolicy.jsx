@@ -1,5 +1,6 @@
 import React from 'react';
 import './PrivacyPolicy.css';
+import cloud from '../../assets/img/landing-page/cloud.png';
 
 function Privacy() {
     return (
@@ -15,6 +16,11 @@ function Privacy() {
                     <li>don't worry be sure!</li>
                 </ul>
             </section>
+            {/* Clouds */}
+            <img src={cloud} className="cloud cloud1 hide-full " alt="Cloud 1" />
+            <img src={cloud} className="cloud cloud2 hide-full " alt="Cloud 2" />
+            <img src={cloud} className="cloud cloud3 hide-full " alt="Cloud 3" />
+            <img src={cloud} className="cloud cloud4 hide-full " alt="Cloud 4" />
         </div>
     );
 }
