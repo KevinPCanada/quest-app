@@ -44,6 +44,10 @@
     --button-red: #f44336;
     --button-red-hover: #d32f2f;
     --button-red-shadow: #c62828;
+
+    /* Full Quest Colors */
+    --danger-color: #d9534f; /* Red */
+    --warning-color: #f0ad4e; /* Orange */
 }
 
 a {

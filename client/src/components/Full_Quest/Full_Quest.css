@@ -1,8 +1,3 @@
-:root {
-    --danger-color: #d9534f; /* Red */
-    --warning-color: #f0ad4e; /* Orange */
-}
-
 .full-quest-container {
     display: flex;
     justify-content: center;
@@ -71,19 +66,20 @@
     .QuestLevelText {
         font-size: 2rem;
     }
-}
 
-.level-trivial {
+    .level-trivial {
     color: var(--primary-color); 
-}
+    }
 
-.level-challenging {
+    .level-challenging {
     color: var(--warning-color); 
+    }
+
+    .level-deadly {
+    color: var(--danger-color); 
+    }
 }
 
-.level-deadly {
-    color: var(--danger-color); 
-}
 
 .full-quest-buttons {
     display: flex;
@@ -178,46 +174,3 @@
         }
     }
 }
-/* @media (max-width: 768px) {
-    .full-quest-container {
-        flex-direction: column;
-    }
-
-    .full-quest-section {
-        width: 100%; 
-        padding: 20px;
-    }
-
-    .FullQuestTitleContainer {
-        
-        text-align: center; 
-    }
-
-    .QuestTitle {
-        display: flex;
-    flex-direction: column;
-        font-size: 1.2rem;
-    }
-
-    .Questdescription, .Questlevel {
-        text-align: center;
-        font-size: 1.2rem;
-    }
-
-    .QuestLevelText{
-        font-size: 1.2rem;
-    }
-    .Questname {
-        font-size: 2rem;
-    }
-
-    .full-quest-buttons {
-        flex-direction: column; 
-        align-items: center;
-    }
-
-    .full-quest-button {
-        width: 100%;
-        margin-bottom: 10px;
-    }
-} */

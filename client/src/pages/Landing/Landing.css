@@ -1,62 +1,3 @@
-/* HOW TO CUSTOMIZE BUTTONS WITH THE EIGTHBIT-BTN CSS CODE */
-/* - Attach the 'eightbit-btn' class to a button you are styling */
-/* - Attach another class to that same button. */
-/* - Copy & paste the 'btn-name' provided below. */
-/* - Change 'btn-name' to the unique button name you've chosen. */
-/* Please contact Ayumu for any questions. If you like this then give him a kebab. */
-
-/* .btn-name {
-    background-color: ;
-    font-family: ;
-    color: ;
-    box-shadow: inset -4px -4px 0px 0px 'add color';
-    font-size: ;
-}
-
-.btn-name:hover {
-    background-color: ;
-    box-shadow: inset -6px -6px 0px 0px 'add color';
-}
-
-.btn-name:active {
-    box-shadow: inset 4px 4px 0px 0px 'add color';
-} */
-
-/* Don't touch 'eightbit-btn' pls T_____T */
-.eightbit-btn {
-    display: inline-block;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-}
-
-/* Border dimensions */
-.eightbit-btn:before,
-.eightbit-btn:after {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    box-sizing: content-box;
-}
-
-.eightbit-btn:before {
-    top: -6px;
-    left: 0;
-    border-top: 6px black solid;
-    border-bottom: 6px black solid;
-}
-
-.eightbit-btn:after {
-    left: -6px;
-    top: 0;
-    border-left: 6px black solid;
-    border-right: 6px black solid;
-}
-
-/* ----------------------------------------------------------- */
-
-/* Landing Page */
 .landing-background {
     background-image: url('../../assets/img/landing-page/background-blank.png');
     background-size: cover;
@@ -68,7 +9,7 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    overflow: hidden; /* Prevent overflow but retain visibility of elements */
+    overflow: hidden;
 }
 
 .landing-container {
@@ -92,6 +33,64 @@
         font-size: 6rem;
         margin-bottom: 50px;
     }
+}
+
+/* Start Button */
+.landing-btn-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.landing-btn {
+    background-color: #c0c0c0;
+    font-family: var(--primary-font);
+    color: var(--text-color);
+    box-shadow: inset -4px -4px 0px 0px #808080;
+    font-size: 1.5rem;
+    width: 250px;
+    height: 65px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.landing-btn:hover {
+    background-color: #a9a9a9;
+    box-shadow: inset -6px -6px 0px 0px #808080;
+}
+
+.landing-btn:active {
+    box-shadow: inset 4px 4px 0px 0px #808080;
+}
+
+.eightbit-btn {
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+
+.eightbit-btn:before,
+.eightbit-btn:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: content-box;
+}
+
+.eightbit-btn:before {
+    top: -6px;
+    left: 0;
+    border-top: 6px black solid;
+    border-bottom: 6px black solid;
+}
+
+.eightbit-btn:after {
+    left: -6px;
+    top: 0;
+    border-left: 6px black solid;
+    border-right: 6px black solid;
 }
 
 /* Clouds */
@@ -200,71 +199,26 @@
     display: none;
 }
 
-/* Guest User Button */
-.guest-btn {
-    background-color: #c0c0c0;
-    padding: 10px 20px;
-    font-size: 1rem;
-    box-shadow: inset -4px -4px 0px 0px #808080;
-    cursor: pointer;
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    font-family: var(--primary-font);
-    color: var(--text-color);
-}
-
-.guest-btn:hover {
-    background-color: #a9a9a9;
-    box-shadow: inset -6px -6px 0px 0px #808080;
-}
-
-.guest-btn:active {
-    box-shadow: inset 4px 4px 0px 0px #808080;
-}
-
-/* Login & Sign Up Buttons */
-.landing-btn-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.landing-btn {
-    background-color: #c0c0c0;
-    font-family: var(--primary-font);
-    color: var(--text-color);
-    box-shadow: inset -4px -4px 0px 0px #808080;
-    font-size: 1.5rem;
-    width: 250px;
-    height: 65px;
-    margin: 10px 0;
-    cursor: pointer;
-}
-
-.landing-btn:hover {
-    background-color: #a9a9a9;
-    box-shadow: inset -6px -6px 0px 0px #808080;
-}
-
-.landing-btn:active {
-    box-shadow: inset 4px 4px 0px 0px #808080;
-}
-
 /* Mobile View */
 @media (max-width: 390px) {
-    .landing-container span {
-        font-size: 2.5rem;
-    }
+    .landing-container {
+        span {
+            font-size: 2.5rem;
+        }
 
-    .landing-container h1 {
-        font-size: 3.5rem;
-        margin-bottom: 25px;
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+        }
     }
 
     .landing-btn {
         font-size: 1rem;
         width: 150px;
         height: 55px;
+    }
+
+   .mountain, .castle, .bush, .tree, .ground-container {
+        display: none;
     }
 }

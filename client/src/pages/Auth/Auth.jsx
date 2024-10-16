@@ -27,8 +27,12 @@ function Auth() {
       </div>
 
       <div className="form-container">
-        {/* Conditionally render Login or SignUp form with animation */}
-        {isLogin ? <Login /> : <SignUp />}
+        {/* Conditionally render Login or SignUp form */}
+        {isLogin ? (
+          <Login onToggle={handleToggle} />
+        ) : (
+          <SignUp onToggle={handleToggle} />
+        )}
       </div>
     </div>
   );

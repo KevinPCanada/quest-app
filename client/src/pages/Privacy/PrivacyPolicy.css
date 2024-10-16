@@ -1,17 +1,16 @@
 .PrivacyPage {
-    background-image: url('../src/assets/img/background.png'); /* Adjust the path if needed */
-    background-size: cover; /* Ensure the image covers the entire container */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent the image from repeating */
-    background-attachment: fixed; /* Keep the background fixed during scrolling */
-    min-height: 100vh; /* Ensure it covers the entire viewport height */
+    background-image: url('../src/assets/img/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    min-height: 100vh;
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    padding: 20px; /* Add padding to ensure space on small screens */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-/* Center the Privacy section in the middle of the screen */
 .Privacy {
     display: flex;
     flex-direction: column;
@@ -19,46 +18,30 @@
     align-items: center;
     width: 100%;
     max-width: 500px;
-    background-color: var(--background-color); /* Light Gray */
+    background-color: var(--background-color);
     padding: 20px;
-    border: 3px solid var(--primary-color); /* Green */
+    border: 3px solid var(--primary-color);
     border-radius: 1px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
-    font-family: var(--primary-font); /* Retro font */
-    color: var(--text-color); /* Dark Gray */
+    font-family: var(--primary-font);
+    color: var(--text-color);
     text-align: center;
-    box-sizing: border-box; /* Ensure padding and border are considered in width */
+    box-sizing: border-box;
     transition: box-shadow 0.3s ease;
 
+    li {
+        margin-bottom: 10px;
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
 }
 
-/* Glow effect on hover */
 .Privacy:hover {
     box-shadow: 0 0 15px 5px var(--primary-color), 0 4px 15px rgba(0, 0, 0, 0.25); /* Glowing green */
 }
 
-/* Styling for unordered list */
-.Privacy ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-}
-
-.Privacy li {
-    margin-bottom: 10px;
-    font-size: 1.2rem;
-    line-height: 1.5;
-}
-
-/* Responsive design for small screens */
-@media (max-width: 500px) {
-    .Privacy {
-        padding: 15px;
-        max-width: 90%; /* Ensure it doesn't exceed the viewport */
-        margin-bottom: 50%;
-    }
-
-    .Privacy li {
-        font-size: 1rem; /* Adjust font size for better readability */
+@media (max-width: 390px) {
+    .PrivacyPage {
+        background-image: url('../src/assets/img/landing-page/background-blank.png');
     }
 }

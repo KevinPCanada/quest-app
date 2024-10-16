@@ -1,4 +1,3 @@
-/* Scoping all the styles to the Auth component */
 .Auth {
     display: flex;
     flex-direction: column;
@@ -96,10 +95,8 @@
     justify-content: space-evenly;
     width: 100%;
     max-width: 400px;
-    /* overflow-y: auto; */
     flex-grow: 1;
     padding: 15px;
-    /* gap: 10px; */
   }
   
   .Auth .form {
@@ -121,10 +118,8 @@
   }
   
   .Auth form {
-    /* margin-top: 5px; */
     display: flex;
     flex-direction: column;
-    /* gap: 5px; */
   }
   
   .loginFormText{
@@ -134,13 +129,12 @@
   .signupFormText{
     font-size: 1.3rem;
   }
-  /* Input styling scoped to .Auth */
+
   .Auth input {
     display: flex;
     flex-direction: column;
     margin: 8px 0;
     gap: 5px;
-    /* padding: 20px 15px; */
     border: none;
     border-radius: 0px;
     font-size: 1rem;

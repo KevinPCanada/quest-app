@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import './Full_Quest.css';
-
+import '../../../public/css/base.css'
 import skullImage from '../../assets/img/skull.png';
 import swordImage from '../../assets/img/sword.png';
 import cakeImage from '../../assets/img/pieceofcake.png';
