@@ -16,6 +16,13 @@ function SignUp({ onToggle }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Check if the username is "Alex"
+    if (inputs.username.toLowerCase() === "alex") {
+      setError("Sorry, Alex. You are not permitted to create an account.");
+      return; // Prevent form submission if username is "Alex"
+    }
+
     try {
       const res = await fetch("http://localhost:8800/api/auth/register", {
         method: "POST",
@@ -34,7 +41,7 @@ function SignUp({ onToggle }) {
         console.log(data);
        
         await login(inputs);
-        onToggle(); // Switch to login view
+        onToggle(); // Switch to login view after successful signup
       }
     } catch (err) {
       setError(err.message || "An error occurred during registration");
@@ -72,7 +79,6 @@ function SignUp({ onToggle }) {
         {err && <p style={{ color: "red" }}>{err}</p>}
         <button type="submit" className="btn">Sign Up</button>
       </form>
-      {/* <p>Already a member? <button onClick={onToggle}>Log in</button></p> */}
     </div>
   );
 }

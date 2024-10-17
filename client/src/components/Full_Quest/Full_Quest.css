@@ -174,9 +174,25 @@
             font-size: 0.8rem;
         }
     }
+    
 }
 
 @media (max-width: 390px) {
+    .QuestTitle {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center;   /* Center them horizontally */
+        text-align: center;    /* Ensure text is centered */
+
+        .QuestLabel {
+            margin-right: 0;   /* Remove margin for better stacking */
+            margin-bottom: 10px; /* Add spacing between stacked items */
+        }
+
+        .QuestLevelImage {
+            margin-left: 0;    /* Remove left margin when stacked */
+            margin-top: 10px;  /* Add spacing above the image */
+        }
+    }
     .full-quest-complete .quest-complete-button {
         width: 260px;
     }
