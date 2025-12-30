@@ -9,7 +9,7 @@ const upload = multer()
 //add a quest. 
 //example query POST http://localhost:8800/api/quests/add-quest
 //body questName: Shopping questDescription: Grocery shopping questLevel: 1
-router.post('/add-quest', upload.none(), verifyToken, addQuest)
+router.post('/add-quest', verifyToken, addQuest)
 
 //delete a quest
 //example query DELETE http://localhost:8800/api/quests/delete-quest/2
