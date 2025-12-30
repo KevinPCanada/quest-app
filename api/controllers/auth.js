@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { pool } from "../pool.js";
+import { v4 as uuidv4 } from 'uuid'; // Import UUID for Guest data generation
 
 export const register = async (req, res) => {
   try {
@@ -92,4 +93,73 @@ export const logout = (req, res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: 'strict'
   }).status(200).json("User has been logged out");
+};
+
+// Guest Controllers
+
+export const guestLogin = async (req, res) => {
+  try {
+    // 1. Generate Fake Credentials
+    const uniqueId = uuidv4().slice(0, 8); // Short random string
+    const guestUsername = `Guest_${uniqueId}`;
+    const guestEmail = `${guestUsername}@guest.questapp.com`; // Fake email to satisfy DB constraint
+    const randomPassword = uuidv4(); // Random password user never needs to know
+    
+    // 2. Hash the random password (to satisfy Not Null constraint)
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(randomPassword, salt);
+
+    // 3. Set Default Stats (Based on schema requirements)
+    const defaultClassId = 1; // might need to change this to a valid ID from 'classes' table
+    const defaultLevel = 1;
+    const defaultExp = 0;
+    const defaultMilestone = 1;
+    const defaultMilestoneProgress = 0;
+
+    // 4. Insert the Guest User
+    // Note: explicitly set is_guest = TRUE
+    const q = "INSERT INTO users (username, email, password_hash, display_name, class_id, level, experience, milestone, milestone_progress, is_guest) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    const [result] = await pool.query(q, [
+      guestUsername, 
+      guestEmail, 
+      hash, 
+      "Traveler", // Default Display Name
+      defaultClassId,
+      defaultLevel,
+      defaultExp,
+      defaultMilestone,
+      defaultMilestoneProgress,
+      true // is_guest
+    ]);
+
+    // 5. Immediate Login (Generate Token)
+    // use result.insertId to get the ID of the user just created
+    const token = jwt.sign({ id: result.insertId }, "jwtkey");
+
+    // 6. Send Cookie and Response (Same as your standard login)
+    // construct the user object manually to avoid an extra DB SELECT query
+    const guestUser = {
+        user_id: result.insertId,
+        username: guestUsername,
+        email: guestEmail,
+        display_name: "Traveler",
+        is_guest: 1, // distinct flag for frontend
+        // ... add other fields if your frontend needs them immediately
+    };
+
+    res
+      .cookie("access_token", token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: 'strict',
+        maxAge: 24 * 60 * 60 * 1000 // 24 hours
+      })
+      .status(200)
+      .json(guestUser);
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json("An error occurred during guest login");
+  }
 };

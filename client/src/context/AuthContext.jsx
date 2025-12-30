@@ -101,10 +101,32 @@ export const AuthContextProvider = ({ children }) => {
     }
   };
 
+  // function for Guest Login
+  const guestLogin = async () => {
+    try {
+      const res = await fetch("http://localhost:8800/api/auth/guest", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        throw new Error("Guest login failed");
+      }
+
+      const data = await res.json();
+      setCurrentUser(data);
+      return data;
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  };
+
   // Make all these functions and data available to the rest of the app
   return (
-    <AuthContext.Provider value={{ currentUser, setCurrentUser, login, logout, fetchRewards }}>
+    <AuthContext.Provider value={{ currentUser, setCurrentUser, login, logout, fetchRewards, guestLogin }}>
       {children}
     </AuthContext.Provider>
   );
 };
+

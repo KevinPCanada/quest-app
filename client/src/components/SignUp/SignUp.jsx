@@ -59,6 +59,8 @@ function SignUp({ onToggle }) {
           value={inputs.email}
           onChange={handleChange}
           required
+          className="w-full box-border p-2 mb-2 border border-gray-300 rounded"
+          
         />
         <input
           type="text"
@@ -67,6 +69,7 @@ function SignUp({ onToggle }) {
           value={inputs.username}
           onChange={handleChange}
           required
+          className="w-full box-border p-2 mb-2 border border-gray-300 rounded"
         />
         <input
           type="password"
@@ -75,6 +78,7 @@ function SignUp({ onToggle }) {
           value={inputs.password}
           onChange={handleChange}
           required
+          className="w-full box-border p-2 mb-2 border border-gray-300 rounded"
         />
         {err && <p style={{ color: "red" }}>{err}</p>}
         <button type="submit" className="btn">Sign Up</button>

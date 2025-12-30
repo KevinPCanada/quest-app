@@ -1,0 +1,7 @@
+The Cleanup Job
+
+Since guest users are saved in the DB, we should run a cleanup query occasionally.
+
+DELETE FROM users 
+WHERE is_guest = TRUE 
+AND created_at < NOW() - INTERVAL 1 DAY;
