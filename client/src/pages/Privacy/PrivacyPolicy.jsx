@@ -7,7 +7,7 @@ function Privacy() {
         <div className='PrivacyPage'>
             <section className='Privacy'>
                 <ul>
-                    <li>At Quest-Hard, your data's well-guarded,</li>
+                    <li>At Task-Slayer, your data's well-guarded,</li>
                     <li>No profits or sale, we promise wholehearted.</li>
                     <li>It’s used just for tasks,</li>
                     <li>No marketing asks,</li>

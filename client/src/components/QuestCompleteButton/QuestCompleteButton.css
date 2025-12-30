@@ -35,21 +35,34 @@
 
 @media (max-width: 600px) {
   .quest-complete-button {
-    
-    width: 70px;
-    height: 70px;
-  
 
-    i {
-      font-size: 1.2rem;
-    }
-
-    p {
-      font-size: .5rem;
-    }
+    width: 100%;
+    height: 45px;
+    background-color: #4a9b48; /* Green color from your screenshot */
+    color: white;
+    flex-direction: row; /* Icon next to text */
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
   }
 
-  .hide-600 {
+
+
+  .quest-complete-button i {
+    font-size: 1.2rem;
+    margin-top: 0; /* Remove top margin from vertical layout */
+    color: white;
+  }
+
+
+  .quest-complete-button p {
     display: none;
+  }
+
+
+  .hide-600 {
+    display: inline-block !important; /* Force it to show */
+    font-size: 1rem;
+    font-family: var(--primary-font);
   }
 }

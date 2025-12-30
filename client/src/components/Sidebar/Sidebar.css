@@ -6,12 +6,17 @@
     padding: 20px 10px;
     display: flex;
     flex-direction: column;
-    position: sticky;
-    height: 100vh;
-    width: 230px;
-    overflow-y: auto;
+    
+
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
+    
+    height: 100vh;
+    width: 230px;
+    overflow-y: auto; 
+    
+    z-index: 50; 
 }
 
 .profile {
@@ -161,7 +166,12 @@
         margin-right: 10px;
       }
 }
-@media (max-width: 390px) {
+@media (max-width: 405px) {
+
+    .mobile-hidden {
+        display: none !important;
+    }
+
     .profile-avatar {
         margin: 10px;
         width: 50px;

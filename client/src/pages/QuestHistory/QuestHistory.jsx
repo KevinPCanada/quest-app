@@ -80,7 +80,7 @@ export default function QuestHistory() {
   }
 
   return (
-    <div className="font-thin mx-auto p-5 min-h-screen bg-background font-pixelify">
+    <div className="font-thin mx-auto p-5 bg-background font-pixelify">
       <h1 className="text-3xl mb-6 text-primary">Quest History</h1>
       
       {message && (

@@ -37,7 +37,7 @@ export function Sidebar() {
             </Link>
           </ul>
         </nav>
-        <nav className="sidebar-info">
+        <nav className="sidebar-info mobile-hidden">
           <Link to="/about" className="sidebar-info-button">
             <i className="material-icons hide-full-sidebar">info</i>
             <p className="hide-1024">About us</p>

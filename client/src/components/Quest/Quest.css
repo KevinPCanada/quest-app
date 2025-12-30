@@ -1,64 +1,77 @@
+/* Container Styles */
 .quest-container {
   margin-bottom: 20px;
   background-color: white;
-  align-items: center;
   border-radius: 4px;
   border: var(--button-border);
   box-shadow: var(--button-shadow);
-
-  .quest-header {
-
-    margin: 15px;
-    display: flex;
-
-    .quest-header-text {
-      display: flex;
-      flex-direction: column;
-      flex: 1;
-
-        h2 {
-          font-family: var(--primary-font);
-          font-size: 1.5rem;
-          word-break: break-all;
-        }
-
-        p {
-          opacity: 0.5;
-        }
-
-    }
-
-  }
-
-
 }
 
-/* Buttons? */
+/* DESKTOP HEADER LAYOUT */
+.quest-header {
+  margin: 11px;
+  display: flex;
+  justify-content: space-between; 
+  align-items: flex-start;        
+  gap: 20px;                     
+}
 
+.quest-header-text {
+  display: flex;
+  flex-direction: column;
+  flex: 1; 
+}
+
+.quest-header-text h2 {
+  font-family: var(--primary-font);
+  font-size: 1.5rem;
+  word-break: break-all;
+  margin-top: 0;
+}
+
+.quest-header-text p {
+  opacity: 0.5;
+}
+
+/* Buttons & Options Container */
 .quest-options {
   padding: 15px;
+  padding-top: 0; /* Reduced top padding since button is gone */
   display: flex;
-  gap: 20px;
+  justify-content: flex-start; /* Aligns secondary buttons to left */
+  align-items: center;
   background-color: var(--background-color);
 }
 
-.quest-options button {
+.quest-buttons-secondary {
+  display: flex;
+  gap: 10px;
+}
+
+.quest-buttons-secondary button,
+.quest-buttons-secondary a {
   font-family: var(--primary-font);
   font-size: 0.9rem;
   text-decoration: none;
   color: var(--text-color);
   background-color: var(--secondary-color);
-  padding: 3px 8px;
+  padding: 8px 16px;
   border: var(--button-border);
   box-shadow: var(--button-shadow);
   transition: background-color 0.3s ease, box-shadow, transform;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }
 
-.quest-options button:hover {
+.quest-buttons-secondary button:hover,
+.quest-buttons-secondary a:hover {
   background-color: var(--button-hover-color);
 }
 
-.quest-options button:active {
+.quest-buttons-secondary button:active,
+.quest-buttons-secondary a:active {
   box-shadow: var(--button-shadow-click);
   transform: var(--button-transform-click);
 }
@@ -66,14 +79,40 @@
 /* Responsiveness */
 
 @media (max-width: 600px) {
-  .quest-option {
-    width: 50px;
+  .quest-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .quest-header-text {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .quest-header > div.relative {
+     width: 100%;
+  }
+
+  .quest-options {
+    padding: 10px;
+    padding-top: 0;
+  }
+
+  .quest-buttons-secondary {
+     width: 100%;
+     display: flex;
+     gap: 10px;
+  }
+
+  .quest-buttons-secondary button,
+  .quest-buttons-secondary a {
+     flex: 1;
+     padding: 10px;
   }
 }
 
 @media (max-width: 405px) {
   .quest-container {
       padding: 10px;
-      align-items: flex-end;
   }
 }

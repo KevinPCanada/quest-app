@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { createPortal } from "react-dom";
 import { Button } from "../ui/button"
 import {
   Command,
@@ -11,7 +12,7 @@ import {
 import { Check, Crown } from "lucide-react"
 import { useToast } from "../../hooks/use-toast"
 import { motion, AnimatePresence } from "framer-motion"
-import { apiRequest } from "../../lib/apiRequest" // Import helper
+import { apiRequest } from "../../lib/apiRequest" 
 
 export default function RewardSelector({ onClose }) {
   const [rewards, setRewards] = useState([])
@@ -24,7 +25,6 @@ export default function RewardSelector({ onClose }) {
     const getRewards = async () => {
       try {
         setLoading(true)
-        // CLEANER: GET request
         const fetchedRewards = await apiRequest('/rewards', 'GET');
         setRewards(fetchedRewards)
         setLoading(false)
@@ -66,37 +66,42 @@ export default function RewardSelector({ onClose }) {
     onClose()
   }
 
-  return (
-    <div className="bg-white rounded-lg shadow-lg p-6 w-[425px] max-w-full">
-      <h2 className="text-2xl font-light font-pixelify mb-4 ">Select a Reward</h2>
-      <Command>
-        <CommandInput placeholder="Search rewards..." />
-        <CommandList>
-          <CommandEmpty>No rewards found.</CommandEmpty>
-          <CommandGroup>
-            {loading ? (
-              <CommandItem>Loading rewards...</CommandItem>
-            ) : error ? (
-              <CommandItem>{error}</CommandItem>
-            ) : (
-              rewards.map((reward) => (
-                <CommandItem
-                  key={reward.id}
-                  onSelect={() => handleRewardSelect(reward)}
-                >
-                  <Check
-                    className={`mr-2 h-4 w-4 ${
-                      selectedReward?.id === reward.id ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
-                  {reward.description}
-                </CommandItem>
-              ))
-            )}
-          </CommandGroup>
-        </CommandList>
-      </Command>
-      <Button onClick={onClose} className="font-pixelify font-thin bg-[var(--text-color-light)] text-[var(--background-color)] rounded-none border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[3px] transition-none my-5">Close</Button>
-    </div>
+  // 1. WRAP RETURN IN createPortal
+  return createPortal(
+    // 2. Add this positioning wrapper so it centers on the screen
+    <div className="fixed inset-0 flex items-center justify-center z-[9999] bg-black/50 backdrop-blur-sm">
+      <div className="bg-white rounded-lg shadow-lg p-6 w-[425px] max-w-full pointer-events-auto">
+        <h2 className="text-2xl font-light font-pixelify mb-4 ">Select a Reward</h2>
+        <Command>
+          <CommandInput placeholder="Search rewards..." />
+          <CommandList>
+            <CommandEmpty>No rewards found.</CommandEmpty>
+            <CommandGroup>
+              {loading ? (
+                <CommandItem>Loading rewards...</CommandItem>
+              ) : error ? (
+                <CommandItem>{error}</CommandItem>
+              ) : (
+                rewards.map((reward) => (
+                  <CommandItem
+                    key={reward.id}
+                    onSelect={() => handleRewardSelect(reward)}
+                  >
+                    <Check
+                      className={`mr-2 h-4 w-4 ${
+                        selectedReward?.id === reward.id ? "opacity-100" : "opacity-0"
+                      }`}
+                    />
+                    {reward.description}
+                  </CommandItem>
+                ))
+              )}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+        <Button onClick={onClose} className="font-pixelify font-thin bg-[var(--text-color-light)] text-[var(--background-color)] rounded-none border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] active:shadow-none active:translate-y-[3px] transition-none my-5">Close</Button>
+      </div>
+    </div>,
+    document.body // <--- 3. Render at the end of body
   )
 }

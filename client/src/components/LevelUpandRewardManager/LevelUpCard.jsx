@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
 import {
@@ -40,14 +41,14 @@ export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector, m
     onOpenRewardSelector();
   };
 
-  return (
+  return createPortal(
     <motion.div
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
       className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none"
     >
-      <Card className="w-[350px] bg-white border-4 border-black text-black pointer-events-auto font-pixelify">
+      <Card className="w-[350px] bg-white border-4 border-black text-black pointer-events-auto font-pixelify shadow-2xl">
         <CardHeader className="border-b-4 border-black">
           <CardTitle className="text-4xl font-bold text-center pixel-text">
             LEVEL UP!
@@ -77,6 +78,7 @@ export default function LevelUpCard({ newLevel, onClose, onOpenRewardSelector, m
           )}
         </CardContent>
       </Card>
-    </motion.div>
+    </motion.div>,
+    document.body // <--- 3. THIS TELLS REACT TO RENDER IT AT THE END OF THE BODY
   );
 }

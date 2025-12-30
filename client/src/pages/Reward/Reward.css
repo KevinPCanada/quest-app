@@ -1,7 +1,6 @@
 .rewardpage {
     display: flex;
     width: 100%;
-    height: 100vh;
     padding: 10px;
     gap: 20px;
     font-family: var(--secondary-font);
@@ -146,7 +145,6 @@
         flex-direction: column;
         align-items: center;
         gap: 10px;
-        height: auto;
     }
 
     .rewardpage-left, .rewardpage-right {
@@ -170,7 +168,6 @@
 
     .rewardpage-right {
         gap: 5px;
-        height: 85vh;
     }
 
     .rewardpage-right-top, .rewardpage-right-bottom {
