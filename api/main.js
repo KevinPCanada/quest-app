@@ -1,3 +1,4 @@
+import dotenv from 'dotenv';      
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import cors from 'cors';
@@ -9,6 +10,7 @@ import rewardsRoutes from './routes/rewards.js'
 import userRoutes from './routes/user.js'
 import classRoutes from './routes/class.js'
 
+dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -45,6 +47,11 @@ app.use((err, req, res, next) => {
 });
 
 const port = process.env.PORT || 8800;
-app.listen(port, () => {
-  console.log('Server listening on http://localhost:8800');
-});
+
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Server listening on http://localhost:${port}`);
+  });
+}
+
+export default app;
