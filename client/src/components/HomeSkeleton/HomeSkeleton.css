@@ -1,0 +1,32 @@
+.skeleton-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 300px; 
+}
+
+.retro-loading {
+    font-family: var(--primary-font), monospace;
+    font-size: 2rem;
+    color: var(--text-color, black); 
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* creates the pseudo-element that holds the dots */
+.retro-loading::after {
+    content: '';
+    display: inline-block;
+    width: 1em; /* Reserve space so text doesn't jump */
+    text-align: left;
+    /* The magic: 'steps' makes it jump frames like an old game */
+    animation: retroDots 1.5s steps(4, end) infinite;
+}
+
+@keyframes retroDots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+}

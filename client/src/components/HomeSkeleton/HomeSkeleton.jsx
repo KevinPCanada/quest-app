@@ -1,20 +1,10 @@
-import React from 'react'
-import './HomeSkeleton.css'
-import BlankQuest from './BlankQuest'
+import React from 'react';
+import './HomeSkeleton.css';
 
 export default function Skeleton() {
-
-
     return (
         <div className='skeleton-container'>
-
-            
-
-           
-
-        <BlankQuest></BlankQuest>
-
-
+            <h2 className="retro-loading">Loading</h2>
         </div>
-    )
+    );
 }
