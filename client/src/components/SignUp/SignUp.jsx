@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
-import { AuthContext } from '/src/context/AuthContext';
+// Ensure this path matches your file structure, usually relative like ../../context/AuthContext
+import { AuthContext } from '../../context/AuthContext'; 
+import { apiRequest } from "../../lib/apiRequest"; // Import helper
 
 function SignUp({ onToggle }) { 
   const [inputs, setInputs] = useState({
@@ -20,30 +22,21 @@ function SignUp({ onToggle }) {
     // Check if the username is "Alex"
     if (inputs.username.toLowerCase() === "alex") {
       setError("Sorry, Alex. You are not permitted to create an account.");
-      return; // Prevent form submission if username is "Alex"
+      return; 
     }
 
     try {
-      const res = await fetch("http://localhost:8800/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(inputs),
-      });
-     
-      if (res.status === 409) {
-        setError("User already exists");
-      } else if (!res.ok) {
-        throw new Error(`HTTP error! Status: ${res.status}`);
-      } else {
-        const data = await res.json();
-        console.log(data);
-       
-        await login(inputs);
-        onToggle(); // Switch to login view after successful signup
-      }
+      // CLEANER: POST request
+      // apiRequest throws an error automatically if the server returns 409 or 500
+      await apiRequest("/auth/register", "POST", inputs);
+      
+      // If we get here, registration was successful
+      await login(inputs);
+      onToggle(); 
+      
     } catch (err) {
+      // This catches 409 (User exists) and 500 (Server error)
+      // Make sure your backend sends { message: "User already exists" }
       setError(err.message || "An error occurred during registration");
     }
   };
@@ -60,7 +53,6 @@ function SignUp({ onToggle }) {
           onChange={handleChange}
           required
           className="w-full box-border p-2 mb-2 border border-gray-300 rounded"
-          
         />
         <input
           type="text"

@@ -4,7 +4,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
-import { AuthContext } from "../../context/AuthContext"; // Adjust the import path as needed
+import { AuthContext } from "../../context/AuthContext";
+import { apiRequest } from "../../lib/apiRequest"; // Import helper
+
+// Helper for Image URLs so they work on Vercel AND Localhost
+const SERVER_URL = import.meta.env.MODE === "development" 
+  ? "http://localhost:8800" 
+  : ""; 
 
 function ProfileButton() {
   const { currentUser } = useContext(AuthContext);
@@ -21,29 +27,13 @@ function ProfileButton() {
       }
 
       try {
-        // Fetch user data
-        const userResponse = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}`, {
-          credentials: "include",
-        });
+        // 1. Fetch User Data
+        const userDataResponse = await apiRequest(`/user/${currentUser.user_id}`, "GET");
+        setUserData(userDataResponse);
 
-        if (!userResponse.ok) {
-          throw new Error(`HTTP error! status: ${userResponse.status}`);
-        }
-
-        const userData = await userResponse.json();
-        setUserData(userData);
-
-        // Fetch class data
-        const classResponse = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}/class`, {
-          credentials: "include",
-        });
-
-        if (!classResponse.ok) {
-          throw new Error(`HTTP error! status: ${classResponse.status}`);
-        }
-
-        const classData = await classResponse.json();
-        setClassData(classData);
+        // 2. Fetch Class Data
+        const classDataResponse = await apiRequest(`/user/${currentUser.user_id}/class`, "GET");
+        setClassData(classDataResponse);
 
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -70,7 +60,10 @@ function ProfileButton() {
 
   const level = Math.floor(userData.experience / 100) + 1;
   const expToNextLevel = userData.experience % 100;
-  const avatarUrl = `http://localhost:8800${classData.class_avatar}`;
+  
+  // UPDATED: Use SERVER_URL to ensure this works in production
+  const avatarUrl = classData.class_avatar;
+  
   const displayName = userData.display_name || userData.username;
 
   return (

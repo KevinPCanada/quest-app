@@ -2,11 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from '../../context/AuthContext';
 import LevelBar from "../Level/Level";
 import LevelSkeleton from "../Level/LevelSkeleton";
-import HeaderButton from "../HeaderButton/HeaderButton";
 import NewQuest from "../NewQuest/NewQuest";
+import { apiRequest } from "../../lib/apiRequest"; // Import helper
 import "./QuestboardHeader.css";
 
-function HomeHeader({updateQuests}) {
+function HomeHeader({ updateQuests }) {
   const [userData, setUserData] = useState(null);
   const { currentUser } = useContext(AuthContext);
 
@@ -14,20 +14,11 @@ function HomeHeader({updateQuests}) {
     const fetchUserData = async () => {
       if (!currentUser) return;
       try {
-        const response = await fetch(`http://localhost:8800/api/user/${currentUser.user_id}`, {
-          method: 'GET',
-          credentials: 'include',
-        });
-        if (!response.ok) {
-          throw new Error('Failed to fetch user data');
-        }
-       
-        const data = await response.json();
+        // CLEANER: GET request
+        const data = await apiRequest(`/user/${currentUser.user_id}`, "GET");
         setUserData(data);
-       
       } catch (error) {
         console.error('Error fetching user data:', error);
-        // Handle error (e.g., show error message to user)
       }
     };
     fetchUserData();

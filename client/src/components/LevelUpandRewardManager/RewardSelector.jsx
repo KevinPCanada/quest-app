@@ -11,22 +11,7 @@ import {
 import { Check, Crown } from "lucide-react"
 import { useToast } from "../../hooks/use-toast"
 import { motion, AnimatePresence } from "framer-motion"
-
-const fetchRewards = async () => {
-  const response = await fetch('http://localhost:8800/api/rewards', {
-    method: 'GET',
-    credentials: 'include', // This is important for including cookies in the request
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to fetch rewards');
-  }
-
-  return response.json();
-};
+import { apiRequest } from "../../lib/apiRequest" // Import helper
 
 export default function RewardSelector({ onClose }) {
   const [rewards, setRewards] = useState([])
@@ -39,7 +24,8 @@ export default function RewardSelector({ onClose }) {
     const getRewards = async () => {
       try {
         setLoading(true)
-        const fetchedRewards = await fetchRewards()
+        // CLEANER: GET request
+        const fetchedRewards = await apiRequest('/rewards', 'GET');
         setRewards(fetchedRewards)
         setLoading(false)
       } catch (err) {

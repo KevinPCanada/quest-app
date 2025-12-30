@@ -3,8 +3,8 @@ import "./QuestCompleteButton.css";
 import LevelUpandRewardManager from "../LevelUpandRewardManager/LevelUpandRewardManager";
 import { AuthContext } from "../../context/AuthContext";
 import questCompleteSound from '../../assets/sfx/quest-complete-sound.mp3';
+import { apiRequest } from "../../lib/apiRequest"; // Import helper
 
-// Added className and children to props
 function QuestCompleteButton({ exp, thisQuestId, onQuestComplete, className, children }) {
   const { currentUser } = useContext(AuthContext);
   const [showLevelUp, setShowLevelUp] = useState(false);
@@ -23,15 +23,14 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete, className, chi
   const fetchMilestoneData = useCallback(async () => {
     if (!currentUser || !currentUser.user_id) return;
     try {
-      const response = await fetch(
-        `http://localhost:8800/api/user/${currentUser.user_id}/milestone-progress`,
-        { credentials: "include" }
-      );
-      if (!response.ok) throw new Error("Failed to fetch milestone data");
-      const data = await response.json();
+     
+      const data = await apiRequest(`/user/${currentUser.user_id}/milestone-progress`, "GET");
+      
       setMilestoneProgress(data.milestone_progress);
       setMilestone(data.milestone);
-    } catch (error) { }
+    } catch (error) { 
+      // Silent error handling as per original code
+    }
   }, [currentUser]);
 
   useEffect(() => {
@@ -49,18 +48,10 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete, className, chi
     playAudio();
 
     try {
-      const response = await fetch(
-        `http://localhost:8800/api/quests/complete-quest/${thisQuestId}`,
-        {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-            body: JSON.stringify({ questId: thisQuestId }),
-        }
-      );
-      if (!response.ok) throw new Error("Failed to complete quest");
-      
-      const data = await response.json();
+      // CLEANER: PUT request with body
+      const data = await apiRequest(`/quests/complete-quest/${thisQuestId}`, "PUT", { 
+        questId: thisQuestId 
+      });
 
       if (data.leveledUp) {
         setNewLevel(data.newLevel);
@@ -70,7 +61,9 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete, className, chi
       } else {
         onQuestComplete();
       }
-    } catch (error) { }
+    } catch (error) { 
+      console.error("Failed to complete quest:", error);
+    }
   }, [thisQuestId, onQuestComplete]);
 
   const handleFinalClose = useCallback(() => {
@@ -83,13 +76,10 @@ function QuestCompleteButton({ exp, thisQuestId, onQuestComplete, className, chi
   return (
     <div className="relative">
       <button
-        // UPDATED: Use passed className OR default to original class
         className={className || "quest-complete-button"}
         onClick={handleClick}
         disabled={showLevelUp}
       >
-        {/* UPDATED: If children exist (Shadcn style), render them. 
-            Otherwise, render the original default UI. */}
         {children ? children : (
             <>
                 <span className="hide-600">Quest Complete</span>

@@ -1,25 +1,10 @@
+import { apiRequest } from "../../lib/apiRequest"; // Adjust path if needed
+
 export const deleteAllCompleted = async (questData) => {
-
-    console.log(questData)
-
     try {
-        const response = await fetch("http://localhost:8800/api/quests/delete-all", {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify(questData),
-        });
-
-        if (!response.ok) {
-            throw new Error("Failed to add quest");
-        }
-
-
-        return await response.json(); 
+        return await apiRequest("/quests/delete-all", "DELETE", questData);
     } catch (error) {
-        console.error("Failed to modify quest, please try again", error);
+        console.error("Failed to delete quests, please try again", error);
         throw error;
     }
 };
