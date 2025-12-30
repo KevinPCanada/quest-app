@@ -1,23 +1,10 @@
-import { useState, useEffect } from "react";
+import { apiRequest } from "../../../../lib/apiRequest"; 
+// ^ Adjust this import path to where your apiRequest helper is! 
+// If you don't use apiRequest, use the fetch version below.
 
+// OPTION 1: If you have your global apiRequest helper (Recommended)
 export const addQuest = async (questData) => {
-    try {
-        const response = await fetch("http://localhost:8800/api/quests/add-quest", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify(questData),
-        });
-
-        if (!response.ok) {
-            throw new Error("Failed to add quest");
-        }
-
-        return await response.json(); 
-    } catch (error) {
-        console.error("Failed to add quest, please try again", error);
-        throw error;
-    }
+  // apiRequest automatically handles JSON headers and credentials
+  const response = await apiRequest("/quests/add-quest", "POST", questData);
+  return response;
 };
