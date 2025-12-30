@@ -141,7 +141,7 @@
 }
 
 /* Mobile View */
-@media (max-width: 390px) {
+@media (max-width: 405px) {
     .rewardpage {
         flex-direction: column;
         align-items: center;

@@ -97,7 +97,7 @@
 }
 
 
-@media (max-width: 390px) {
+@media (max-width: 405px) {
   .quest-container {
       padding: 10px;
       align-items: flex-end;

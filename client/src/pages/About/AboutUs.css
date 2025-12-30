@@ -122,7 +122,7 @@
     }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 405px) {
     .AboutUs {
         background-image: url('../src/assets/img/landing-page/background-blank.png');
     }

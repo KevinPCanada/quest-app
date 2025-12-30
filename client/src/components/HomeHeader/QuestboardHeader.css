@@ -55,8 +55,8 @@
   }
 }
 
-/* Mobile View for 390px screen width */
-@media (max-width: 390px) {
+/* Mobile View for 405px screen width */
+@media (max-width: 405px) {
   .questboard-header {
     flex-direction: column;
 

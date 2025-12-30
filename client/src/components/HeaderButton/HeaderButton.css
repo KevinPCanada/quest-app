@@ -21,7 +21,7 @@
   transform: var(--button-transform-click);
 }
 
-@media (max-width: 390px) {
+@media (max-width: 405px) {
   .questboard-header-button {
       height: 2px;
   }
