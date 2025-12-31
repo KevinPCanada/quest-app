@@ -14,7 +14,6 @@ function AboutUs() {
             <section className='TeamContainer'>
                 {teamMembers.map((member, index) => (
                     <div key={index} className='TeamMember'>
-                        <img src={member.image} alt={member.name} className='TeamImage' />
                         <h2 className='TeamName'>{member.name}</h2>
                         <h3 className='TeamRole'>{member.role}</h3>
                         <p className='TeamIntro'>{member.intro}</p>
